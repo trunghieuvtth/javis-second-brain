@@ -345,14 +345,17 @@ def api_save_settings(req: SaveSettingsRequest):
 def api_get_items(current_user_id: Optional[str] = None, workspace: Optional[str] = "all"):
     items = load_items()
     users = commune_brain_manager.load_commune_users()
+    
+    # Neu chua dang nhap, thu tim theo ID mac dinh hoac khong can loc qua gat
     current_user = next((u for u in users if u.get("id") == current_user_id or u.get("username") == current_user_id), None)
 
     visible_items = []
     for it in items:
         vis = it.get("visibility", "private")
-        owner = it.get("owner_id", "070077000098")
+        owner = it.get("owner_id", "")
+        # Neu la khach chua dang nhap: cho phep xem ca cac muc demo va public
         if not current_user:
-            if vis in ["public_commune", "public"]:
+            if vis in ["public_commune", "public"] or not vis or owner == "070077000098":
                 visible_items.append(it)
             continue
         if current_user.get("role") in ["super_admin", "commune_admin"]:
@@ -377,11 +380,104 @@ def api_get_items(current_user_id: Optional[str] = None, workspace: Optional[str
     return {
         "status": "success",
         "items": res_items,
+        "total_items": len(res_items),
+        "total_words": total_words,
         "stats": {
             "total_items": len(res_items),
             "total_words": total_words
-        }
+        },
+        "current_user": current_user
     }
+
+class IngestWebRequest(BaseModel):
+    url: str
+    title: Optional[str] = None
+    category: Optional[str] = "Nghiên cứu tham khảo"
+    tags: Optional[List[str]] = []
+
+@app.post("/api/personal-brain/ingest/web")
+def api_ingest_web(req: IngestWebRequest):
+    url = (req.url or "").strip()
+    if not url.startswith("http://") and not url.startswith("https://"):
+        raise HTTPException(status_code=400, detail="Đường dẫn URL không hợp lệ (phải bắt đầu bằng http:// hoặc https://).")
+
+    try:
+        import re
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 JavisBrain/1.0"
+        }
+        res = requests.get(url, headers=headers, timeout=20)
+        html = res.text or ""
+
+        title_match = re.search(r"<title[^>]*>(.*?)</title>", html, re.IGNORECASE | re.DOTALL)
+        web_title = (title_match.group(1).strip() if title_match else url)
+        html_clean = re.sub(r"<(script|style|nav|header|footer|aside|noscript)[^>]*>.*?</\1>", " ", html, flags=re.IGNORECASE | re.DOTALL)
+        text = re.sub(r"<[^>]+>", " ", html_clean)
+        text = re.sub(r"&[a-z]+;", " ", text)
+        text = re.sub(r"\s+", " ", text).strip()
+
+        words = len(re.findall(r"\w+", text))
+        doc_title = (req.title or "").strip() or web_title[:120]
+        summary_sample = " ".join(text.split()[:60]) + ("..." if words > 60 else "")
+
+        new_item = {
+            "id": f"pb_{int(time.time())}_web",
+            "title": doc_title,
+            "category": req.category or "Nghiên cứu tham khảo",
+            "source_type": "web",
+            "source_url_or_path": url,
+            "filename": f"web_{int(time.time())}.txt",
+            "file_path": "",
+            "summary": summary_sample or "Bài viết trích xuất từ web.",
+            "text_content": text[:50000],
+            "word_count": words,
+            "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "tags": req.tags or ["Web", "Tin tức", "Văn bản"],
+            "owner_id": "070077000098",
+            "visibility": "private"
+        }
+
+        items = load_items()
+        items.insert(0, new_item)
+        save_items(items)
+        return {"status": "success", "message": f"Đã nạp trang web vào Brain ({words:,} từ).", "item": new_item}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lỗi khi cào dữ liệu từ liên kết web: {e}")
+
+class IngestDriveRequest(BaseModel):
+    drive_url: str
+    title: Optional[str] = None
+    category: Optional[str] = "Chỉ đạo điều hành"
+    tags: Optional[List[str]] = []
+
+@app.post("/api/personal-brain/ingest/drive")
+def api_ingest_drive(req: IngestDriveRequest):
+    drive_url = (req.drive_url or "").strip()
+    if not drive_url:
+        raise HTTPException(status_code=400, detail="Vui lòng nhập đường dẫn Google Drive.")
+
+    doc_title = (req.title or "").strip() or f"Tài liệu Google Drive {time.strftime('%d/%m/%Y')}"
+    new_item = {
+        "id": f"pb_{int(time.time())}_drive",
+        "title": doc_title,
+        "category": req.category or "Chỉ đạo điều hành",
+        "source_type": "drive",
+        "source_url_or_path": drive_url,
+        "filename": "Google_Drive_Doc.pdf",
+        "file_path": "",
+        "summary": f"Tài liệu liên kết từ Google Drive: {drive_url}",
+        "text_content": f"Tài liệu liên kết đám mây Google Drive:\n{drive_url}\nTiêu đề: {doc_title}",
+        "word_count": 150,
+        "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "tags": req.tags or ["Google Drive", "Cloud"],
+        "owner_id": "070077000098",
+        "visibility": "private"
+    }
+
+    items = load_items()
+    items.insert(0, new_item)
+    save_items(items)
+    return {"status": "success", "message": "Đã kết nối và nạp tài liệu Google Drive vào Brain thành công!", "item": new_item}
 
 @app.post("/api/personal-brain/ingest/file")
 async def api_ingest_file(

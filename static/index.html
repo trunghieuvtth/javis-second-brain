@@ -121,10 +121,10 @@
                 <div :class="currentTheme === 'light' ? 'text-blue-700' : 'text-blue-300'" class="text-lg sm:text-xl font-black font-mono mt-0.5" x-text="(personalBrain.stats?.total_words || 0).toLocaleString()"></div>
               </div>
 
-              <!-- Nút Quản trị xã/phường (Chỉ hiện khi ĐÃ ĐĂNG NHẬP và là Super Admin hoặc Lãnh đạo đơn vị) -->
-              <button x-show="personalBrain.currentUser && (personalBrain.currentUser.role === 'super_admin' || personalBrain.currentUser.role === 'commune_admin')" @click="loadCommuneUsersAndDepts(); personalBrain.showCommuneAdminModal = true" class="px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md shadow-indigo-600/30 transition flex items-center gap-2 text-xs sm:text-sm font-bold" :title="'Bảng điều khiển quản trị nhân sự và phân quyền ' + (personalBrain.settingsForm.user_unit || 'Đơn vị')">
+              <!-- Nút Quản trị xã/phường: Luôn cho phép bấm mở Quản trị (nếu chưa đăng nhập sẽ nhắc đăng nhập hoặc nạp quyền) -->
+              <button @click="openCommuneAdminModal()" class="px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md shadow-indigo-600/30 transition flex items-center gap-2 text-xs sm:text-sm font-bold" :title="'Bảng điều khiển quản trị nhân sự và phân quyền ' + (personalBrain.settingsForm.user_unit || 'Đơn vị')">
                 <i class="fa-solid fa-shield-halved text-amber-300 text-sm"></i>
-                <span x-text="(personalBrain.currentUser && personalBrain.currentUser.role === 'super_admin') ? 'Super Admin' : ('Quản Trị ' + ((personalBrain.settingsForm.user_unit && personalBrain.settingsForm.user_unit.toLowerCase().includes('phường')) ? 'Phường' : ((personalBrain.settingsForm.user_unit && personalBrain.settingsForm.user_unit.toLowerCase().includes('thị trấn')) ? 'Thị Trấn' : 'Xã')))"></span>
+                <span x-text="(personalBrain.currentUser && personalBrain.currentUser.role === 'super_admin') ? 'Super Admin' : ('Quản Trị ' + ((personalBrain.settingsForm.user_unit && personalBrain.settingsForm.user_unit.toLowerCase().includes('phường')) ? 'Phường' : ((personalBrain.settingsForm.user_unit && personalBrain.settingsForm.user_unit.toLowerCase().includes('thị trấn')) ? 'Thị Trấn' : 'Xã/Cơ quan')))"></span>
               </button>
 
               <!-- Nút Đăng nhập / Tài khoản CBCC -->
@@ -1824,7 +1824,27 @@
           } catch (e) {}
 
           this.loadPersonalBrain();
-          this.loadBrainSettings();
+          this.loadCommuneUsersAndDepts();
+          this.fetchBrainSettings();
+        },
+
+        async fetchBrainSettings() {
+          try {
+            const res = await fetch('/api/personal-brain/settings');
+            const data = await res.json();
+            if (data.status === 'success' && data.settings) {
+              this.personalBrain.settingsForm = {
+                user_fullname: data.settings.user_fullname || '',
+                user_title: data.settings.user_title || '',
+                user_unit: data.settings.user_unit || '',
+                gdrive_enabled: data.settings.gdrive_enabled !== false,
+                gdrive_auto_sync: data.settings.gdrive_auto_sync !== false,
+                gdrive_folder_url: data.settings.gdrive_folder_url || '',
+                web_links_str: (data.settings.web_links || []).join('\n'),
+                ai_model: data.settings.ai_model || 'google-antigravity/gemini-3.8-flash'
+              };
+            }
+          } catch(e) {}
         },
 
         showToast(msg) {
@@ -1857,8 +1877,22 @@
           return await res.json();
         },
 
+        openCommuneAdminModal() {
+          if (!this.personalBrain.currentUser) {
+            this.showToast('Vui lòng đăng nhập công vụ bằng CCCD để truy cập Quản trị!');
+            this.personalBrain.showLoginModal = true;
+            return;
+          }
+          if (this.personalBrain.currentUser.role !== 'super_admin' && this.personalBrain.currentUser.role !== 'commune_admin') {
+            this.showToast('Chỉ Lãnh đạo đơn vị hoặc Super Admin mới có quyền truy cập Quản trị!');
+            return;
+          }
+          this.loadCommuneUsersAndDepts();
+          this.personalBrain.showCommuneAdminModal = true;
+        },
+
         openBrainSettingsModal() {
-          this.loadBrainSettings();
+          this.fetchBrainSettings();
           this.personalBrain.showSettingsModal = true;
         },
 
@@ -2046,19 +2080,20 @@
         async loadPersonalBrain() {
           this.personalBrain.loading = true;
           try {
-            const uid = this.personalBrain.currentUserId || 'guest_unauthenticated';
-            const url = `/api/personal-brain/items?current_user_id=${uid}&workspace=${this.personalBrain.currentWorkspace || 'all'}`;
+            const uid = this.personalBrain.currentUserId || (this.personalBrain.currentUser ? this.personalBrain.currentUser.id : '');
+            const url = `/api/personal-brain/items?current_user_id=${encodeURIComponent(uid)}&workspace=${this.personalBrain.currentWorkspace || 'all'}`;
             const res = await fetch(url);
             const data = await res.json();
             if (data.status === 'success' || Array.isArray(data.items)) {
               this.personalBrain.items = data.items || [];
               this.personalBrain.stats = {
                 total_items: data.total_items || (data.items ? data.items.length : 0),
-                total_words: data.total_words || 0,
-                categories: data.categories || [],
-                workspace_stats: data.workspace_stats || {}
+                total_words: data.stats?.total_words || 0,
+                categories: data.categories || []
               };
-              this.personalBrain.currentUser = data.current_user;
+              if (data.current_user) {
+                this.personalBrain.currentUser = data.current_user;
+              }
               // Lọc lại các ID đã chọn nếu tài liệu không còn tồn tại
               const validIds = new Set(this.personalBrain.items.map(it => it.id));
               this.personalBrain.selectedIds = this.personalBrain.selectedIds.filter(id => validIds.has(id));
@@ -2328,6 +2363,9 @@
         },
 
         openAddUserModal() {
+          if (!this.personalBrain.communeDepartments || this.personalBrain.communeDepartments.length === 0) {
+            this.loadCommuneUsersAndDepts();
+          }
           const defaultDept = this.personalBrain.communeDepartments?.[0]?.id || 'lanh_dao';
           const defaultTitles = this.getTitlesForDepartment(defaultDept, false);
           this.personalBrain.newUserForm = {
@@ -2336,7 +2374,7 @@
             phone: '',
             email: '',
             department_id: defaultDept,
-            title: defaultTitles[0] || 'Chủ tịch UBND xã',
+            title: defaultTitles[0] || 'Chuyên viên',
             is_new_dept: false,
             custom_dept_name: '',
             is_new_title: false,
