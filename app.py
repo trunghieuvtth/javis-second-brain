@@ -346,33 +346,41 @@ def api_get_items(current_user_id: Optional[str] = None, workspace: Optional[str
     items = load_items()
     users = commune_brain_manager.load_commune_users()
     
-    # Neu chua dang nhap, thu tim theo ID mac dinh hoac khong can loc qua gat
+    # Tìm user hiện tại nếu có truyền ID
     current_user = next((u for u in users if u.get("id") == current_user_id or u.get("username") == current_user_id), None)
 
     visible_items = []
     for it in items:
-        vis = it.get("visibility", "private")
-        owner = it.get("owner_id", "")
-        # Neu la khach chua dang nhap: cho phep xem ca cac muc demo va public
+        vis = it.get("visibility")
+        owner = it.get("owner_id")
+
+        # NGUYÊN TẮC: Mặc định tất cả dữ liệu mẫu đều hiển thị cho mọi người dùng
+        # Chỉ ẩn khi tài liệu được gán quyền "private" rõ ràng bởi người dùng khác
         if not current_user:
-            if vis in ["public_commune", "public"] or not vis or owner == "070077000098":
+            # Chưa đăng nhập: Cho phép xem toàn bộ tài liệu public, tài liệu chưa gắn nhãn hoặc tài liệu demo
+            if not vis or vis in ["public_commune", "public", "commune"] or not owner or owner == "070077000098":
                 visible_items.append(it)
             continue
+
+        # Đã đăng nhập:
         if current_user.get("role") in ["super_admin", "commune_admin"]:
+            # Lãnh đạo và Super Admin xem được toàn bộ
             visible_items.append(it)
-        elif owner == current_user.get("username") or owner == current_user.get("id"):
+        elif not owner or owner == current_user.get("username") or owner == current_user.get("id"):
+            # Chính chủ hoặc tài liệu hệ thống/mẫu
             visible_items.append(it)
         elif vis == "department" and it.get("department_id") == current_user.get("department_id"):
             visible_items.append(it)
-        elif vis in ["public_commune", "public"]:
+        elif vis in ["public_commune", "public", "commune"] or not vis:
             visible_items.append(it)
 
+    # Bộ lọc tab không gian tri thức
     if workspace == "private":
         res_items = [it for it in visible_items if it.get("visibility") == "private"]
     elif workspace == "department":
         res_items = [it for it in visible_items if it.get("visibility") == "department"]
     elif workspace in ["commune", "public"]:
-        res_items = [it for it in visible_items if it.get("visibility") in ["public_commune", "public"]]
+        res_items = [it for it in visible_items if it.get("visibility") in ["public_commune", "public", "commune"] or not it.get("visibility")]
     else:
         res_items = visible_items
 
