@@ -345,8 +345,6 @@ def api_save_settings(req: SaveSettingsRequest):
 def api_get_items(current_user_id: Optional[str] = None, workspace: Optional[str] = "all"):
     items = load_items()
     users = commune_brain_manager.load_commune_users()
-    
-    # Tìm user hiện tại nếu có truyền ID
     current_user = next((u for u in users if u.get("id") == current_user_id or u.get("username") == current_user_id), None)
 
     visible_items = []
@@ -357,21 +355,19 @@ def api_get_items(current_user_id: Optional[str] = None, workspace: Optional[str
         # NGUYÊN TẮC: Mặc định tất cả dữ liệu mẫu đều hiển thị cho mọi người dùng
         # Chỉ ẩn khi tài liệu được gán quyền "private" rõ ràng bởi người dùng khác
         if not current_user:
-            # Chưa đăng nhập: Cho phép xem toàn bộ tài liệu public, tài liệu chưa gắn nhãn hoặc tài liệu demo
-            if not vis or vis in ["public_commune", "public", "commune"] or not owner or owner == "070077000098":
+            # Chưa đăng nhập: Cho phép xem toàn bộ tài liệu trừ phi bị gán private bởi user cụ thể
+            if vis != "private":
                 visible_items.append(it)
             continue
 
         # Đã đăng nhập:
         if current_user.get("role") in ["super_admin", "commune_admin"]:
-            # Lãnh đạo và Super Admin xem được toàn bộ
             visible_items.append(it)
         elif not owner or owner == current_user.get("username") or owner == current_user.get("id"):
-            # Chính chủ hoặc tài liệu hệ thống/mẫu
             visible_items.append(it)
         elif vis == "department" and it.get("department_id") == current_user.get("department_id"):
             visible_items.append(it)
-        elif vis in ["public_commune", "public", "commune"] or not vis:
+        elif vis != "private":
             visible_items.append(it)
 
     # Bộ lọc tab không gian tri thức
