@@ -1,0 +1,74 @@
+[
+  {
+    "id": "lanh_dao",
+    "name": "Thường trực UBND Xã",
+    "code": "UBND",
+    "description": "Chủ tịch và các Phó Chủ tịch UBND xã chỉ đạo, điều hành chung",
+    "leader_title": "Chủ tịch UBND xã"
+  },
+  {
+    "id": "van_phong",
+    "name": "Văn phòng - Thống kê",
+    "code": "VP-TK",
+    "description": "Công tác văn thư lưu trữ, tổng hợp, thống kê, kiểm soát TTHC",
+    "leader_title": "Công chức Văn phòng - Thống kê",
+    "custom_titles": [
+      "Chuyên viên Tiếp nhận và Trả kết quả một cửa"
+    ]
+  },
+  {
+    "id": "dia_chinh",
+    "name": "Địa chính - Nông nghiệp - Xây dựng - Môi trường",
+    "code": "ĐC-NN-XD-MT",
+    "description": "Quản lý đất đai, quy hoạch, tài nguyên, nông nghiệp, môi trường",
+    "leader_title": "Công chức Địa chính - Xây dựng",
+    "custom_titles": [
+      "Công chức Địa chính - Nông nghiệp - Xây dựng và Môi trường"
+    ]
+  },
+  {
+    "id": "tu_phap",
+    "name": "Tư pháp - Hộ tịch",
+    "code": "TP-HT",
+    "description": "Công tác hộ tịch, chứng thực, hòa giải cơ sở, phổ biến pháp luật",
+    "leader_title": "Công chức Tư pháp - Hộ tịch"
+  },
+  {
+    "id": "tai_chinh",
+    "name": "Tài chính - Kế toán",
+    "code": "TC-KT",
+    "description": "Quản lý ngân sách xã, kế toán, tài sản công",
+    "leader_title": "Công chức Tài chính - Kế toán"
+  },
+  {
+    "id": "van_hoa",
+    "name": "Văn hóa - Xã hội",
+    "code": "VH-XH",
+    "description": "Chính sách người có công, bảo trợ xã hội, văn hóa, y tế, giáo dục",
+    "leader_title": "Công chức Văn hóa - Xã hội",
+    "custom_titles": [
+      "Chuyên viên / Hợp đồng lao động"
+    ]
+  },
+  {
+    "id": "cong_an",
+    "name": "Công an Xã",
+    "code": "CAX",
+    "description": "Đảm bảo an ninh trật tự, quản lý cư trú, đề án 06",
+    "leader_title": "Trưởng Công an xã"
+  },
+  {
+    "id": "to_cds",
+    "name": "Tổ Chuyển đổi số cộng đồng",
+    "code": "TỔ-CĐS",
+    "description": "Hỗ trợ người dân thực hiện dịch vụ công trực tuyến và thanh toán số",
+    "leader_title": "Tổ trưởng Tổ CĐS"
+  },
+  {
+    "id": "dept_1793460495_Ban_Quan_l",
+    "name": "Ban Quản lý Chợ Xã Thạnh Đức",
+    "code": "BAN_QU",
+    "description": "Bộ phận/Ban: Ban Quản lý Chợ Xã Thạnh Đức",
+    "leader_title": "Phụ trách bộ phận"
+  }
+]

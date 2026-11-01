@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+venv/
+.env
+data/drafts/*.docx
+data/personal_brain/files/*
+!data/personal_brain/files/.gitkeep

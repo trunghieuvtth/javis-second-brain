@@ -1,0 +1,314 @@
+[
+  {
+    "timestamp": "2026-11-01 02:54:38",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Bật trạng thái hoạt động của cán bộ: Lê Thị Mai",
+    "target_id": "user_02_mai"
+  },
+  {
+    "timestamp": "2026-11-01 02:54:37",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Tắt trạng thái hoạt động của cán bộ: Lê Thị Mai",
+    "target_id": "user_02_mai"
+  },
+  {
+    "timestamp": "2026-11-01 02:54:35",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Bật trạng thái hoạt động của cán bộ: Lê Thị Mai",
+    "target_id": "user_02_mai"
+  },
+  {
+    "timestamp": "2026-11-01 02:54:34",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Tắt trạng thái hoạt động của cán bộ: Lê Thị Mai",
+    "target_id": "user_02_mai"
+  },
+  {
+    "timestamp": "2026-11-01 02:44:49",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 02:42:56",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 02:42:11",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 02:38:37",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 02:37:45",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:59:40",
+    "user_id": "user_03_tam",
+    "username": "Trần Thanh Tâm",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Trần Thanh Tâm (Công chức Địa chính - Xây dựng)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:59:40",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "UPDATE_USER",
+    "details": "Cập nhật tài khoản cán bộ: Trần Thanh Tâm (Công chức Địa chính - Xây dựng) - Vị trí: ",
+    "target_id": "user_03_tam"
+  },
+  {
+    "timestamp": "2026-11-01 00:59:07",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "UPDATE_USER",
+    "details": "Cập nhật tài khoản cán bộ: Trần Thanh Tâm (Công chức Địa chính - Xây dựng) - Vị trí: ",
+    "target_id": "user_03_tam"
+  },
+  {
+    "timestamp": "2026-11-01 00:54:26",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "UPDATE_USER",
+    "details": "Cập nhật tài khoản cán bộ: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã) - Vị trí: Trực tiếp tham mưu thực hiện nhiệm vụ chuyên môn được giao tại Thường trực UBND Xã; chịu trách nhiệm trước Trưởng phòng và Lãnh đạo UBND xã về tiến độ, chất lượng hồ sơ công việc; phối hợp chặt chẽ với các bộ phận liên quan.",
+    "target_id": "user_super_admin"
+  },
+  {
+    "timestamp": "2026-11-01 00:53:33",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "UPDATE_USER",
+    "details": "Cập nhật tài khoản cán bộ: Lê Thị Mai (Công chức Địa chính - Nông nghiệp - Xây dựng và Môi trường) - Vị trí: Trực tiếp tham mưu công tác quản lý nhà nước về đất đai, tài nguyên khoáng sản, đo đạc lập bản đồ địa chính, cấp GCNQSDĐ; theo dõi quy hoạch xây dựng, trật tự xây dựng, giao thông nông thôn; quản lý chương trình phát triển nông nghiệp, khuyến nông và bảo vệ môi trường trên địa bàn xã.",
+    "target_id": "user_02_mai"
+  },
+  {
+    "timestamp": "2026-11-01 00:39:25",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "UPDATE_USER",
+    "details": "Cập nhật tài khoản cán bộ: Trần Thanh Tâm (Công chức Địa chính - Xây dựng) - Vị trí: ",
+    "target_id": "user_03_tam"
+  },
+  {
+    "timestamp": "2026-11-01 00:35:31",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "CREATE_USER",
+    "details": "Tạo tài khoản cán bộ mới: Nguyễn Thị Tuyết Trinh (Chuyên viên / Hợp đồng lao động) - Vị trí: Trực tiếp tham mưu công tác quản lý hoạt động đổi mới sáng tạo, chuyển giao công nghệ, hỗ trợ doanh nghiệp KH&CN và khởi nghiệp ĐMST; phối hợp quản lý sở hữu trí tuệ dưới sự chỉ đạo của Trưởng phòng VHXH và Phó Chủ tịch UBND xã phụ trách khối.",
+    "target_id": "user_1793493331_07008899"
+  },
+  {
+    "timestamp": "2026-11-01 00:35:06",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "UPDATE_USER",
+    "details": "Cập nhật tài khoản cán bộ: Nguyễn Văn Hùng (Chủ tịch UBND xã)",
+    "target_id": "user_01_hung"
+  },
+  {
+    "timestamp": "2026-11-01 00:21:47",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:14:31",
+    "user_id": "user_1793491976_07008812",
+    "username": "Trương Quốc Bảo",
+    "action": "RESET_PASSWORD_EMAIL",
+    "details": "Yêu cầu reset mật khẩu qua email: baotq@thanhduc.tayninh.gov.vn (CCCD: 070088123456)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:13:58",
+    "user_id": "user_1793491976_07008812",
+    "username": "Trương Quốc Bảo",
+    "action": "RESET_PASSWORD_EMAIL",
+    "details": "Yêu cầu reset mật khẩu qua email: baotq@thanhduc.tayninh.gov.vn (CCCD: 070088123456)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:12:56",
+    "user_id": "user_1793491976_07008812",
+    "username": "Trương Quốc Bảo",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Trương Quốc Bảo (Công chức Địa chính - Nông nghiệp - Xây dựng và Môi trường)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:12:56",
+    "user_id": "user_1793491976_07008812",
+    "username": "Trương Quốc Bảo",
+    "action": "RESET_PASSWORD_EMAIL",
+    "details": "Yêu cầu reset mật khẩu qua email: baotq@thanhduc.tayninh.gov.vn (CCCD: 070088123456)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:12:56",
+    "user_id": "user_super_admin",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "CREATE_USER",
+    "details": "Tạo tài khoản cán bộ mới: Trương Quốc Bảo (Công chức Địa chính - Nông nghiệp - Xây dựng và Môi trường) - Phòng: dia_chinh",
+    "target_id": "user_1793491976_07008812"
+  },
+  {
+    "timestamp": "2026-11-01 00:12:37",
+    "user_id": "user_1793461016_07007700",
+    "username": "Nguyễn Trung Hiếu",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:03:05",
+    "user_id": "user_1793491385_minh_dia",
+    "username": "Nguyễn Văn Minh",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Nguyễn Văn Minh (Công chức Địa chính - Nông nghiệp - Xây dựng và Môi trường)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-11-01 00:03:05",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "CREATE_USER",
+    "details": "Tạo tài khoản cán bộ mới: Nguyễn Văn Minh (Công chức Địa chính - Nông nghiệp - Xây dựng và Môi trường) - Phòng: dia_chinh",
+    "target_id": "user_1793491385_minh_dia"
+  },
+  {
+    "timestamp": "2026-11-01 00:03:05",
+    "user_id": "user_03_tam",
+    "username": "Trần Thanh Tâm",
+    "action": "LOGIN_COMMUNE",
+    "details": "Cán bộ đăng nhập thành công vào Kho Tri Thức: Trần Thanh Tâm (Công chức Địa chính - Xây dựng)",
+    "target_id": ""
+  },
+  {
+    "timestamp": "2026-10-31 16:05:28",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "SHARE_ITEM",
+    "details": "Đổi phạm vi chia sẻ tệp '6369 Skhcn-Cđs 05-10-2026 Cv De Xuat Mo Hinh Noi Bat Sang Tao Dot Pha Trong Cds Skhcn Tay Ninh.Signed' thành 'public_commune'",
+    "target_id": "pb_1793435077_6369_SKHCN_CS_0"
+  },
+  {
+    "timestamp": "2026-10-31 15:59:47",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "CREATE_USER",
+    "details": "Tạo tài khoản cán bộ mới: Hoàng Thùy Linh (Chuyên viên Tiếp nhận và Trả kết quả một cửa) - Phòng: van_phong",
+    "target_id": "user_1793462387_linh_tie"
+  },
+  {
+    "timestamp": "2026-10-31 15:53:21",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Tắt trạng thái hoạt động của cán bộ: Nguyễn Anh Tuấn",
+    "target_id": "user_1793459812_tuan_xay"
+  },
+  {
+    "timestamp": "2026-10-31 15:53:20",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Bật trạng thái hoạt động của cán bộ: Nguyễn Anh Tuấn",
+    "target_id": "user_1793459812_tuan_xay"
+  },
+  {
+    "timestamp": "2026-10-31 15:53:19",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Tắt trạng thái hoạt động của cán bộ: Nguyễn Anh Tuấn",
+    "target_id": "user_1793459812_tuan_xay"
+  },
+  {
+    "timestamp": "2026-10-31 15:41:11",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "DELETE_USER",
+    "details": "Xóa tài khoản cán bộ: Lê Văn Thịnh (Đã Cập Nhật) (Trưởng ban / Phụ trách bộ phận)",
+    "target_id": "user_1793460495_truong_b"
+  },
+  {
+    "timestamp": "2026-10-31 15:41:11",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "UPDATE_USER",
+    "details": "Cập nhật tài khoản cán bộ: Lê Văn Thịnh (Đã Cập Nhật) (Trưởng ban / Phụ trách bộ phận)",
+    "target_id": "user_1793460495_truong_b"
+  },
+  {
+    "timestamp": "2026-10-31 15:41:11",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "TOGGLE_USER_STATUS",
+    "details": "Tắt trạng thái hoạt động của cán bộ: Lê Văn Thịnh",
+    "target_id": "user_1793460495_truong_b"
+  },
+  {
+    "timestamp": "2026-10-31 15:36:56",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "CREATE_USER",
+    "details": "Tạo tài khoản cán bộ mới: Nguyễn Trung Hiếu (Bí thư Đảng ủy xã) - Phòng: lanh_dao",
+    "target_id": "user_1793461016_07007700"
+  },
+  {
+    "timestamp": "2026-10-31 15:28:15",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "CREATE_USER",
+    "details": "Tạo tài khoản cán bộ mới: Lê Văn Thịnh (Chuyên viên / Hợp đồng lao động) - Phòng: dept_1793460495_Ban_Quan_l",
+    "target_id": "user_1793460495_truong_b"
+  },
+  {
+    "timestamp": "2026-10-31 15:28:15",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "CREATE_DEPARTMENT",
+    "details": "Tạo phòng ban/bộ phận mới tại chỗ: Ban Quản lý Chợ Xã Thạnh Đức",
+    "target_id": "dept_1793460495_Ban_Quan_l"
+  },
+  {
+    "timestamp": "2026-10-31 15:16:52",
+    "user_id": "user_01_hung",
+    "username": "Nguyễn Văn Hùng",
+    "action": "CREATE_USER",
+    "details": "Tạo tài khoản cán bộ mới: Nguyễn Anh Tuấn (Chuyên viên Quản lý Xây dựng) - Phòng: dia_chinh",
+    "target_id": "user_1793459812_tuan_xay"
+  }
+]

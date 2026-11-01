@@ -1,0 +1,14 @@
+{
+  "user_fullname": "Nguyễn Trung Hiếu",
+  "user_title": "Bí thư",
+  "user_unit": "Uỷ ban nhân dân xã Thạnh Đức",
+  "gdrive_enabled": true,
+  "gdrive_auto_sync": true,
+  "gdrive_folder_url": "https://drive.google.com/drive/folders/1QPYdTbx_mPDT5TDWDGJRrHM_7nREn_SR",
+  "web_links": [
+    "https://chinhphu.vn",
+    "https://tayninh.gov.vn",
+    "https://thuvienphapluat.vn"
+  ],
+  "ai_model": "google-antigravity/gemini-3.8-flash"
+}

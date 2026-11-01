@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  javis-second-brain:
+    build: .
+    container_name: javis-second-brain
+    restart: always
+    ports:
+      - "8090:8090"
+    environment:
+      - PORT=8090
+      - HOST=0.0.0.0
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/api/personal-brain/settings"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
