@@ -6,6 +6,7 @@ Nền tảng Quản trị Kho Tri Thức Số & Soạn Thảo Báo Cáo NĐ 30 �
 """
 
 import os
+import re
 import sys
 import json
 import time
@@ -296,19 +297,42 @@ def api_toggle_user_status(req: ToggleStatusRequest):
 class AiSuggestVTVLRequest(BaseModel):
     title: str
     department_id: Optional[str] = ""
+    department_name: Optional[str] = ""
 
 @app.post("/api/personal-brain/commune/ai-suggest-job-position")
 def api_ai_suggest_vtvl(req: AiSuggestVTVLRequest):
     depts = commune_brain_manager.load_commune_departments()
     dept_obj = next((d for d in depts if d["id"] == req.department_id), None)
-    dept_name = dept_obj["name"] if dept_obj else "Cơ quan đơn vị"
+    dept_name = req.department_name or (dept_obj["name"] if dept_obj else req.department_id) or "UBND xã"
+    title = req.title.strip()
 
-    job_desc = commune_brain_manager.suggest_job_position_by_title(req.title, dept_name)
+    title_lower = title.lower()
+    if "chủ tịch" in title_lower and "phó" not in title_lower:
+        desc = f"Lãnh đạo, quản lý và điều hành toàn diện mọi mặt hoạt động của {dept_name}; trực tiếp chỉ đạo công tác quy hoạch, kế hoạch phát triển kinh tế - xã hội, ngân sách, an ninh trật tự và công tác cán bộ; ký duyệt các văn bản thuộc thẩm quyền theo quy định."
+    elif "phó chủ tịch" in title_lower:
+        desc = f"Giúp Chủ tịch UBND xã phụ trách, theo dõi và chỉ đạo trực tiếp các mảng công tác thuộc lĩnh vực chuyên môn của khối; ký duyệt các văn bản được Chủ tịch phân công, ủy quyền; đôn đốc các bộ phận chuyên môn tham mưu giải quyết hồ sơ đúng hạn."
+    elif "địa chính" in title_lower or "nông nghiệp" in title_lower or "xây dựng" in title_lower:
+        desc = f"Trực tiếp tham mưu công tác quản lý nhà nước về đất đai, tài nguyên khoáng sản, đo đạc lập bản đồ địa chính, cấp GCNQSDĐ; theo dõi quy hoạch xây dựng, trật tự xây dựng, giao thông nông thôn; quản lý chương trình phát triển nông nghiệp, khuyến nông và bảo vệ môi trường trên địa bàn xã."
+    elif "tư pháp" in title_lower or "hộ tịch" in title_lower:
+        desc = f"Trực tiếp tham mưu công tác đăng ký và quản lý hộ tịch (khai sinh, kết hôn, khai tử...), chứng thực bản sao, chữ ký; công tác phổ biến giáo dục pháp luật, hòa giải cơ sở; theo dõi thi hành văn bản quy phạm pháp luật và kiểm soát thủ tục hành chính tại Bộ phận Một cửa."
+    elif "văn phòng" in title_lower or "thống kê" in title_lower:
+        desc = f"Trực tiếp tham mưu công tác tổng hợp lịch công tác, chương trình làm việc của Thường trực UBND xã; quản lý công tác văn thư lưu trữ, luân chuyển văn bản đi - đến (VBĐH); thống kê kinh tế - xã hội, kiểm soát cải cách hành chính và vận hành Bộ phận Một cửa."
+    elif "tài chính" in title_lower or "kế toán" in title_lower:
+        desc = f"Trực tiếp tham mưu xây dựng dự toán ngân sách xã hàng năm; quản lý các nguồn thu - chi ngân sách theo Luật Ngân sách; thực hiện chế độ kế toán, thanh quyết toán tài chính, quản lý tài sản công và các quỹ tài chính của xã."
+    elif "văn hóa" in title_lower or "xã hội" in title_lower:
+        desc = f"Trực tiếp tham mưu công tác văn hóa, thông tin truyền thông, thể dục thể thao, du lịch; chính sách người có công, bảo trợ xã hội, giảm nghèo, lao động việc làm, bảo vệ chăm sóc trẻ em và công tác phòng chống tệ nạn xã hội."
+    elif "công an" in title_lower:
+        desc = f"Nắm tình hình an ninh trật tự, an toàn xã hội trên địa bàn; quản lý cư trú, định danh điện tử (Đề án 06), PCCC; phối hợp tuần tra, phòng chống tội phạm và giải quyết các vụ việc vi phạm pháp luật thuộc thẩm quyền."
+    elif "chuyển đổi số" in title_lower or "cđs" in title_lower:
+        desc = f"Tham mưu triển khai kế hoạch chuyển đổi số, chính quyền điện tử của xã; hướng dẫn người dân tạo tài khoản dịch vụ công trực tuyến, thanh toán không dùng tiền mặt và cài đặt chữ ký số cá nhân; hỗ trợ vận hành hạ tầng công nghệ thông tin."
+    else:
+        desc = f"Trực tiếp tham mưu thực hiện nhiệm vụ chuyên môn được giao tại {dept_name}; chịu trách nhiệm trước Trưởng phòng và Lãnh đạo UBND xã về tiến độ, chất lượng hồ sơ công việc; phối hợp chặt chẽ với các bộ phận liên quan."
+
     return {
         "status": "success",
-        "title": req.title,
+        "title": title,
         "department_name": dept_name,
-        "job_position": job_desc
+        "job_position": desc
     }
 
 # ----------------- KHO TRI THỨC CRUD & INGEST -----------------
@@ -659,11 +683,24 @@ Kính đề nghị {co_quan} tiếp tục quan tâm, chỉ đạo các cơ quan 
     }
 
     out_docx_path = DRAFTS_DIR / out_filename
-    vbdh_draft_generator.generate_draft_docx(
+    doc_info_vbdh = {
+        "hash_id": f"brain_rep_{safe_time}",
+        "so_hieu": "BC-SKHCN",
+        "so_den": "",
+        "co_quan": co_quan,
+        "co_quan_ban_hanh": don_vi,
+        "ngay_ban_hanh": time.strftime("%d/%m/%Y"),
+        "trich_yeu": trich_yeu,
+    }
+    vbdh_draft_generator.create_docx_reply_draft(
+        doc_info=doc_info_vbdh,
+        draft_body_text=body_text,
+        signer_name=signer_name,
+        signer_title=signer_title,
         loai_van_ban=loai,
-        body_text=body_text,
-        doc_info=doc_info,
-        output_path=out_docx_path
+        ten_tep=out_filename,
+        kinh_gui=co_quan,
+        bo_kinh_gui=False,
     )
 
     return {
@@ -683,15 +720,25 @@ Kính đề nghị {co_quan} tiếp tục quan tâm, chỉ đạo các cơ quan 
         }
     }
 
-@app.get("/api/vbdh/draft/download/{filename}")
+@app.get("/api/vbdh/draft/download/{filename:path}")
+@app.get("/api/personal-brain/draft/download/{filename:path}")
 def api_download_draft(filename: str):
-    file_path = DRAFTS_DIR / filename
+    safe_filename = Path(filename).name
+    file_path = DRAFTS_DIR / safe_filename
     if not file_path.exists():
-        raise HTTPException(status_code=404, detail="Không tìm thấy tệp dự thảo.")
+        # Kiểm tra thêm đường dẫn từ file dự thảo gốc nếu có
+        file_path = BASE_DIR / "data" / "drafts" / safe_filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail=f"Không tìm thấy tệp dự thảo: {safe_filename}")
+    ascii_filename = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', safe_filename)
+    encoded_filename = urllib.parse.quote(safe_filename)
     return FileResponse(
         path=str(file_path),
-        filename=filename,
-        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        filename=safe_filename,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={
+            "Content-Disposition": f'attachment; filename="{ascii_filename}"; filename*=UTF-8\'\'{encoded_filename}'
+        }
     )
 
 # Static Files

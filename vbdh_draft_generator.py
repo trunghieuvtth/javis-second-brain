@@ -12,12 +12,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
-try:                                   # python-docx là bắt buộc (gói hệ thống python3-docx)
+try:
     import docx
-except ModuleNotFoundError:            # dự phòng: mượn site-packages của môi trường khác
+except ModuleNotFoundError:
     for p in ("/usr/lib/python3/dist-packages",
               "/home/ubuntu/rag-ocr-env/lib/python3.12/site-packages"):
-        if p not in sys.path:
+        if os.path.exists(p) and p not in sys.path:
             sys.path.append(p)
     import docx
 from docx.shared import Inches, Cm, Pt, RGBColor
@@ -174,6 +174,8 @@ def create_docx_reply_draft(doc_info: Dict[str, Any], draft_body_text: str, sign
     so_hieu_den = doc_info.get("so_hieu") or "Dự thảo"
     ngay_den = doc_info.get("ngay_ban_hanh") or datetime.now().strftime("%d/%m/%Y")
     trich_yeu_den = doc_info.get("trich_yeu") or ""
+    ty_clean = re.sub(r'^(?:v/v|về việc|về)\s*', '', trich_yeu_den, flags=re.IGNORECASE).strip()
+    ty_text = f"V/v {ty_clean}" if ty_clean else f"V/v phúc đáp CV số {so_hieu_den}"
     is_party = is_party_organization(co_quan_gui, trich_yeu_den)
 
     # 1. ƯU TIÊN SỬ DỤNG MẪU CHUẨN TỪ THƯ MỤC TEMPLATES (HD 05 CHO ĐẢNG, NĐ 30 CHO CHÍNH QUYỀN)
@@ -662,7 +664,7 @@ def create_docx_reply_draft(doc_info: Dict[str, Any], draft_body_text: str, sign
     
     # Lưu file
     safe_name = re.sub(r'[^a-zA-Z0-9_\-]', '_', doc_info.get("hash_id") or f"doc_{now.strftime('%Y%m%d%H%M%S')}")
-    out_filename = f"Du_thao_tra_loi_{safe_name}.docx"
+    out_filename = ten_tep or f"Du_thao_tra_loi_{safe_name}.docx"
     out_path = DRAFTS_DIR / out_filename
     _dat_tieu_de_theo_loai(doc, loai_van_ban, ty_text)
     doc.save(str(out_path))

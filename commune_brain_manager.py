@@ -289,7 +289,7 @@ def sync_user_job_position_to_brain(user: Dict[str, Any]) -> None:
         return
 
     # Ghi nhận vào file markdown trong Second Brain để RAG tự động học
-    brain_wiki_dir = Path("/home/ubuntu/second-brain/wiki/phan_cong_nhiem_vu")
+    brain_wiki_dir = BASE_DIR / "data" / "wiki" / "phan_cong_nhiem_vu"
     brain_wiki_dir.mkdir(parents=True, exist_ok=True)
     
     clean_slug = "".join([c for c in cccd if c.isalnum()]) or f"user_{int(time.time())}"
