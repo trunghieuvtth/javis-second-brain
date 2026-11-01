@@ -65,8 +65,18 @@ systemctl --user restart "$SERVICE_NAME.service"
 # Kích hoạt linger để chạy ngầm 24/7 kể cả khi logout
 loginctl enable-linger "$USER" 2>/dev/null || true
 
+# Chờ 2 giây để server khởi động hoàn tất
+sleep 2
+
+# Tự động mở trình duyệt web truy cập ngay (nếu có môi trường đồ họa xdg-open / sensible-browser)
+if command -v xdg-open &>/dev/null; then
+    xdg-open "http://localhost:$PORT" 2>/dev/null &
+elif command -v sensible-browser &>/dev/null; then
+    sensible-browser "http://localhost:$PORT" 2>/dev/null &
+fi
+
 echo "=================================================================="
-echo " [OK] CÀI ĐẶT THÀNH CÔNG JAVIS SECOND BRAIN!"
-echo " Cổng truy cập cục bộ: http://127.0.0.1:$PORT"
+echo " [OK] CÀI ĐẶT & TỰ ĐỘNG KÍCH HOẠT THÀNH CÔNG JAVIS SECOND BRAIN!"
+echo " Cổng truy cập: http://127.0.0.1:$PORT (Đã mở trên trình duyệt)"
 echo " Trạng thái dịch vụ: systemctl --user status $SERVICE_NAME.service"
 echo "=================================================================="

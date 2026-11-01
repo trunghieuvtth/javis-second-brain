@@ -30,19 +30,34 @@ Nền tảng Quản trị Tri Thức Đa Nguồn và Soạn Thảo Văn Bản H�
 
 ---
 
-## 🚀 CÀI ĐẶT 1-CLICK TRÊN JAVISOS / LINUX
+## 🚀 CÀI ĐẶT & KÍCH HOẠT 1-CLICK (WINDOWS, JAVISOS, LINUX)
 
-### Cách 1: Chạy lệnh cài đặt tự động (Khuyên dùng)
+### 💻 Dành cho Windows:
+1. Tải repository về máy (Tải ZIP giải nén hoặc `git clone`).
+2. Nhấp đúp chuột vào tệp: **`install_windows.bat`**.
+   * Hệ thống sẽ tự động tạo môi trường ảo Python `venv`.
+   * Cài đặt toàn bộ thư viện cần thiết.
+   * Thiết lập **chạy ngầm 24/7 (ẩn cửa sổ đen console)** và tự động khởi động cùng máy tính Windows (`Startup`).
+   * **Tự động bật trình duyệt web** mở ngay trang Kho Tri Thức tại `http://localhost:8090`.
+*(Khi cần tắt dịch vụ trên Windows: Chỉ cần nhấp đúp file `stop_service.bat`)*.
+
+---
+
+### 🐧 Dành cho JavisOS & Linux:
+Mở terminal và chạy 1 dòng lệnh:
 ```bash
 git clone https://github.com/trunghieuvtth/javis-second-brain.git ~/javis-second-brain
-cd ~/javis-second-brain
-bash install.sh
+cd ~/javis-second-brain && bash install.sh
 ```
+Script sẽ tự động:
+* Khởi tạo `venv` và cài đặt thư viện.
+* Tạo và kích hoạt dịch vụ chạy ngầm `systemd user service` (`javis-second-brain.service`).
+* Bật `Linger` chạy ngầm 24/7 kể cả khi tắt máy ảo/logout.
+* **Tự động mở trình duyệt web** vào ngay `http://localhost:8090`.
 
-Hệ thống sẽ tự khởi tạo môi trường, cài đặt thư viện và đăng ký dịch vụ `systemd user service` chạy ngầm 24/7.
-- Truy cập giao diện: `http://localhost:8090` (hoặc cấu hình tên miền `brain.centos.vn`).
+---
 
-### Cách 2: Chạy bằng Docker Compose
+### 🐳 Dành cho Docker Compose:
 ```bash
 docker-compose up -d
 ```

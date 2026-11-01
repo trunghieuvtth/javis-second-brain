@@ -21,6 +21,11 @@
     "python-multipart>=0.0.9",
     "python-docx>=1.1.0"
   ],
+  "scripts": {
+    "install_linux": "bash install.sh",
+    "install_windows": "install_windows.bat",
+    "stop_windows": "stop_service.bat"
+  },
   "env": {
     "PORT": "8090",
     "HOST": "0.0.0.0"
