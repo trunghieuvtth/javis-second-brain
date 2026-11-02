@@ -52,7 +52,10 @@
     "can_approve_public": false,
     "is_active": true,
     "quota_mb": 5120,
-    "created_at": "2026-01-01 08:00:00"
+    "created_at": "2026-01-01 08:00:00",
+    "job_position": "Trực tiếp tham mưu công tác đăng ký và quản lý hộ tịch (khai sinh, kết hôn, khai tử...), chứng thực bản sao, chữ ký; công tác phổ biến giáo dục pháp luật, hòa giải cơ sở; theo dõi thi hành văn bản quy phạm pháp luật và kiểm soát thủ tục hành chính tại Bộ phận Một cửa.",
+    "phone": "0913999999",
+    "email": ""
   },
   {
     "id": "user_05_tai",
@@ -152,7 +155,10 @@
     "can_approve_public": false,
     "is_active": true,
     "quota_mb": 5120,
-    "created_at": "2026-11-01 00:03:05"
+    "created_at": "2026-11-01 00:03:05",
+    "job_position": "Trực tiếp tham mưu công tác quản lý nhà nước về đất đai, tài nguyên khoáng sản, đo đạc lập bản đồ địa chính, cấp GCNQSDĐ; theo dõi quy hoạch xây dựng, trật tự xây dựng, giao thông nông thôn; quản lý chương trình phát triển nông nghiệp, khuyến nông và bảo vệ môi trường trên địa bàn xã.",
+    "phone": "",
+    "email": ""
   },
   {
     "id": "user_1793491976_07008812",

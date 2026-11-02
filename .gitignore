@@ -2,7 +2,13 @@ __pycache__/
 *.pyc
 venv/
 .env
-data/drafts/*.docx
+data/drafts/*
+!data/drafts/.gitkeep
 data/personal_brain/files/*.pdf
 data/personal_brain/files/*.docx
+data/personal_brain/files/*.doc
 !data/personal_brain/files/.gitkeep
+desktop.ini
+Thumbs.db
+.DS_Store
+*.tmp

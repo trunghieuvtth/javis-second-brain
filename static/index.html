@@ -6,11 +6,11 @@
   <title>Javis Second Brain | Kho Tri Thức Số & Soạn Thảo Báo Cáo NĐ 30</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%2314b8a6' d='M184 0c30.9 0 56 25.1 56 56V456c0 30.9-25.1 56-56 56c-28.9 0-52.7-21.9-55.7-50.1c-5.2 1.4-10.7 2.1-16.3 2.1c-35.3 0-64-28.7-64-64c0-7.4 1.3-14.6 3.6-21.2C21.4 367.4 0 330.1 0 288c0-41.5 20.6-78.2 52.3-100.8c-2.8-8.7-4.3-17.9-4.3-27.2c0-48.6 39.4-88 88-88c9.3 0 18.5 1.5 27.2 4.3C163.8 45.4 172.9 0 184 0zm144 0c11.1 0 20.2 45.4 20.8 76.3c8.7-2.8 17.9-4.3 27.2-4.3c48.6 0 88 39.4 88 88c0 9.3-1.5 18.5-4.3 27.2C491.4 209.8 512 246.5 512 288c0 42.1-21.4 79.4-47.6 90.8c2.4 6.7 3.6 13.8 3.6 21.2c0 35.3-28.7 64-64 64c-5.6 0-11.1-.7-16.3-2.1c-3 28.2-26.8 50.1-55.7 50.1c-30.9 0-56-25.1-56-56V56c0-30.9 25.1-56 56-56z'/></svg>">
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/vendor/tailwind.js"></script>
   <!-- FontAwesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/vendor/fa/all.min.css">
   <!-- Alpine.js -->
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+  <script defer src="/vendor/alpine.min.js"></script>
   <style>
     [x-cloak] { display: none !important; }
     @keyframes fadeIn {
@@ -28,7 +28,8 @@
 
   <!-- Top Simple Navigation Bar -->
   <header class="border-b px-5 py-3.5 flex items-center justify-between sticky top-0 z-40 backdrop-blur-md transition-colors duration-300"
-          :class="currentTheme === 'light' ? 'bg-white/95 border-slate-300 shadow-sm' : 'bg-[#0c1220]/90 border-[#27354f] shadow-lg'">
+          :class="currentTheme === 'light' ? 'bg-white/95 border-slate-300 shadow-sm' : 'bg-[#0c1220]/90 border-[#27354f] shadow-lg'"
+          :style="currentTheme === 'light' ? 'background-color: rgba(255,255,255,0.96); border-color: rgb(203,213,225)' : 'background-color: rgba(12,18,32,0.9); border-color: rgb(39,53,79)'">
     <div class="flex items-center space-x-3">
       <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center shadow-lg shadow-teal-600/30">
         <i class="fa-solid fa-brain text-xl"></i>
@@ -36,8 +37,8 @@
       <div>
         <div class="flex items-center gap-2">
           <h1 class="text-base sm:text-lg font-black tracking-wide" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">JAVIS SECOND BRAIN</h1>
-          <span class="px-2 py-0.5 text-[10px] font-bold bg-teal-500/20 text-teal-400 border border-teal-500/30 rounded-full">v1.0.0</span>
-          <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full hidden sm:inline">JavisOS Store Ready</span>
+          <span class="px-2 py-0.5 text-[10px] font-bold border rounded-full" :class="currentTheme === 'light' ? 'bg-teal-600/10 text-teal-700 border-teal-600/30' : 'bg-teal-500/20 text-teal-400 border border-teal-500/30'">v1.0.0</span>
+          <span class="px-2 py-0.5 text-[10px] font-bold border rounded-full hidden sm:inline" :class="currentTheme === 'light' ? 'bg-emerald-600/10 text-emerald-700 border-emerald-600/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'">JavisOS Store Ready</span>
         </div>
         <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Nền tảng Quản trị Tri Thức & Soạn Thảo Báo Cáo NĐ 30 Độc Lập</p>
       </div>
@@ -47,7 +48,8 @@
     <div class="flex items-center space-x-3">
       <!-- Nút chuyển Theme Sáng/Tối -->
       <button @click="toggleTheme()" class="px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition shadow-sm"
-              :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'">
+              :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'"
+              :style="currentTheme === 'light' ? 'background-color: rgb(241,245,249); color: rgb(30,41,59); border-color: rgb(203,213,225)' : ''">
         <i class="fa-solid text-sm" :class="currentTheme === 'light' ? 'fa-sun text-amber-500' : 'fa-moon text-blue-400'"></i>
         <span class="hidden sm:inline" x-text="currentTheme === 'light' ? 'Theme Sáng' : 'Theme Tối'"></span>
       </button>
@@ -144,7 +146,7 @@
                     <div :class="currentTheme === 'light' ? 'text-slate-900 font-bold' : 'text-white font-bold'" class="text-xs sm:text-sm leading-tight" x-text="personalBrain.currentUser?.fullname"></div>
                     <div :class="currentTheme === 'light' ? 'text-teal-700 font-semibold' : 'text-teal-400'" class="text-[11px] leading-tight" x-text="personalBrain.currentUser?.title"></div>
                   </div>
-                  <button type="button" @click="logoutCommune()" class="ml-2 text-slate-400 hover:text-rose-500 text-sm transition" title="Đăng xuất khỏi Kho Tri Thức">
+                  <button type="button" @click="logoutCommune()" class="ml-2 text-sm transition" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-rose-600' : 'text-slate-400 hover:text-rose-500'" title="Đăng xuất khỏi Kho Tri Thức">
                     <i class="fa-solid fa-right-from-bracket"></i>
                   </button>
                 </div>
@@ -319,11 +321,90 @@
                     </div>
                     <div class="min-w-0 flex-1">
                       <div class="text-[11px] font-bold truncate" x-text="s.name"></div>
-                      <div class="text-[10px] font-mono text-slate-400" x-text="((personalBrain.items || []).filter(it => it.source_type === s.id).length) + ' mục'"></div>
+                      <div class="text-[10px] font-mono" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" x-text="((personalBrain.items || []).filter(it => it.source_type === s.id).length) + ' mục'"></div>
                     </div>
                   </button>
                 </template>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI TẠO DỰ THẢO VĂN BẢN (NĐ 30) - Dashboard Quick Draft -->
+        <div class="border rounded-xl p-4 space-y-3" :class="currentTheme === 'light' ? 'bg-white border-indigo-200 shadow-sm' : 'bg-[#111827] border-indigo-500/40'">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-200'" class="text-sm font-black uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-wand-magic-sparkles text-indigo-500 text-base"></i>
+              <span>AI TẠO DỰ THẢO VĂN BẢN (THEO NĐ 30/2020 - HD 05)</span>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full font-bold" :class="currentTheme === 'light' ? 'bg-indigo-50 text-indigo-600' : 'bg-indigo-500/20 text-indigo-300'" x-text="'Nguồn tri thức: ' + (personalBrain.items || []).length + ' tài liệu'"></span>
+          </div>
+          <p :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" class="text-[11px]">AI đọc Toàn bộ Kho Tri Thức + Luật NĐ 30/HD 05 để soạn thảo. Điền đủ 4 mục dưới đây rồi bấm nút — bản dự thảo sẽ hiện ngay bên dưới kèm nút Xem/Sửa/Tải/Xóa.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block mb-1 font-bold text-[11px]" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">1. Loại văn bản <span class="text-rose-500">*</span></label>
+              <select x-model="personalBrain.quickForm.loai" class="w-full border rounded-lg px-3 py-2 text-xs font-semibold focus:outline-none focus:border-indigo-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+                <option value="bao_cao">BÁO CÁO</option>
+                <option value="to_trinh">TỜ TRÌNH</option>
+                <option value="ke_hoach">KẾ HOẠCH</option>
+                <option value="cong_van">CÔNG VĂN</option>
+                <option value="quyet_dinh">QUYẾT ĐỊNH</option>
+                <option value="thong_bao">THÔNG BÁO</option>
+                <option value="bien_ban">BIÊN BẢN</option>
+                <option value="de_an">ĐỀ ÁN</option>
+                <option value="phuong_an">PHƯƠNG ÁN</option>
+                <option value="chuong_trinh">CHƯƠNG TRÌNH</option>
+                <option value="huong_dan">HƯỚNG DẪN</option>
+                <option value="quy_che">QUY CHẾ</option>
+                <option value="nghi_quyet_dang">NGHỊ QUYẾT Đảng</option>
+                <option value="quyet_dinh_dang">QUYẾT ĐỊNH Đảng</option>
+                <option value="chi_thi_dang">CHỈ THỊ Đảng</option>
+                <option value="ket_luan_dang">KẾT LUẬN Đảng</option>
+                <option value="ke_hoach_dang">KẾ HOẠCH Đảng</option>
+                <option value="bao_cao_dang">BÁO CÁO Đảng</option>
+                <option value="thong_tri_dang">THÔNG TRI</option>
+                <option value="to_trinh_dang">TỜ TRÌNH Đảng</option>
+                <option value="cong_van_dang">CÔNG VĂN Đảng</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 font-bold text-[11px]" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">2. Trích yếu / Tên văn bản <span class="text-rose-500">*</span></label>
+              <input type="text" x-model="personalBrain.quickForm.trich_yeu" placeholder="VD: về việc tổng hợp kết quả kiểm định tính năng soạn thảo..."
+                     class="w-full border rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+            </div>
+          </div>
+          <div>
+            <label class="block mb-1 font-bold text-[11px]" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">3. Yêu cầu nội dung chi tiết (AI sẽ dựa vào Kho Tri Thức để viết) <span class="text-rose-500">*</span></label>
+            <textarea x-model="personalBrain.quickForm.prompt" rows="4"
+                      placeholder="VD: Viết báo cáo về kết quả kiểm định tính năng soạn thảo văn bản, nhấn mạnh việc ứng dụng AI NĐ 30, có số liệu 17 tài liệu kho, đề xuất nâng cấp hạ tầng..."
+                      class="w-full border rounded-lg px-3 py-2 text-xs leading-relaxed focus:outline-none focus:border-indigo-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'"></textarea>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-end">
+            <div>
+              <label class="block mb-1 font-bold text-[11px]" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">4. Cơ quan nhận văn bản</label>
+              <input type="text" x-model="personalBrain.quickForm.co_quan_gui" placeholder="Ủy ban nhân dân tỉnh Tây Ninh"
+                     class="w-full border rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+            </div>
+            <button @click="quickGenerateDraft()" :disabled="personalBrain.quickBusy"
+                    class="px-5 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:from-indigo-500 hover:to-blue-500 disabled:opacity-50 shadow-md shadow-indigo-600/30 whitespace-nowrap">
+              <span x-text="personalBrain.quickBusy ? '✨ AI ĐANG SOẠN THẢO (vui lòng chờ 30-90s)...' : '✨ AI TẠO DỰ THẢO VĂN BẢN'"></span>
+            </button>
+          </div>
+          <!-- Ket qua: ten file + 4 nut (Xem / Sua / Luu kho / Xoa) giong Kho Du Thao -->
+          <div x-show="personalBrain.quickResult" class="border rounded-xl p-3.5 space-y-2" :class="currentTheme === 'light' ? 'bg-emerald-50 border-emerald-300' : 'bg-emerald-500/10 border-emerald-500/40'">
+            <div class="flex items-center justify-between gap-2">
+              <p class="text-xs font-bold truncate" :class="currentTheme === 'light' ? 'text-emerald-800' : 'text-emerald-300'">
+                ✅ Đã tạo: <span x-text="personalBrain.quickResult?.filename"></span>
+              </p>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0" :class="currentTheme === 'light' ? 'bg-emerald-200 text-emerald-800' : 'bg-emerald-500/20 text-emerald-300'" x-text="personalBrain.quickResult?.word_count + ' từ'"></span>
+            </div>
+            <p class="text-[10px] opacity-70">Đã tự lưu vào Kho Dự Thảo — các nút bên dưới thao tác trực tiếp tệp này:</p>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button @click="openPreviewDraft(personalBrain.quickResult?.filename)" class="px-2.5 py-1.5 rounded-lg text-[10px] font-bold border" :class="currentTheme === 'light' ? 'bg-slate-100 border-slate-300' : 'bg-slate-800 border-slate-600'">👁 Xem</button>
+              <button @click="editDraft(personalBrain.quickResult?.filename)" class="px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-indigo-600 text-white">✎ Sửa</button>
+              <button @click="downloadDraftFile(personalBrain.quickResult?.filename)" class="px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-teal-600 text-white">⬇ Tải về</button>
+              <button @click="deleteDraftFile(personalBrain.quickResult?.filename)" class="px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-rose-600 text-white">🗑 Xóa</button>
+              <button @click="saveQuickDraftToKho(personalBrain.quickResult?.filename)" :disabled="personalBrain.khoSaving" class="px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-slate-600 text-white disabled:opacity-50">💾 Lưu kho</button>
             </div>
           </div>
         </div>
@@ -420,11 +501,11 @@
 
             <!-- Search Input: Tăng kích thước và độ tương phản -->
             <div class="relative w-full sm:w-72">
-              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-sm" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'"></i>
               <input type="text" x-model="personalBrain.searchQuery" placeholder="Tìm kiếm tri thức..." 
                      :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-teal-500' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500'" 
                      class="w-full border rounded-xl pl-9 pr-8 py-2 text-xs sm:text-sm font-medium focus:outline-none shadow-inner">
-              <button x-show="personalBrain.searchQuery" @click="personalBrain.searchQuery = ''" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-white text-sm">
+              <button x-show="personalBrain.searchQuery" @click="personalBrain.searchQuery = ''" class="absolute right-2.5 top-2.5 text-sm transition" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'">
                 <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
@@ -436,31 +517,31 @@
               <button @click="toggleSelectAllBrainItems()" 
                       :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300 font-semibold' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 font-medium'" 
                       class="px-3.5 py-2 rounded-xl text-xs sm:text-sm border flex items-center gap-2 transition shadow-sm">
-                <i class="fa-solid" :class="(personalBrain.selectedIds.length > 0 && personalBrain.selectedIds.length === getFilteredBrainItems().length) ? 'fa-square-check text-blue-500' : 'fa-square text-slate-400'"></i>
+                <i class="fa-solid" :class="(personalBrain.selectedIds.length > 0 && personalBrain.selectedIds.length === getFilteredBrainItems().length) ? 'fa-square-check text-blue-500' : (currentTheme === 'light' ? 'fa-square text-slate-500' : 'fa-square text-slate-400')"></i>
                 <span x-text="(personalBrain.selectedIds.length > 0 && personalBrain.selectedIds.length === getFilteredBrainItems().length) ? 'Bỏ chọn tất cả' : 'Chọn tất cả'"></span>
               </button>
 
-              <span class="text-xs text-slate-400">
-                Đã chọn: <b class="text-amber-400 font-mono text-sm" x-text="personalBrain.selectedIds.length"></b> / <span x-text="getFilteredBrainItems().length"></span> tài liệu
+              <span class="text-xs" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
+                Đã chọn: <b class="font-mono text-sm" :class="currentTheme === 'light' ? 'text-amber-600' : 'text-amber-400'" x-text="personalBrain.selectedIds.length"></b> / <span x-text="getFilteredBrainItems().length"></span> tài liệu
               </span>
             </div>
 
             <div class="flex items-center gap-2">
               <!-- Nút Share kho tri thức khi chọn nhiều kho -->
-              <button x-show="personalBrain.selectedIds.length > 0" @click="openBatchShareBrainModal()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 flex items-center gap-1.5 transition shadow-sm" title="Phân quyền chia sẻ các mục tri thức đã chọn">
-                <i class="fa-solid fa-share-nodes text-indigo-400"></i>
+              <button x-show="personalBrain.selectedIds.length > 0" @click="openBatchShareBrainModal()" class="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm border" :class="currentTheme === 'light' ? 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border-indigo-500/30'" title="Phân quyền chia sẻ các mục tri thức đã chọn">
+                <i class="fa-solid fa-share-nodes" :class="currentTheme === 'light' ? 'text-indigo-600' : 'text-indigo-400'"></i>
                 <span>Share kho tri thức (<span x-text="personalBrain.selectedIds.length"></span>)</span>
               </button>
 
               <!-- Nút Mở Kho Dự Thảo Báo Cáo & Văn Bản -->
-              <button @click="openDraftsModal()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 flex items-center gap-1.5 transition shadow-sm" title="Mở kho lưu trữ các bản dự thảo báo cáo đã soạn">
-                <i class="fa-solid fa-folder-open text-amber-400"></i>
+              <button @click="openDraftsModal()" class="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm border" :class="currentTheme === 'light' ? 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-300' : 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border-amber-500/30'" title="Mở kho lưu trữ các bản dự thảo báo cáo đã soạn">
+                <i class="fa-solid fa-folder-open" :class="currentTheme === 'light' ? 'text-amber-600' : 'text-amber-400'"></i>
                 <span class="hidden sm:inline">Kho Dự Thảo</span>
-                <span class="px-1.5 py-0.2 rounded text-[10px] bg-amber-500/20 text-amber-300 font-mono font-bold" x-text="draftsList.length || '59'"></span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold" :class="currentTheme === 'light' ? 'bg-amber-200/70 text-amber-800' : 'bg-amber-500/20 text-amber-300'" x-text="(personalBrain.drafts || []).length"></span>
               </button>
 
               <!-- Nút Tạo Báo Cáo / Văn Bản Rút Gọn: VB AI {số kho tri thức} tri thức -->
-              <button @click="openReportModal()" :disabled="personalBrain.selectedIds.length === 0" :class="personalBrain.selectedIds.length > 0 ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-600/30 ring-1 ring-white/20 cursor-pointer scale-100 active:scale-95' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'" class="px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition duration-200">
+              <button @click="openReportModal()" :disabled="personalBrain.selectedIds.length === 0" :class="personalBrain.selectedIds.length > 0 ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-600/30 ring-1 ring-white/20 cursor-pointer scale-100 active:scale-95' : (currentTheme === 'light' ? 'bg-slate-200 text-slate-500 cursor-not-allowed border border-slate-300' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700')" class="px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition duration-200">
                 <i class="fa-solid fa-wand-magic-sparkles text-amber-300 text-sm"></i>
                 <span x-text="personalBrain.selectedIds.length > 0 ? ('VB AI ' + personalBrain.selectedIds.length + ' tri thức') : 'VB AI 0 tri thức'"></span>
                 <span x-show="personalBrain.selectedIds.length > 0" class="bg-amber-400/20 text-amber-300 text-[10px] px-1.5 py-0.5 rounded font-mono font-extrabold border border-amber-400/30">NĐ 30</span>
@@ -470,9 +551,9 @@
         </div>
 
         <!-- Brain Items List / Table -->
-        <div class="bg-[#111827] border border-[#27354f] rounded-xl overflow-hidden shadow-lg">
+        <div class="border rounded-xl overflow-hidden" :class="currentTheme === 'light' ? 'bg-white border-slate-300 shadow-sm' : 'bg-[#111827] border-[#27354f] shadow-lg'">
           <!-- Loading State -->
-          <div x-show="personalBrain.loading" class="p-8 text-center text-slate-400">
+          <div x-show="personalBrain.loading" class="p-8 text-center" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
             <i class="fa-solid fa-circle-notch fa-spin text-2xl text-teal-400 mb-2"></i>
             <p class="text-xs">Đang nạp danh sách tri thức cá nhân...</p>
           </div>
@@ -482,20 +563,20 @@
             <div class="w-16 h-16 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 text-2xl mx-auto mb-3">
               <i class="fa-solid fa-brain"></i>
             </div>
-            <h3 class="text-sm font-bold text-white">Chưa có mục tri thức nào phù hợp</h3>
-            <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+            <h3 class="text-sm font-bold" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">Chưa có mục tri thức nào phù hợp</h3>
+            <p class="text-xs mt-1 max-w-sm mx-auto" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
               Sử dụng 4 nút nạp nhanh ở trên (Google Drive, Thư mục máy tính, File đính kèm, Link Web) để bổ sung tài liệu vào kho Second Brain của bạn.
             </p>
           </div>
 
           <!-- Table of Items -->
-          <div x-show="!personalBrain.loading && getFilteredBrainItems().length > 0" class="divide-y divide-slate-800/80">
+          <div x-show="!personalBrain.loading && getFilteredBrainItems().length > 0" class="divide-y" :class="currentTheme === 'light' ? 'divide-slate-200' : 'divide-slate-800/80'">
             <template x-for="item in getFilteredBrainItems()" :key="item.id">
-              <div :class="personalBrain.selectedIds.includes(item.id) ? 'bg-blue-950/20 border-l-4 border-l-blue-500' : 'hover:bg-slate-800/40'" class="p-4 transition flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div :class="personalBrain.selectedIds.includes(item.id) ? 'bg-blue-950/20 border-l-4 border-l-blue-500' : (currentTheme === 'light' ? 'hover:bg-slate-100' : 'hover:bg-slate-800/40')" class="p-4 transition flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <!-- Checkbox + Item Info (Bấm toàn bộ khu vực thông tin để mở xem chi tiết) -->
                 <div class="flex items-start space-x-3.5 flex-1 min-w-0">
                   <div class="pt-1 flex-shrink-0" @click.stop>
-                    <input type="checkbox" :checked="personalBrain.selectedIds.includes(item.id)" @change="toggleSelectBrainItem(item.id)" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-blue-600 focus:ring-0 cursor-pointer">
+                    <input type="checkbox" :checked="personalBrain.selectedIds.includes(item.id)" @change="toggleSelectBrainItem(item.id)" class="w-4 h-4 rounded focus:ring-0 cursor-pointer" :class="currentTheme === 'light' ? 'border-slate-400 bg-white text-blue-600' : 'border-slate-700 bg-slate-900 text-blue-600'">
                   </div>
 
                   <!-- Source Icon (Bấm để xem) -->
@@ -534,10 +615,10 @@
                     <!-- Meta Tags & Tên file -->
                     <div :class="currentTheme === 'light' ? 'text-slate-500 font-semibold' : 'text-slate-400'" class="flex flex-wrap items-center gap-3 mt-2 text-xs">
                       <span><i class="fa-solid fa-file-word mr-1 text-teal-500"></i><b :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-200'" class="font-mono font-bold" x-text="(item.word_count || 0).toLocaleString()"></b> từ</span>
-                      <span class="font-mono"><i class="fa-solid fa-clock mr-1 text-slate-400"></i><span x-text="item.created_at"></span></span>
+                      <span class="font-mono"><i class="fa-solid fa-clock mr-1" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'"></i><span x-text="item.created_at"></span></span>
                       <span><i class="fa-solid fa-tag mr-1 text-amber-500"></i><span x-text="(item.tags || []).join(', ')"></span></span>
                       <template x-if="item.filename">
-                        <span class="truncate max-w-xs font-mono text-slate-400 group-hover/item:text-teal-400"><i class="fa-solid fa-paperclip mr-1"></i><span x-text="item.filename"></span></span>
+                        <span class="truncate max-w-xs font-mono" :class="currentTheme === 'light' ? 'text-slate-500 group-hover/item:text-teal-600' : 'text-slate-400 group-hover/item:text-teal-400'"><i class="fa-solid fa-paperclip mr-1"></i><span x-text="item.filename"></span></span>
                       </template>
                     </div>
                   </div>
@@ -546,24 +627,24 @@
                 <!-- Actions on Item -->
                 <div class="flex items-center gap-1.5 md:flex-shrink-0 self-end md:self-center">
                   <!-- Xem chi tiết -->
-                  <button @click="previewBrainItem(item)" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-medium border border-slate-700 transition" title="Xem nội dung chi tiết">
+                  <button @click="previewBrainItem(item)" class="px-2.5 py-1.5 rounded-lg text-xs font-medium border transition" :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border-slate-700'" title="Xem nội dung chi tiết">
                     <i class="fa-solid fa-eye text-teal-400 mr-1"></i>
                     <span>Xem</span>
                   </button>
 
                   <!-- Soạn báo cáo riêng cho tài liệu này -->
-                  <button @click="openReportModal(item)" class="px-2.5 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 rounded-lg text-xs font-medium border border-indigo-500/40 transition" title="Tạo Báo cáo NĐ 30 từ tài liệu này">
-                    <i class="fa-solid fa-file-pen mr-1 text-indigo-400"></i>
+                  <button @click="openReportModal(item)" class="px-2.5 py-1.5 rounded-lg text-xs font-medium border transition" :class="currentTheme === 'light' ? 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border-indigo-500/40'" title="Tạo Báo cáo NĐ 30 từ tài liệu này">
+                    <i class="fa-solid fa-file-pen mr-1" :class="currentTheme === 'light' ? 'text-indigo-600' : 'text-indigo-400'"></i>
                     <span>Soạn BC</span>
                   </button>
 
                   <!-- Nút Phân quyền Chia sẻ tài liệu (Private / Dept / Commune) -->
-                  <button @click="openShareItemModal(item)" class="p-1.5 bg-slate-800 hover:bg-indigo-900/40 text-slate-400 hover:text-indigo-400 rounded-lg text-xs border border-slate-700 transition" title="Phân quyền chia sẻ tài liệu (Cá nhân, Phòng ban hoặc Toàn xã)">
+                  <button @click="openShareItemModal(item)" class="p-1.5 rounded-lg text-xs border transition" :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-indigo-100 text-slate-500 hover:text-indigo-600 border-slate-300' : 'bg-slate-800 hover:bg-indigo-900/40 text-slate-400 hover:text-indigo-400 border-slate-700'" title="Phân quyền chia sẻ tài liệu (Cá nhân, Phòng ban hoặc Toàn xã)">
                     <i class="fa-solid fa-share-nodes"></i>
                   </button>
 
                   <!-- Xóa -->
-                  <button @click="deleteBrainItem(item.id)" class="p-1.5 bg-slate-800 hover:bg-rose-900/40 text-slate-400 hover:text-rose-400 rounded-lg text-xs border border-slate-700 transition" title="Xóa khỏi Brain">
+                  <button @click="deleteBrainItem(item.id)" class="p-1.5 rounded-lg text-xs border transition" :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 border-slate-300' : 'bg-slate-800 hover:bg-rose-900/40 text-slate-400 hover:text-rose-400 border-slate-700'" title="Xóa khỏi Brain">
                     <i class="fa-solid fa-trash-can"></i>
                   </button>
                 </div>
@@ -571,39 +652,38 @@
             </template>
           </div>
         </div>
-      </div>
   </main>
 
   <!-- Modals Container -->
     <!-- Modal 1: Nạp từ Google Drive -->
   <div x-show="personalBrain.showDriveModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" x-cloak>
-    <div class="bg-[#111827] border border-amber-500/40 rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div class="border rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-amber-500/40'">
+      <div class="flex items-center justify-between border-b pb-3" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
         <div class="flex items-center space-x-3">
           <div class="w-9 h-9 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
             <i class="fa-brands fa-google-drive text-lg"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-white">Nạp Tri Thức Từ Google Drive</h3>
-            <p class="text-[11px] text-slate-400">Trích xuất văn bản từ liên kết tệp hoặc tài liệu Docs Google Drive</p>
+            <h3 class="text-sm font-bold" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">Nạp Tri Thức Từ Google Drive</h3>
+            <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Trích xuất văn bản từ liên kết tệp hoặc tài liệu Docs Google Drive</p>
           </div>
         </div>
-        <button @click="personalBrain.showDriveModal = false" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="personalBrain.showDriveModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
         <div>
-          <label class="text-slate-300 font-semibold block mb-1">Đường dẫn Google Drive (Link chia sẻ) <span class="text-rose-400">*</span></label>
-          <input type="text" x-model="personalBrain.driveForm.drive_url" placeholder="https://drive.google.com/file/d/... hoặc Docs link" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+          <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Đường dẫn Google Drive (Link chia sẻ) <span class="text-rose-400">*</span></label>
+          <input type="text" x-model="personalBrain.driveForm.drive_url" placeholder="Link File / Docs / Thư mục Google Drive (chia sẻ công khai)" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
         </div>
         <div>
-          <label class="text-slate-300 font-semibold block mb-1">Tiêu đề tài liệu (Để trống để tự động nhận dạng)</label>
-          <input type="text" x-model="personalBrain.driveForm.title" placeholder="VD: Báo cáo kinh tế xã hội quý III..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+          <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Tiêu đề tài liệu (Để trống để tự động nhận dạng)</label>
+          <input type="text" x-model="personalBrain.driveForm.title" placeholder="VD: Báo cáo kinh tế xã hội quý III..." class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Phân loại Brain</label>
-            <select x-model="personalBrain.driveForm.category" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Phân loại Brain</label>
+            <select x-model="personalBrain.driveForm.category" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-white'">
               <option value="Chỉ đạo điều hành">Chỉ đạo điều hành</option>
               <option value="Báo cáo chuyên đề">Báo cáo chuyên đề</option>
               <option value="Quy định & Chính sách">Quy định & Chính sách</option>
@@ -612,17 +692,30 @@
             </select>
           </div>
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Từ khóa / Tags</label>
-            <input type="text" x-model="personalBrain.driveForm.tags_str" placeholder="Tây Ninh, KHCN, Báo cáo" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Từ khóa / Tags</label>
+            <input type="text" x-model="personalBrain.driveForm.tags_str" placeholder="Tây Ninh, KHCN, Báo cáo" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
           </div>
         </div>
-        <div class="p-2.5 bg-amber-950/20 border border-amber-500/20 rounded-lg text-[11px] text-amber-300/90 leading-relaxed">
+        <div class="p-2.5 border rounded-lg text-[11px] leading-relaxed" :class="currentTheme === 'light' ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-amber-950/20 border-amber-500/20 text-amber-300/90'">
           <i class="fa-solid fa-lightbulb mr-1 text-amber-400"></i> Hỗ trợ tải trực tiếp tệp công khai hoặc tài liệu Google Docs sang định dạng văn bản sạch để phân tích.
         </div>
       </div>
 
-      <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
-        <button @click="personalBrain.showDriveModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-semibold">Hủy</button>
+      <div class="flex justify-end gap-2 pt-3 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
+        <button @click="cancelIngestDrive()" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Hủy</button>
+        <!-- Thanh tien trinh nap Drive (xanh chay nhu sac pin) -->
+        <div x-show="personalBrain.driveProgress && personalBrain.driveProgress.active" class="mb-3 space-y-1.5" x-cloak>
+          <div class="flex items-center justify-between text-[11px] font-bold" :class="currentTheme === 'light' ? 'text-emerald-700' : 'text-emerald-400'">
+            <span x-text="'Đang nạp: ' + (personalBrain.driveProgress.current || '')"></span>
+            <span x-text="(personalBrain.driveProgress.done || 0) + '/' + (personalBrain.driveProgress.total || 0) + ' tệp'"></span>
+          </div>
+          <div class="w-full h-2.5 rounded-full overflow-hidden" :class="currentTheme === 'light' ? 'bg-slate-200' : 'bg-slate-800'">
+            <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500 relative overflow-hidden"
+                 :style="'width:' + (personalBrain.driveProgress.total ? Math.round(100 * (personalBrain.driveProgress.done || 0) / personalBrain.driveProgress.total) : 0) + '%'">
+              <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
         <button @click="submitIngestDrive()" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-amber-600/20">
           <i class="fa-solid" :class="personalBrain.ingesting ? 'fa-circle-notch fa-spin' : 'fa-cloud-arrow-down'"></i>
           <span x-text="personalBrain.ingesting ? 'Đang nạp...' : 'Nạp Vào Brain'"></span>
@@ -632,24 +725,24 @@
   </div>
     <!-- Modal 2: Quét Thư mục Máy tính -->
   <div x-show="personalBrain.showFolderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" x-cloak>
-    <div class="bg-[#111827] border border-emerald-500/40 rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div class="border rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-emerald-500/40'">
+      <div class="flex items-center justify-between border-b pb-3" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
         <div class="flex items-center space-x-3">
           <div class="w-9 h-9 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
             <i class="fa-solid fa-folder-tree text-lg"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-white">Nạp Tri Thức Từ Thư Mục Máy Tính</h3>
-            <p class="text-[11px] text-slate-400">Chọn thư mục trực tiếp từ thiết bị đang sử dụng hoặc nhập đường dẫn server</p>
+            <h3 class="text-sm font-bold" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">Nạp Tri Thức Từ Thư Mục Máy Tính</h3>
+            <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Chọn thư mục trực tiếp từ thiết bị đang sử dụng hoặc nhập đường dẫn server</p>
           </div>
         </div>
-        <button @click="personalBrain.showFolderModal = false" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="personalBrain.showFolderModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
         <!-- Khu vực chọn Thư mục trực tiếp bằng nút Browse trên máy tính -->
         <div>
-          <label class="text-slate-300 font-semibold block mb-1.5 flex items-center justify-between">
+          <label class="font-semibold block mb-1.5 flex items-center justify-between" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">
             <span>Chọn thư mục trên máy tính của bạn</span>
             <span class="text-[10px] text-emerald-400 font-normal">Hỗ trợ PDF, Word, Excel, Text, Ảnh...</span>
           </label>
@@ -662,28 +755,28 @@
               <i class="fa-solid fa-folder-open text-amber-300 text-sm"></i>
               <span>Browse...</span>
             </button>
-            <div class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-300 font-mono text-[11px] truncate flex items-center justify-between">
+            <div class="flex-1 border rounded-xl px-3 py-2 font-mono text-[11px] truncate flex items-center justify-between" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-300 text-slate-700' : 'bg-slate-900 border-slate-700 text-slate-300'">
               <span class="truncate" x-text="personalBrain.folderForm.folderName ? ('Thư mục: ' + personalBrain.folderForm.folderName) : 'Chưa chọn thư mục nào từ máy'"></span>
-              <span x-show="personalBrain.folderForm.fileCount > 0" class="ml-2 px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-[10px] flex-shrink-0" x-text="personalBrain.folderForm.fileCount + ' tệp'"></span>
+              <span x-show="personalBrain.folderForm.fileCount > 0" class="ml-2 px-2 py-0.5 rounded font-bold text-[10px] flex-shrink-0" :class="currentTheme === 'light' ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-500/20 text-emerald-300'" x-text="personalBrain.folderForm.fileCount + ' tệp'"></span>
             </div>
           </div>
         </div>
 
         <div class="relative flex py-1 items-center">
-          <div class="flex-grow border-t border-slate-800"></div>
+          <div class="flex-grow border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'"></div>
           <span class="flex-shrink mx-3 text-[10px] uppercase font-bold text-slate-500">HOẶC NHẬP ĐƯỜNG DẪN TRÊN SERVER</span>
-          <div class="flex-grow border-t border-slate-800"></div>
+          <div class="flex-grow border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'"></div>
         </div>
 
         <div>
-          <label class="text-slate-300 font-semibold block mb-1">Đường dẫn thư mục nội bộ server</label>
-          <input type="text" x-model="personalBrain.folderForm.folder_path" placeholder="/home/ubuntu/tai_lieu hoặc đường dẫn thư mục..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+          <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Đường dẫn thư mục nội bộ server</label>
+          <input type="text" x-model="personalBrain.folderForm.folder_path" placeholder="/home/ubuntu/tai_lieu hoặc đường dẫn thư mục..." class="w-full border rounded-lg px-3 py-2 font-mono focus:outline-none focus:border-emerald-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
         </div>
 
         <div class="grid grid-cols-2 gap-3 pt-1">
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Phân loại mặc định</label>
-            <select x-model="personalBrain.folderForm.category" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-emerald-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Phân loại mặc định</label>
+            <select x-model="personalBrain.folderForm.category" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-white'">
               <option value="Tài liệu cơ quan">Tài liệu cơ quan</option>
               <option value="Chỉ đạo điều hành">Chỉ đạo điều hành</option>
               <option value="Báo cáo chuyên đề">Báo cáo chuyên đề</option>
@@ -692,8 +785,8 @@
             </select>
           </div>
           <div class="flex items-center pt-5">
-            <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-              <input type="checkbox" x-model="personalBrain.folderForm.recursive" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-emerald-600 focus:ring-0">
+            <label class="flex items-center space-x-2 cursor-pointer" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">
+              <input type="checkbox" x-model="personalBrain.folderForm.recursive" class="w-4 h-4 rounded focus:ring-0" :class="currentTheme === 'light' ? 'border-slate-400 bg-white text-emerald-600' : 'border-slate-700 bg-slate-900 text-emerald-600'">
               <span>Quét cả thư mục con</span>
             </label>
           </div>
@@ -701,10 +794,9 @@
 
             <i class="fa-solid fa-microchip mr-1 text-emerald-400"></i> Trích xuất tự động qua lõi đa năng RapidOCR, PyMuPDF và OpenXML độc quyền của Hermes.
         </div>
-      </div>
 
-      <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
-        <button @click="personalBrain.showFolderModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-semibold">Hủy</button>
+      <div class="flex justify-end gap-2 pt-3 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
+        <button @click="personalBrain.showFolderModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Hủy</button>
         <button @click="submitIngestFolder()" :disabled="personalBrain.ingesting || (!personalBrain.folderForm.folder_path && (!personalBrain.folderForm.files || personalBrain.folderForm.files.length === 0))" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-emerald-600/20 disabled:opacity-50">
           <i class="fa-solid" :class="personalBrain.ingesting ? 'fa-circle-notch fa-spin' : 'fa-magnifying-glass-chart'"></i>
           <span x-text="personalBrain.ingesting ? 'Đang nạp...' : 'Bắt Đầu Quét & Nạp'"></span>
@@ -715,34 +807,34 @@
 
   <!-- Modal 3: Tải Tệp Lên Kho (File Upload) -->
   <div x-show="personalBrain.showFileModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" x-cloak>
-    <div class="bg-[#111827] border border-blue-500/40 rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div class="border rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-blue-500/40'">
+      <div class="flex items-center justify-between border-b pb-3" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
         <div class="flex items-center space-x-3">
           <div class="w-9 h-9 rounded-lg bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400">
             <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-white">Tải Tệp Đính Kèm Lên Kho Brain</h3>
-            <p class="text-[11px] text-slate-400">Hỗ trợ tệp Word (.docx), PDF (.pdf), Excel (.xlsx), Text (.txt, .md)</p>
+            <h3 class="text-sm font-bold" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">Tải Tệp Đính Kèm Lên Kho Brain</h3>
+            <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Hỗ trợ tệp Word (.docx), PDF (.pdf), Excel (.xlsx), Text (.txt, .md)</p>
           </div>
         </div>
-        <button @click="personalBrain.showFileModal = false" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="personalBrain.showFileModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
         <div>
-          <label class="text-slate-300 font-semibold block mb-1">Chọn tệp từ máy tính <span class="text-rose-400">*</span></label>
-          <div class="border-2 border-dashed border-slate-700 hover:border-blue-500/60 rounded-xl p-4 text-center cursor-pointer bg-slate-900/60 transition relative">
+          <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Chọn tệp từ máy tính <span class="text-rose-400">*</span></label>
+          <div class="border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition relative" :class="currentTheme === 'light' ? 'border-slate-300 hover:border-blue-400 bg-slate-50' : 'border-slate-700 hover:border-blue-500/60 bg-slate-900/60'">
             <input type="file" @change="handleBrainFileSelect($event)" accept=".pdf,.docx,.doc,.xlsx,.xls,.txt,.md,.png,.jpg,.jpeg" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
             <i class="fa-solid fa-file-arrow-up text-2xl text-blue-400 mb-1"></i>
-            <p class="text-xs text-white font-medium" x-text="personalBrain.fileForm.selectedFileName || 'Kéo thả tệp vào đây hoặc bấm để chọn tệp'"></p>
+            <p class="text-xs font-medium" :class="currentTheme === 'light' ? 'text-slate-800' : 'text-white'" x-text="personalBrain.fileForm.selectedFileName || 'Kéo thả tệp vào đây hoặc bấm để chọn tệp'"></p>
             <p class="text-[10px] text-slate-500 mt-0.5">Dung lượng tối đa: 50MB</p>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Phân loại Brain</label>
-            <select x-model="personalBrain.fileForm.category" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Phân loại Brain</label>
+            <select x-model="personalBrain.fileForm.category" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-white'">
               <option value="Báo cáo chuyên đề">Báo cáo chuyên đề</option>
               <option value="Chỉ đạo điều hành">Chỉ đạo điều hành</option>
               <option value="Quy định & Chính sách">Quy định & Chính sách</option>
@@ -751,14 +843,14 @@
             </select>
           </div>
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Từ khóa / Tags</label>
-            <input type="text" x-model="personalBrain.fileForm.tags_str" placeholder="Chuyển đổi số, Kế hoạch 2026" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Từ khóa / Tags</label>
+            <input type="text" x-model="personalBrain.fileForm.tags_str" placeholder="Chuyển đổi số, Kế hoạch 2026" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
           </div>
         </div>
       </div>
 
-      <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
-        <button @click="personalBrain.showFileModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-semibold">Hủy</button>
+      <div class="flex justify-end gap-2 pt-3 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
+        <button @click="personalBrain.showFileModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Hủy</button>
         <button @click="submitIngestFile()" :disabled="personalBrain.ingesting || !personalBrain.fileForm.file" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-blue-600/20 disabled:opacity-50">
           <i class="fa-solid" :class="personalBrain.ingesting ? 'fa-circle-notch fa-spin' : 'fa-cloud-arrow-up'"></i>
           <span x-text="personalBrain.ingesting ? 'Đang trích xuất...' : 'Tải Lên & Bóc Tách'"></span>
@@ -768,33 +860,33 @@
   </div>
     <!-- Modal 4: Nạp từ Link Web -->
   <div x-show="personalBrain.showWebModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" x-cloak>
-    <div class="bg-[#111827] border border-cyan-500/40 rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div class="border rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-4 animate-fade-in" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-cyan-500/40'">
+      <div class="flex items-center justify-between border-b pb-3" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
         <div class="flex items-center space-x-3">
           <div class="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
             <i class="fa-solid fa-globe text-lg"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-white">Nạp Tri Thức Từ Link Web</h3>
-            <p class="text-[11px] text-slate-400">Cào và làm sạch nội dung bài viết, tin tức hoặc văn bản từ URL</p>
+            <h3 class="text-sm font-bold" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">Nạp Tri Thức Từ Link Web</h3>
+            <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Cào và làm sạch nội dung bài viết, tin tức hoặc văn bản từ URL</p>
           </div>
         </div>
-        <button @click="personalBrain.showWebModal = false" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="personalBrain.showWebModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
         <div>
-          <label class="text-slate-300 font-semibold block mb-1">Địa chỉ URL trang web <span class="text-rose-400">*</span></label>
-          <input type="url" x-model="personalBrain.webForm.url" placeholder="https://tayninh.gov.vn/bai-viet hoặc link văn bản" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+          <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Địa chỉ URL trang web <span class="text-rose-400">*</span></label>
+          <input type="url" x-model="personalBrain.webForm.url" placeholder="https://tayninh.gov.vn/bai-viet hoặc link văn bản" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-cyan-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
         </div>
         <div>
-          <label class="text-slate-300 font-semibold block mb-1">Tiêu đề (Để trống để tự động trích xuất từ thẻ title)</label>
-          <input type="text" x-model="personalBrain.webForm.title" placeholder="VD: Chỉ đạo của UBND tỉnh về phát triển kinh tế..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+          <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Tiêu đề (Để trống để tự động trích xuất từ thẻ title)</label>
+          <input type="text" x-model="personalBrain.webForm.title" placeholder="VD: Chỉ đạo của UBND tỉnh về phát triển kinh tế..." class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-cyan-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Phân loại Brain</label>
-            <select x-model="personalBrain.webForm.category" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Phân loại Brain</label>
+            <select x-model="personalBrain.webForm.category" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-cyan-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-white'">
               <option value="Quy định & Chính sách">Quy định & Chính sách</option>
               <option value="Chỉ đạo điều hành">Chỉ đạo điều hành</option>
               <option value="Báo cáo chuyên đề">Báo cáo chuyên đề</option>
@@ -803,14 +895,14 @@
             </select>
           </div>
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Từ khóa / Tags</label>
-            <input type="text" x-model="personalBrain.webForm.tags_str" placeholder="Tin tức, Chính sách, 2026" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Từ khóa / Tags</label>
+            <input type="text" x-model="personalBrain.webForm.tags_str" placeholder="Tin tức, Chính sách, 2026" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-cyan-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
           </div>
         </div>
       </div>
 
-      <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
-        <button @click="personalBrain.showWebModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-semibold">Hủy</button>
+      <div class="flex justify-end gap-2 pt-3 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
+        <button @click="personalBrain.showWebModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Hủy</button>
         <button @click="submitIngestWeb()" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-cyan-600/20">
           <i class="fa-solid" :class="personalBrain.ingesting ? 'fa-circle-notch fa-spin' : 'fa-spider'"></i>
           <span x-text="personalBrain.ingesting ? 'Đang cào...' : 'Cào & Nạp Vào Brain'"></span>
@@ -820,44 +912,44 @@
   </div>
     <!-- Modal 5: Xem Chi Tiết Nội Dung Toàn Văn (Brain Item Full-Text Preview) -->
   <div x-show="personalBrain.previewItem" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" x-cloak>
-    <div class="bg-[#111827] border border-blue-500/40 rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in" @click.away="personalBrain.previewItem = null">
-      <div class="flex items-center justify-between px-5 py-4 bg-[#0f172a] border-b border-slate-800 flex-shrink-0">
+    <div class="border rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-blue-500/40'" @click.away="personalBrain.previewItem = null">
+      <div class="flex items-center justify-between px-5 py-4 border-b flex-shrink-0" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-slate-800'">
         <div class="flex items-center space-x-3 truncate mr-3">
           <div class="w-9 h-9 rounded-lg bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-400 flex-shrink-0">
             <i class="fa-solid fa-file-lines text-base"></i>
           </div>
           <div class="truncate">
-            <h3 class="text-sm font-bold text-white truncate" x-text="personalBrain.previewItem?.title"></h3>
-            <div class="flex items-center gap-2 mt-0.5 text-[10px] text-slate-400">
-              <span class="px-1.5 py-0.2 rounded font-semibold bg-blue-500/20 text-blue-300" x-text="personalBrain.previewItem?.category"></span>
-              <span>• Nguồn: <b class="uppercase font-mono text-slate-300" x-text="personalBrain.previewItem?.source_type"></b></span>
+            <h3 class="text-sm font-bold truncate" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" x-text="personalBrain.previewItem?.title"></h3>
+            <div class="flex items-center gap-2 mt-0.5 text-[10px]" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'">
+              <span class="px-1.5 py-0.2 rounded font-semibold" :class="currentTheme === 'light' ? 'bg-blue-100 text-blue-700' : 'bg-blue-500/20 text-blue-300'" x-text="personalBrain.previewItem?.category"></span>
+              <span>• Nguồn: <b class="uppercase font-mono" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'" x-text="personalBrain.previewItem?.source_type"></b></span>
               <span>• <b class="font-mono text-amber-400" x-text="(personalBrain.previewItem?.word_count || 0).toLocaleString()"></b> từ</span>
             </div>
           </div>
         </div>
-        <button @click="personalBrain.previewItem = null" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button @click="personalBrain.previewItem = null" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
-      <div class="p-5 overflow-y-auto flex-1 space-y-3 text-xs leading-relaxed text-slate-300">
-        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
-          <div><b class="text-slate-300">Tóm tắt:</b> <span x-text="personalBrain.previewItem?.summary"></span></div>
-          <div x-show="personalBrain.previewItem?.source_url_or_path"><b class="text-slate-300">Đường dẫn / Tệp nguồn:</b> <span class="font-mono text-slate-400" x-text="personalBrain.previewItem?.source_url_or_path"></span></div>
+      <div class="p-5 overflow-y-auto flex-1 space-y-3 text-xs leading-relaxed" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">
+        <div class="p-3 rounded-xl border text-[11px] space-y-1" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-600' : 'bg-slate-900/80 border-slate-800 text-slate-400'">
+          <div><b :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-300'">Tóm tắt:</b> <span x-text="personalBrain.previewItem?.summary"></span></div>
+          <div x-show="personalBrain.previewItem?.source_url_or_path"><b :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-300'">Đường dẫn / Tệp nguồn:</b> <span class="font-mono" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" x-text="personalBrain.previewItem?.source_url_or_path"></span></div>
         </div>
 
         <div>
-          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Toàn Văn Trích Xuất Sạch:</div>
-          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs whitespace-pre-wrap select-text leading-relaxed text-slate-200" x-text="personalBrain.previewItem?.text_content"></div>
+          <div class="text-[11px] font-bold uppercase tracking-wider mb-1.5" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'">Toàn Văn Trích Xuất Sạch:</div>
+          <div class="p-4 rounded-xl border font-mono text-xs whitespace-pre-wrap select-text leading-relaxed" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'" x-text="personalBrain.previewItem?.text_content"></div>
         </div>
       </div>
 
-      <div class="flex items-center justify-between px-5 py-3 bg-[#0f172a] border-t border-slate-800 flex-shrink-0">
-        <button @click="navigator.clipboard.writeText(personalBrain.previewItem?.text_content || ''); showToast('Đã sao chép nội dung vào bộ nhớ tạm!')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 flex items-center gap-1.5 transition">
+      <div class="flex items-center justify-between px-5 py-3 border-t flex-shrink-0" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-slate-800'">
+        <button @click="navigator.clipboard.writeText(personalBrain.previewItem?.text_content || ''); showToast('Đã sao chép nội dung vào bộ nhớ tạm!')" class="px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-1.5 transition" :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'">
           <i class="fa-regular fa-copy"></i>
           <span>Sao chép toàn văn</span>
         </button>
 
         <div class="flex items-center gap-2">
-          <button @click="personalBrain.previewItem = null" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold">Đóng</button>
+          <button @click="personalBrain.previewItem = null" class="px-4 py-1.5 rounded-lg text-xs font-semibold" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'">Đóng</button>
           <button @click="openReportModal(personalBrain.previewItem); personalBrain.previewItem = null" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-md shadow-indigo-600/30">
             <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i>
             <span>Soạn Báo Cáo NĐ 30 Từ Tệp Này</span>
@@ -868,66 +960,66 @@
   </div>
     <!-- ================= MODAL PHÂN QUYỀN CHIA SẺ TÀI LIỆU (SHARE ITEM MODAL) ================= -->
   <div x-show="personalBrain.showShareItemModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4" x-cloak>
-    <div class="bg-[#111827] border border-indigo-500/50 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-fade-in flex flex-col">
-      <div class="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-[#0f172a] via-[#1a1b36] to-[#0f172a] border-b border-slate-800">
+    <div class="border rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-fade-in flex flex-col" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-indigo-500/50'">
+      <div class="flex items-center justify-between px-5 py-3.5 border-b" :class="currentTheme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-gradient-to-r from-[#0f172a] via-[#1a1b36] to-[#0f172a] border-slate-800'">
         <div class="flex items-center space-x-3">
           <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
             <i class="fa-solid fa-share-nodes"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-white uppercase tracking-wide" x-text="personalBrain.batchShareMode ? 'PHÂN QUYỀN CHIA SẺ ĐỒNG LOẠT' : 'PHÂN QUYỀN CHIA SẺ TRI THỨC'"></h3>
-            <p class="text-[11px] text-slate-400 truncate max-w-xs" x-text="personalBrain.shareItemTarget?.title"></p>
+            <h3 class="text-sm font-bold uppercase tracking-wide" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" x-text="personalBrain.batchShareMode ? 'PHÂN QUYỀN CHIA SẺ ĐỒNG LOẠT' : 'PHÂN QUYỀN CHIA SẺ TRI THỨC'"></h3>
+            <p class="text-[11px] truncate max-w-xs" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" x-text="personalBrain.shareItemTarget?.title"></p>
           </div>
         </div>
-        <button @click="personalBrain.showShareItemModal = false" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button @click="personalBrain.showShareItemModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <div class="p-5 space-y-4 text-xs">
         <div>
-          <label class="text-slate-300 font-semibold block mb-2">Phạm vi chia sẻ (Visibility Scope):</label>
+          <label class="font-semibold block mb-2" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Phạm vi chia sẻ (Visibility Scope):</label>
           <div class="space-y-2">
             <!-- 1. Riêng tư -->
             <label class="flex items-start space-x-3 p-2.5 rounded-xl border cursor-pointer transition"
-                   :class="personalBrain.shareItemForm.visibility === 'private' ? 'bg-teal-950/30 border-teal-500/60' : 'bg-slate-900 border-slate-800 hover:border-slate-700'">
+                   :class="personalBrain.shareItemForm.visibility === 'private' ? (currentTheme === 'light' ? 'bg-teal-50 border-teal-400' : 'bg-teal-950/30 border-teal-500/60') : (currentTheme === 'light' ? 'bg-white border-slate-300 hover:border-slate-400' : 'bg-slate-900 border-slate-800 hover:border-slate-700')">
               <input type="radio" value="private" x-model="personalBrain.shareItemForm.visibility" class="mt-0.5 text-teal-600 focus:ring-0">
               <div>
-                <span class="font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-lock text-teal-400"></i> Riêng tư (Chỉ mình tôi)</span>
-                <p class="text-[11px] text-slate-400 mt-0.5">Chỉ tài khoản của bạn mới có quyền tra cứu và dùng AI soạn thảo từ tệp này.</p>
+                <span class="font-bold flex items-center gap-1.5" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'"><i class="fa-solid fa-lock text-teal-400"></i> Riêng tư (Chỉ mình tôi)</span>
+                <p class="text-[11px] mt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Chỉ tài khoản của bạn mới có quyền tra cứu và dùng AI soạn thảo từ tệp này.</p>
               </div>
             </label>
 
             <!-- 2. Phòng ban -->
             <label class="flex items-start space-x-3 p-2.5 rounded-xl border cursor-pointer transition"
-                   :class="personalBrain.shareItemForm.visibility === 'department' ? 'bg-amber-950/30 border-amber-500/60' : 'bg-slate-900 border-slate-800 hover:border-slate-700'">
+                   :class="personalBrain.shareItemForm.visibility === 'department' ? (currentTheme === 'light' ? 'bg-amber-50 border-amber-400' : 'bg-amber-950/30 border-amber-500/60') : (currentTheme === 'light' ? 'bg-white border-slate-300 hover:border-slate-400' : 'bg-slate-900 border-slate-800 hover:border-slate-700')">
               <input type="radio" value="department" x-model="personalBrain.shareItemForm.visibility" class="mt-0.5 text-amber-600 focus:ring-0">
               <div>
-                <span class="font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-users text-amber-400"></i> Dùng chung phòng ban chuyên môn</span>
-                <p class="text-[11px] text-slate-400 mt-0.5">Toàn bộ công chức trong bộ phận của bạn và Lãnh đạo phụ trách đều được dùng chung.</p>
+                <span class="font-bold flex items-center gap-1.5" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'"><i class="fa-solid fa-users text-amber-400"></i> Dùng chung phòng ban chuyên môn</span>
+                <p class="text-[11px] mt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Toàn bộ công chức trong bộ phận của bạn và Lãnh đạo phụ trách đều được dùng chung.</p>
               </div>
             </label>
 
             <!-- 3. Toàn xã / đơn vị -->
             <label class="flex items-start space-x-3 p-2.5 rounded-xl border cursor-pointer transition"
-                   :class="personalBrain.shareItemForm.visibility === 'public_commune' ? 'bg-blue-950/30 border-blue-500/60' : 'bg-slate-900 border-slate-800 hover:border-slate-700'">
+                   :class="personalBrain.shareItemForm.visibility === 'public_commune' ? (currentTheme === 'light' ? 'bg-blue-50 border-blue-400' : 'bg-blue-950/30 border-blue-500/60') : (currentTheme === 'light' ? 'bg-white border-slate-300 hover:border-slate-400' : 'bg-slate-900 border-slate-800 hover:border-slate-700')">
               <input type="radio" value="public_commune" x-model="personalBrain.shareItemForm.visibility" class="mt-0.5 text-blue-600 focus:ring-0">
               <div>
-                <span class="font-bold text-white flex items-center gap-1.5">
+                <span class="font-bold flex items-center gap-1.5" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">
                   <i class="fa-solid fa-landmark text-blue-400"></i>
                   <span x-text="'Đưa vào Kho Dùng Chung Toàn ' + (personalBrain.settingsForm.user_unit || 'Cơ Quan / Xã, Phường')"></span>
                 </span>
-                <p class="text-[11px] text-slate-400 mt-0.5" x-text="'Tất cả cán bộ, công chức và lãnh đạo thuộc ' + (personalBrain.settingsForm.user_unit || 'đơn vị') + ' đều cùng khai thác tra cứu.'"></p>
+                <p class="text-[11px] mt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'" x-text="'Tất cả cán bộ, công chức và lãnh đạo thuộc ' + (personalBrain.settingsForm.user_unit || 'đơn vị') + ' đều cùng khai thác tra cứu.'"></p>
               </div>
             </label>
           </div>
         </div>
 
-        <div class="p-2.5 bg-indigo-950/20 border border-indigo-500/20 rounded-lg text-[11px] text-indigo-300/90 leading-relaxed">
+        <div class="p-2.5 border rounded-lg text-[11px] leading-relaxed" :class="currentTheme === 'light' ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-indigo-950/20 border-indigo-500/20 text-indigo-300/90'">
           <i class="fa-solid fa-shield-halved mr-1 text-indigo-400"></i> Mọi thay đổi về quyền truy cập đều được ghi vết bảo mật tự động vào Audit Log.
         </div>
       </div>
 
-      <div class="flex items-center justify-end gap-2 px-5 py-3 bg-[#0f172a] border-t border-slate-800">
-        <button type="button" @click="personalBrain.showShareItemModal = false" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold">Hủy</button>
+      <div class="flex items-center justify-end gap-2 px-5 py-3 border-t" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-slate-800'">
+        <button type="button" @click="personalBrain.showShareItemModal = false" class="px-4 py-2 rounded-xl text-xs font-semibold" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'">Hủy</button>
         <button type="button" @click="submitShareBrainItem()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30">Lưu Phân Quyền</button>
       </div>
     </div>
@@ -951,7 +1043,7 @@
             <i class="fa-solid fa-user-plus text-amber-300"></i>
             <span>+ Tạo Tài Khoản</span>
           </button>
-          <button @click="personalBrain.showCommuneAdminModal = false" class="text-slate-400 hover:text-rose-500 ml-2 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+          <button @click="personalBrain.showCommuneAdminModal = false" class="ml-2 p-1" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-rose-600' : 'text-slate-400 hover:text-rose-500'"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
       </div>
 
@@ -975,7 +1067,7 @@
                   <td class="py-2.5 px-3">
                     <div class="font-bold text-xs sm:text-sm group-hover:text-teal-600 transition flex items-center gap-1.5" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">
                       <span x-text="u.fullname"></span>
-                      <span x-show="u.role === 'super_admin'" class="px-1.5 py-0.2 rounded text-[9px] bg-amber-500/20 text-amber-500 font-bold border border-amber-500/40">SUPER ADMIN</span>
+                      <span x-show="u.role === 'super_admin'" class="px-1.5 py-0.2 rounded text-[9px] font-bold border" :class="currentTheme === 'light' ? 'bg-amber-100 text-amber-700 border-amber-300' : 'bg-amber-500/20 text-amber-500 border-amber-500/40'">SUPER ADMIN</span>
                     </div>
                     <div class="text-[10px] font-mono flex items-center gap-1 mt-0.5" :class="currentTheme === 'light' ? 'text-teal-700 font-semibold' : 'text-teal-400'">
                       <i class="fa-solid fa-id-card text-[9px]"></i>
@@ -1025,8 +1117,8 @@
                         <span class="hidden sm:inline">Sửa</span>
                       </button>
                       <!-- Nút Xóa -->
-                      <button type="button" @click="deleteCommuneUser(u)" class="px-2 py-1 bg-rose-950/40 hover:bg-rose-600 text-rose-300 hover:text-white rounded-lg text-xs font-semibold border border-rose-600/40 transition flex items-center gap-1 shadow-sm" title="Xóa tài khoản cán bộ">
-                        <i class="fa-solid fa-trash-can text-rose-400"></i>
+                      <button type="button" @click="deleteCommuneUser(u)" class="px-2 py-1 rounded-lg text-xs font-semibold border transition flex items-center gap-1 shadow-sm" :class="currentTheme === 'light' ? 'bg-rose-100 hover:bg-rose-600 text-rose-700 hover:text-white border-rose-300' : 'bg-rose-950/40 hover:bg-rose-600 text-rose-300 hover:text-white border-rose-600/40'" title="Xóa tài khoản cán bộ">
+                        <i class="fa-solid fa-trash-can" :class="currentTheme === 'light' ? 'text-rose-600' : 'text-rose-400'"></i>
                         <span class="hidden sm:inline">Xóa</span>
                       </button>
                       <!-- Nút Đăng nhập -->
@@ -1042,9 +1134,9 @@
         </div>
       </div>
 
-      <div class="flex items-center justify-between px-5 py-3 bg-[#0f172a] border-t border-slate-800 flex-shrink-0 text-xs">
-        <span class="text-slate-400">Đang có <b class="text-indigo-400" x-text="personalBrain.communeUsers.length"></b> tài khoản CBCC <span x-text="personalBrain.settingsForm.user_unit ? ('thuộc ' + personalBrain.settingsForm.user_unit) : 'đơn vị'"></span> đã được cấp quyền</span>
-        <button type="button" @click="personalBrain.showCommuneAdminModal = false" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold">Đóng</button>
+      <div class="flex items-center justify-between px-5 py-3 border-t flex-shrink-0 text-xs" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-slate-800'">
+        <span :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Đang có <b :class="currentTheme === 'light' ? 'text-indigo-600' : 'text-indigo-400'" x-text="personalBrain.communeUsers.length"></b> tài khoản CBCC <span x-text="personalBrain.settingsForm.user_unit ? ('thuộc ' + personalBrain.settingsForm.user_unit) : 'đơn vị'"></span> đã được cấp quyền</span>
+        <button type="button" @click="personalBrain.showCommuneAdminModal = false" class="px-4 py-1.5 rounded-xl text-xs font-semibold" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'">Đóng</button>
       </div>
     </div>
   </div>
@@ -1061,7 +1153,8 @@
             <h3 :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" class="text-sm sm:text-base font-black uppercase tracking-wide">ĐĂNG NHẬP KHO TRI THỨC</h3>
             <p :class="currentTheme === 'light' ? 'text-slate-600 font-medium' : 'text-teal-300'" class="text-xs">Dành cho Cán bộ, Công chức cấp xã/phường</p>
           </div>
-          <button @click="personalBrain.showLoginModal = false" class="text-slate-400 hover:text-rose-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+        <button @click="personalBrain.showLoginModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-rose-600' : 'text-slate-400 hover:text-rose-500'"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <div class="p-5 space-y-4 text-xs">
@@ -1077,13 +1170,13 @@
             Tên đăng nhập (Số CCCD 12 số) <span class="text-rose-500">*</span>
           </label>
           <div class="relative">
-            <i class="fa-solid fa-id-card absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            <i class="fa-solid fa-id-card absolute left-3 top-2.5 text-xs" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'"></i>
             <input type="text" maxlength="12" x-model="personalBrain.loginForm.username" @input="personalBrain.loginError = ''" placeholder="Nhập số CCCD (VD: 070077000098)" 
                    :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-teal-600' : 'bg-slate-900 border-slate-700 text-white font-mono focus:border-teal-500'" 
                    class="w-full border rounded-xl pl-8 pr-3 py-2 text-xs sm:text-sm font-mono font-bold focus:outline-none shadow-sm">
           </div>
           <!-- Gợi ý lỗi nhập thiếu số CCCD -->
-          <div x-show="personalBrain.loginForm.username && personalBrain.loginForm.username.length > 0 && personalBrain.loginForm.username.length < 12" class="text-[11px] text-amber-500 font-medium mt-1 flex items-center gap-1">
+          <div x-show="personalBrain.loginForm.username && personalBrain.loginForm.username.length > 0 && personalBrain.loginForm.username.length < 12" class="text-[11px] font-medium mt-1 flex items-center gap-1" :class="currentTheme === 'light' ? 'text-amber-600' : 'text-amber-500'">
             <i class="fa-solid fa-triangle-exclamation"></i>
             <span>Số CCCD phải đủ 12 chữ số (Hiện tại: <b x-text="personalBrain.loginForm.username.length"></b>/12)</span>
           </div>
@@ -1097,7 +1190,7 @@
             <button type="button" @click="promptResetPasswordViaEmail()" class="text-xs text-teal-600 dark:text-teal-400 hover:underline font-bold">Quên mật khẩu?</button>
           </div>
           <div class="relative">
-            <i class="fa-solid fa-key absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            <i class="fa-solid fa-key absolute left-3 top-2.5 text-xs" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'"></i>
             <input type="password" x-model="personalBrain.loginForm.password" @input="personalBrain.loginError = ''" @keydown.enter="submitCommuneLogin()" :placeholder="'Nhập mật khẩu (Mặc định: ' + getDefaultCommunePassword() + ')'" 
                    :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-teal-600' : 'bg-slate-900 border-slate-700 text-white font-mono focus:border-teal-500'" 
                    class="w-full border rounded-xl pl-8 pr-3 py-2 text-xs sm:text-sm font-mono focus:outline-none shadow-sm">
@@ -1132,7 +1225,7 @@
             <p :class="currentTheme === 'light' ? 'text-slate-600' : 'text-amber-300'" class="text-[11px]" x-text="'Tài khoản: ' + personalBrain.editUserForm.username"></p>
           </div>
         </div>
-        <button @click="personalBrain.showEditUserModal = false" class="text-slate-400 hover:text-rose-500 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button @click="personalBrain.showEditUserModal = false" class="p-1" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-rose-600' : 'text-slate-400 hover:text-rose-500'"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <!-- Modal Body cuộn độc lập bên trong -->
@@ -1287,7 +1380,7 @@
             <p :class="currentTheme === 'light' ? 'text-slate-600' : 'text-emerald-300'" class="text-[11px]">Khởi tạo định danh, phân bổ phòng ban và cấp hạn mức ổ đĩa</p>
           </div>
         </div>
-        <button @click="personalBrain.showAddUserModal = false" class="text-slate-400 hover:text-rose-500 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button @click="personalBrain.showAddUserModal = false" class="p-1" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-rose-600' : 'text-slate-400 hover:text-rose-500'"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <!-- Modal Body cuộn độc lập bên trong không bao giờ đẩy trôi header/footer -->
@@ -1399,22 +1492,43 @@
 
         <div>
           <label :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-300'" class="font-bold block mb-1">Vai trò hệ thống</label>
-          <select x-model="personalBrain.newUserForm.role" 
+          <select x-model="personalBrain.newUserForm.role"
+                  :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-emerald-600' : 'bg-slate-900 border-slate-700 text-white focus:border-emerald-500'"
+                  class="w-full border rounded-lg px-3 py-2 focus:outline-none font-semibold">
+            <option value="officer">Chuyên viên — Cán bộ thường (nộp và xem tài liệu)</option>
+            <option value="department_lead">Trưởng bộ phận — Duyệt nội bộ phòng ban</option>
+            <option value="commune_admin">Quản trị viên UBND xã — Duyệt công khai toàn kho</option>
+            <option value="super_admin">Super Admin — Quản trị tối cao toàn hệ thống</option>
+          </select>
+          <p :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" class="text-[10px] mt-0.5">
+            <i class="fa-solid fa-circle-info text-emerald-500"></i> Vai trò quyết định quyền duyệt tài liệu dùng chung và quản lý tài khoản. Mật khẩu mặc định cấp: <b>tên đơn vị @2026</b> (VD: ThanhDuc@2026).
+          </p>
+        </div>
+      </div>
+
+      <!-- Modal Footer: nút thao tác -->
+      <div class="px-5 py-3.5 border-t flex items-center justify-end gap-2 flex-shrink-0" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+        <button type="button" @click="personalBrain.showAddUserModal = false" class="px-4 py-2 rounded-xl text-xs font-bold border" :class="currentTheme === 'light' ? 'border-slate-300 text-slate-600 hover:bg-slate-100' : 'border-slate-600 text-slate-300 hover:bg-slate-800'">Hủy</button>
+        <button type="button" @click="submitCreateCommuneUser()" class="px-5 py-2 rounded-xl text-xs font-black bg-emerald-600 text-white hover:bg-emerald-500 shadow-md">✔ TẠO TÀI KHOẢN</button>
+      </div>
+    </div>
+  </div>
+
     <!-- ================= MODAL CÀI ĐẶT TRI THỨC CÁ NHÂN (SETTINGS MODAL) ================= -->
   <div x-show="personalBrain.showSettingsModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4" x-cloak>
-    <div class="bg-[#111827] border border-teal-500/50 rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+    <div class="border rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-teal-500/50'">
       <!-- Modal Header -->
-      <div class="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-[#0f172a] via-[#132337] to-[#0f172a] border-b border-slate-800 flex-shrink-0">
+      <div class="flex items-center justify-between px-5 py-3.5 border-b flex-shrink-0" :class="currentTheme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-gradient-to-r from-[#0f172a] via-[#132337] to-[#0f172a] border-slate-800'">
         <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-300 text-lg shadow-md flex-shrink-0">
+          <div class="w-10 h-10 rounded-xl border flex items-center justify-center text-lg shadow-md flex-shrink-0" :class="currentTheme === 'light' ? 'bg-teal-100 border-teal-300 text-teal-600' : 'bg-teal-500/20 border-teal-500/40 text-teal-300'">
             <i class="fa-solid fa-sliders"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-white tracking-wide uppercase">CÀI ĐẶT HỆ THỐNG KHO TRI THỨC CÁ NHÂN</h3>
-            <p class="text-[11px] text-slate-300">Khai báo danh tính người dùng • Cấu hình đồng bộ Google Drive, Link Web & Mô hình AI</p>
+            <h3 class="text-sm font-bold tracking-wide uppercase" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">CÀI ĐẶT HỆ THỐNG KHO TRI THỨC CÁ NHÂN</h3>
+            <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-300'">Khai báo danh tính người dùng • Cấu hình đồng bộ Google Drive, Link Web & Mô hình AI</p>
           </div>
         </div>
-        <button @click="personalBrain.showSettingsModal = false" class="text-slate-400 hover:text-white p-1">
+        <button @click="personalBrain.showSettingsModal = false" class="p-1" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -1422,32 +1536,32 @@
       <!-- Modal Body -->
       <div class="p-5 overflow-y-auto flex-1 space-y-5 text-xs">
         <!-- Nhóm 1: Thông tin người sử dụng -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
+        <div class="border rounded-xl p-4 space-y-3" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/80 border-slate-800'">
           <div class="flex items-center gap-2 text-teal-400 font-bold uppercase tracking-wider text-[11px]">
             <i class="fa-solid fa-id-card"></i>
             <span>1. Khai báo Người Sử Dụng & Ký Duyệt</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="text-slate-300 font-semibold block mb-1">Họ và tên người sử dụng</label>
-              <input type="text" x-model="personalBrain.settingsForm.user_fullname" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:outline-none focus:border-teal-500" placeholder="Nguyễn Trung Hiếu">
+              <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Họ và tên người sử dụng</label>
+              <input type="text" x-model="personalBrain.settingsForm.user_fullname" class="w-full border rounded-lg px-3 py-2 font-medium focus:outline-none focus:border-teal-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'" placeholder="Nguyễn Trung Hiếu">
             </div>
             <div>
-              <label class="text-slate-300 font-semibold block mb-1">Chức vụ</label>
-              <input type="text" x-model="personalBrain.settingsForm.user_title" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:outline-none focus:border-teal-500 uppercase" placeholder="PHÓ GIÁM ĐỐC">
+              <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Chức vụ</label>
+              <input type="text" x-model="personalBrain.settingsForm.user_title" class="w-full border rounded-lg px-3 py-2 font-medium focus:outline-none focus:border-teal-500 uppercase" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'" placeholder="PHÓ GIÁM ĐỐC">
             </div>
           </div>
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Tên cơ quan / Xã, Phường, Thị trấn công tác</label>
-            <input type="text" x-model="personalBrain.settingsForm.user_unit" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-teal-500 font-medium" placeholder="UBND Xã Thạnh Đức / Sở Khoa học và Công nghệ...">
-            <p class="text-[10px] text-slate-400 mt-1">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Tên cơ quan / Xã, Phường, Thị trấn công tác</label>
+            <input type="text" x-model="personalBrain.settingsForm.user_unit" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-teal-500 font-medium" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'" placeholder="UBND Xã Thạnh Đức / Sở Khoa học và Công nghệ...">
+            <p class="text-[10px] mt-1" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
               <i class="fa-solid fa-circle-info text-teal-400"></i> Trường dữ liệu <b>Đơn vị</b> này sẽ được dùng tự động để đặt tên tiêu đề văn bản, gán quyền kho tri thức dùng chung và hiển thị trên toàn hệ thống.
             </p>
           </div>
         </div>
 
         <!-- Nhóm 2: Google Drive MCP & Tự động nạp Brain -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
+        <div class="border rounded-xl p-4 space-y-3" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/80 border-slate-800'">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider text-[11px]">
               <i class="fa-brands fa-google-drive"></i>
@@ -1455,44 +1569,44 @@
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" x-model="personalBrain.settingsForm.gdrive_enabled" class="sr-only peer">
-              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
+              <div class="w-9 h-5 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500" :class="currentTheme === 'light' ? 'bg-slate-300' : 'bg-slate-700'"></div>
             </label>
           </div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">
+          <p class="text-[11px] leading-relaxed" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
             MCP Google Drive tự động theo dõi thư mục lưu trữ: khi có tệp mới tải lên hoặc sửa đổi, hệ thống sẽ tự động bóc tách và nạp vào Second Brain để truy xuất.
           </p>
           <div x-show="personalBrain.settingsForm.gdrive_enabled" class="space-y-3 pt-1">
             <div>
-              <label class="text-slate-300 font-semibold block mb-1">Đường dẫn thư mục Google Drive đồng bộ</label>
-              <input type="text" x-model="personalBrain.settingsForm.gdrive_folder_url" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-500 font-mono text-[11px]" placeholder="https://drive.google.com/drive/folders/...">
+              <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Đường dẫn thư mục Google Drive đồng bộ</label>
+              <input type="text" x-model="personalBrain.settingsForm.gdrive_folder_url" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500 font-mono text-[11px]" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'" placeholder="https://drive.google.com/drive/folders/...">
             </div>
             <div class="flex items-center gap-2">
-              <input type="checkbox" id="gdrive_auto_sync" x-model="personalBrain.settingsForm.gdrive_auto_sync" class="rounded bg-slate-950 border-slate-700 text-amber-500 focus:ring-0">
-              <label for="gdrive_auto_sync" class="text-slate-300 text-[11px] cursor-pointer">Tự động kích hoạt nạp vào Brain khi phát hiện file mới/thay đổi</label>
+              <input type="checkbox" id="gdrive_auto_sync" x-model="personalBrain.settingsForm.gdrive_auto_sync" class="rounded focus:ring-0" :class="currentTheme === 'light' ? 'bg-white border-slate-400 text-amber-500' : 'bg-slate-950 border-slate-700 text-amber-500'">
+              <label for="gdrive_auto_sync" class="text-[11px] cursor-pointer" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Tự động kích hoạt nạp vào Brain khi phát hiện file mới/thay đổi</label>
             </div>
           </div>
         </div>
 
         <!-- Nhóm 3: Link Web Tự Động Đọc & Nạp (Pháp luật, Chính phủ...) -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
+        <div class="border rounded-xl p-4 space-y-3" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/80 border-slate-800'">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2 text-cyan-400 font-bold uppercase tracking-wider text-[11px]">
               <i class="fa-solid fa-globe"></i>
               <span>3. Danh Sách Link Web Tự Động Đọc & Nạp (Văn bản QPPL, Chính phủ)</span>
             </div>
-            <button type="button" @click="addBrainWebLink()" class="px-2.5 py-1 bg-cyan-600/20 hover:bg-cyan-600 border border-cyan-500/40 text-cyan-300 hover:text-white rounded-lg text-[10px] font-bold flex items-center gap-1 transition">
+            <button type="button" @click="addBrainWebLink()" class="px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 transition border" :class="currentTheme === 'light' ? 'bg-cyan-100 hover:bg-cyan-600 text-cyan-700 hover:text-white border-cyan-300' : 'bg-cyan-600/20 hover:bg-cyan-600 text-cyan-300 hover:text-white border-cyan-500/40'">
               <i class="fa-solid fa-plus"></i>
               <span>Thêm link web</span>
             </button>
           </div>
-          <p class="text-[11px] text-slate-400">
+          <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
             Hệ thống tự động theo dõi, cào và bóc tách các trang thông tin chính thống để làm giàu nguồn tri thức tham chiếu.
           </p>
           <div class="space-y-2">
             <template x-for="(link, lIdx) in personalBrain.settingsForm.web_links" :key="lIdx">
               <div class="flex items-center gap-2">
-                <input type="text" x-model="personalBrain.settingsForm.web_links[lIdx]" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-cyan-500 font-mono text-[11px]" placeholder="https://...">
-                <button type="button" @click="removeBrainWebLink(lIdx)" class="w-8 h-8 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/40 flex items-center justify-center transition" title="Xóa link này">
+                <input type="text" x-model="personalBrain.settingsForm.web_links[lIdx]" class="flex-1 border rounded-lg px-3 py-1.5 focus:outline-none focus:border-cyan-500 font-mono text-[11px]" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'" placeholder="https://...">
+                <button type="button" @click="removeBrainWebLink(lIdx)" class="w-8 h-8 rounded-lg border flex items-center justify-center transition" :class="currentTheme === 'light' ? 'bg-rose-100 hover:bg-rose-600 text-rose-700 hover:text-white border-rose-300' : 'bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border-rose-500/40'" title="Xóa link này">
                   <i class="fa-solid fa-trash-can text-xs"></i>
                 </button>
               </div>
@@ -1501,14 +1615,14 @@
         </div>
 
         <!-- Nhóm 4: Cấu hình Mô hình AI sử dụng riêng cho Tri Thức Cá Nhân -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-3">
+        <div class="border rounded-xl p-4 space-y-3" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/80 border-slate-800'">
           <div class="flex items-center gap-2 text-indigo-400 font-bold uppercase tracking-wider text-[11px]">
             <i class="fa-solid fa-microchip-ai"></i>
             <span>4. Cấu Hình Mô Hình AI Sử Dụng Riêng Cho Mục Này</span>
           </div>
           <div>
-            <label class="text-slate-300 font-semibold block mb-1">Mô hình AI chuyên trách soạn thảo & tổng hợp Brain</label>
-            <select x-model="personalBrain.settingsForm.ai_model" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:outline-none focus:border-indigo-500">
+            <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Mô hình AI chuyên trách soạn thảo & tổng hợp Brain</label>
+            <select x-model="personalBrain.settingsForm.ai_model" class="w-full border rounded-lg px-3 py-2 font-medium focus:outline-none focus:border-indigo-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
               <option value="google-antigravity/gemini-3.8-flash">google-antigravity/gemini-3.8-flash (Tốc độ siêu nhanh, tổng hợp tri thức đa nguồn xuất sắc)</option>
               <option value="google-antigravity/gemini-3.7-flash">google-antigravity/gemini-3.7-flash (Ổn định, ngữ cảnh lớn)</option>
               <option value="gpt-5.6-sol">gpt-5.6-sol (Tốc độ cao 1-2s, lập luận hành chính chuẩn)</option>
@@ -1516,13 +1630,22 @@
               <option value="glm/glm-5.3-flash">glm/glm-5.3-flash (Mô hình tư duy sâu, phân tích chi tiết)</option>
             </select>
             <p class="text-[10px] text-slate-500 mt-1">Mô hình này sẽ được ưu tiên chạy riêng khi bấm nút "Tạo văn bản/báo cáo" từ kho tri thức cá nhân.</p>
+            <div class="grid grid-cols-1 gap-2 mt-2 pt-2 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
+              <label class="block font-semibold text-[11px]" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">🔗 AI Provider URL (endpoint chat/completions)</label>
+              <input type="text" x-model="personalBrain.settingsForm.ai_provider_url" placeholder="http://127.0.0.1:10100/v1/chat/completions"
+                     class="w-full border rounded-lg px-3 py-2 font-mono text-[11px] focus:outline-none focus:border-indigo-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+              <label class="block font-semibold text-[11px]" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">🔑 AI Provider API Key</label>
+              <input type="password" x-model="personalBrain.settingsForm.ai_provider_key" placeholder="ocx_... hoặc sk-..."
+                     class="w-full border rounded-lg px-3 py-2 font-mono text-[11px] focus:outline-none focus:border-indigo-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+              <p class="text-[10px] opacity-60">Mặc định: Opencodex proxy local (cổng 10100). Đổi sang provider khác (OpenRouter, Ollama...) nếu muốn.</p>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Modal Footer -->
-      <div class="flex items-center justify-between px-5 py-3.5 bg-[#0f172a] border-t border-slate-800 flex-shrink-0">
-        <button @click="personalBrain.showSettingsModal = false" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-semibold">Đóng</button>
+      <div class="flex items-center justify-between px-5 py-3.5 border-t flex-shrink-0" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-slate-800'">
+        <button @click="personalBrain.showSettingsModal = false" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Đóng</button>
         <button @click="saveBrainSettings()" :disabled="personalBrain.settingsSaving" class="px-5 py-2 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-teal-600/30 disabled:opacity-50">
           <i class="fa-solid" :class="personalBrain.settingsSaving ? 'fa-spinner fa-spin' : 'fa-floppy-disk'"></i>
           <span x-text="personalBrain.settingsSaving ? 'Đang lưu cài đặt...' : 'Lưu Thay Đổi Cài Đặt'"></span>
@@ -1532,38 +1655,38 @@
   </div>
     <!-- Modal 6: Soạn Thảo Văn Bản Chuẩn Thể Thức (Report Generator) -->
   <div x-show="personalBrain.showReportModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4" x-cloak>
-    <div class="bg-[#111827] border border-blue-500/50 rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+    <div class="border rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-blue-500/50'">
       <!-- Modal Header -->
-      <div class="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-[#0f172a] to-[#162238] border-b border-slate-800 flex-shrink-0">
+      <div class="flex items-center justify-between px-5 py-3.5 border-b flex-shrink-0" :class="currentTheme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-gradient-to-r from-[#0f172a] to-[#162238] border-slate-800'">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/30 flex-shrink-0">
             <i class="fa-solid fa-file-pen text-lg"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-sm font-bold text-white tracking-wide">SOẠN THẢO VĂN BẢN TỔNG HỢP</h3>
-              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">A4 • TIMES NEW ROMAN</span>
+              <h3 class="text-sm font-bold tracking-wide" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">SOẠN THẢO VĂN BẢN TỔNG HỢP</h3>
+              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold border" :class="currentTheme === 'light' ? 'bg-amber-100 text-amber-700 border-amber-300' : 'bg-amber-500/20 text-amber-300 border-amber-500/30'">A4 • TIMES NEW ROMAN</span>
             </div>
-            <p class="text-[11px] text-slate-300">Trích xuất tri thức từ Brain • Bố cục chuẩn mực • Tự sinh tệp Word .docx chuẩn chỉnh</p>
+            <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-300'">Trích xuất tri thức từ Brain • Bố cục chuẩn mực • Tự sinh tệp Word .docx chuẩn chỉnh</p>
           </div>
         </div>
-        <button @click="personalBrain.showReportModal = false" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button @click="personalBrain.showReportModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <!-- Modal Body -->
       <div class="p-5 overflow-y-auto flex-1 space-y-4 text-xs">
         <!-- Selected Items Banner -->
-        <div class="p-3 bg-blue-950/30 border border-blue-500/30 rounded-xl space-y-1.5">
+        <div class="p-3 border rounded-xl space-y-1.5" :class="currentTheme === 'light' ? 'bg-blue-50 border-blue-200' : 'bg-blue-950/30 border-blue-500/30'">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-blue-300 flex items-center gap-1.5">
-              <i class="fa-solid fa-layer-group text-blue-400"></i>
-              <span>Nguồn tri thức được chọn: <b class="text-amber-300 font-mono text-sm" x-text="getSelectedBrainItems().length"></b> tài liệu</span>
+            <span class="font-bold flex items-center gap-1.5" :class="currentTheme === 'light' ? 'text-blue-700' : 'text-blue-300'">
+              <i class="fa-solid fa-layer-group" :class="currentTheme === 'light' ? 'text-blue-600' : 'text-blue-400'"></i>
+              <span>Nguồn tri thức được chọn: <b class="font-mono text-sm" :class="currentTheme === 'light' ? 'text-amber-700' : 'text-amber-300'" x-text="getSelectedBrainItems().length"></b> tài liệu</span>
             </span>
-            <span class="text-[11px] text-slate-400">Tổng <b class="font-mono text-slate-200" x-text="getSelectedBrainItems().reduce((acc, it) => acc + (it.word_count || 0), 0).toLocaleString()"></b> từ ngữ cảnh</span>
+            <span class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Tổng <b class="font-mono text-slate-200" x-text="getSelectedBrainItems().reduce((acc, it) => acc + (it.word_count || 0), 0).toLocaleString()"></b> từ ngữ cảnh</span>
           </div>
           <div class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pt-1">
             <template x-for="it in getSelectedBrainItems()" :key="it.id">
-              <span class="px-2 py-0.5 rounded text-[10px] bg-slate-900 border border-slate-700 text-slate-300 flex items-center gap-1 max-w-xs truncate">
+              <span class="px-2 py-0.5 rounded text-[10px] border flex items-center gap-1 max-w-xs truncate" :class="currentTheme === 'light' ? 'bg-slate-100 border-slate-300 text-slate-700' : 'bg-slate-900 border-slate-700 text-slate-300'">
                 <i class="fa-solid fa-file-lines text-teal-400 text-[9px]"></i>
                 <span class="truncate" x-text="it.title"></span>
               </span>
@@ -1575,8 +1698,8 @@
         <div class="space-y-3">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="text-slate-300 font-semibold block mb-1">Loại văn bản thể thức <span class="text-rose-400">*</span></label>
-              <select x-model="personalBrain.reportForm.loai_van_ban" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:outline-none focus:border-blue-500 text-xs">
+              <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Loại văn bản thể thức <span class="text-rose-400">*</span></label>
+              <select x-model="personalBrain.reportForm.loai_van_ban" class="w-full border rounded-lg px-3 py-2 font-medium focus:outline-none focus:border-blue-500 text-xs" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-white'">
                 <optgroup label="🏛️ KHỐI CHÍNH QUYỀN (NGHỊ ĐỊNH 30/2020/NĐ-CP)">
                   <option value="bao_cao">Báo cáo (BÁO CÁO)</option>
                   <option value="to_trinh">Tờ trình (TỜ TRÌNH)</option>
@@ -1605,51 +1728,51 @@
               </select>
             </div>
             <div>
-              <label class="text-slate-300 font-semibold block mb-1">Cơ quan nhận / Báo cáo <span class="text-rose-400">*</span></label>
-              <input type="text" x-model="personalBrain.reportForm.co_quan_gui" placeholder="Ủy ban nhân dân tỉnh Tây Ninh" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500">
+              <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Cơ quan nhận / Báo cáo <span class="text-rose-400">*</span></label>
+              <input type="text" x-model="personalBrain.reportForm.co_quan_gui" placeholder="Ủy ban nhân dân tỉnh Tây Ninh" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-white'">
             </div>
           </div>
 
           <!-- ================= KHUNG THỂ THỨC CHUẨN VBĐH (TỰ ĐỘNG SINH NỘI DUNG BÊN TRONG) ================= -->
-          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 font-serif text-slate-200 leading-relaxed shadow-inner space-y-3">
+          <div class="border rounded-xl p-4 font-serif leading-relaxed shadow-inner space-y-3" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-800 text-slate-200'">
             <!-- 1. Đầu trang 2 cột -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-0 text-center text-[11px] pb-3 border-b border-slate-800">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-0 text-center text-[11px] pb-3 border-b" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
               <div class="min-w-0">
-                <p class="font-bold text-slate-300" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'TỈNH ỦY TÂY NINH' : 'UBND TỈNH TÂY NINH'"></p>
-                <p class="font-bold text-white uppercase" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'ĐẢNG BỘ SỞ KH&CN' : (['ke_hoach','quyet_dinh'].includes(personalBrain.reportForm.loai_van_ban) ? '' : (personalBrain.settingsForm.user_unit || 'SỞ KHOA HỌC VÀ CÔNG NGHỆ'))"></p>
-                <p class="text-slate-400 font-medium font-mono" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'Số: ...-BC/ĐBU' : 'Số:       /BC-SKHCN'"></p>
+                <p class="font-bold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'TỈNH ỦY TÂY NINH' : 'UBND TỈNH TÂY NINH'"></p>
+                <p class="font-bold uppercase" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'ĐẢNG BỘ SỞ KH&CN' : (['ke_hoach','quyet_dinh'].includes(personalBrain.reportForm.loai_van_ban) ? '' : (personalBrain.settingsForm.user_unit || 'SỞ KHOA HỌC VÀ CÔNG NGHỆ'))"></p>
+                <p class="font-medium font-mono" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'Số: ...-BC/ĐBU' : 'Số:       /BC-SKHCN'"></p>
               </div>
               <div>
-                <p class="font-bold text-white uppercase" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'ĐẢNG CỘNG SẢN VIỆT NAM' : 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM'"></p>
-                <p class="font-bold text-slate-300" x-show="!(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang')">Độc lập - Tự do - Hạnh phúc</p>
-                <p class="italic text-slate-400">Tây Ninh, ngày... tháng... năm 2026</p>
+                <p class="font-bold uppercase" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'ĐẢNG CỘNG SẢN VIỆT NAM' : 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM'"></p>
+                <p class="font-bold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'" x-show="!(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang')">Độc lập - Tự do - Hạnh phúc</p>
+                <p class="italic" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'">Tây Ninh, ngày... tháng... năm 2026</p>
               </div>
             </div>
 
             <!-- 2. Tiêu đề và trích yếu căn giữa (AI tự sinh theo ngữ cảnh tri thức) -->
             <div class="text-center py-2 space-y-1" x-show="!['cong_van', 'cong_van_dang'].includes(personalBrain.reportForm.loai_van_ban)">
-              <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider font-serif" x-text="getTenLoaiVanBanTiengViet(personalBrain.reportForm.loai_van_ban)"></h2>
-              <p class="text-xs font-bold text-slate-300 italic" x-text="personalBrain.generatedReport?.trich_yeu ? ('Về việc ' + personalBrain.generatedReport.trich_yeu.replace(/^(?:v\/v|về việc|về)\s*/i, '')) : (personalBrain.reportForm.trich_yeu ? ('Về việc ' + personalBrain.reportForm.trich_yeu.replace(/^(?:v\/v|về việc|về)\s*/i, '')) : '[Trích yếu nội dung do AI tự sinh theo ngữ cảnh tài liệu]')"></p>
+              <h2 class="text-base sm:text-lg font-bold uppercase tracking-wider font-serif" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" x-text="getTenLoaiVanBanTiengViet(personalBrain.reportForm.loai_van_ban)"></h2>
+              <p class="text-xs font-bold italic" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'" x-text="personalBrain.generatedReport?.trich_yeu ? ('Về việc ' + personalBrain.generatedReport.trich_yeu.replace(/^(?:v\/v|về việc|về)\s*/i, '')) : (personalBrain.reportForm.trich_yeu ? ('Về việc ' + personalBrain.reportForm.trich_yeu.replace(/^(?:v\/v|về việc|về)\s*/i, '')) : '[Trích yếu nội dung do AI tự sinh theo ngữ cảnh tài liệu]')"></p>
             </div>
 
             <!-- 3. Kính gửi (tab lùi dòng) -->
-            <div class="text-slate-300 text-xs whitespace-normal break-words pl-8">
-              <span :class="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'italic font-normal' : 'font-bold text-white'">Kính gửi: </span>
+            <div class="text-xs whitespace-normal break-words pl-8" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">
+              <span :class="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'italic font-normal' : (currentTheme === 'light' ? 'font-bold text-slate-900' : 'font-bold text-white')">Kính gửi: </span>
               <span x-text="personalBrain.reportForm.co_quan_gui || 'Ủy ban nhân dân tỉnh Tây Ninh'"></span>
             </div>
 
             <!-- 4. NỘI DUNG VĂN BẢN (TỰ ĐỘNG SINH & HIỂN THỊ NGAY BÊN TRONG KHUNG NÀY) -->
             <div class="pt-2">
-              <div x-show="personalBrain.generatingReport" class="flex items-center gap-3 p-4 bg-emerald-950/30 rounded-xl border border-emerald-500/40">
+              <div x-show="personalBrain.generatingReport" class="flex items-center gap-3 p-4 rounded-xl border" :class="currentTheme === 'light' ? 'bg-emerald-50 border-emerald-300' : 'bg-emerald-950/30 border-emerald-500/40'">
                 <i class="fa-solid fa-spinner fa-spin text-emerald-400 text-base shrink-0"></i>
                 <div class="min-w-0">
-                  <p class="text-slate-200 font-semibold">AI đang bóc tách tri thức và soạn thảo văn bản...</p>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Nội dung sẽ tự động xuất hiện trực tiếp ngay bên trong khung này khi hoàn tất.</p>
+                  <p class="font-semibold" :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-200'">AI đang bóc tách tri thức và soạn thảo văn bản...</p>
+                  <p class="text-[11px] mt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Nội dung sẽ tự động xuất hiện trực tiếp ngay bên trong khung này khi hoàn tất.</p>
                 </div>
               </div>
 
               <!-- Khi chưa sinh nội dung -->
-              <div x-show="!personalBrain.generatingReport && !personalBrain.generatedReport" class="p-8 text-center text-slate-500 border border-dashed border-slate-800 rounded-xl font-sans text-xs">
+              <div x-show="!personalBrain.generatingReport && !personalBrain.generatedReport" class="p-8 text-center border border-dashed rounded-xl font-sans text-xs" :class="currentTheme === 'light' ? 'text-slate-500 border-slate-300' : 'text-slate-500 border-slate-800'">
                 <i class="fa-solid fa-wand-magic-sparkles text-2xl text-slate-600 mb-2 block"></i>
                 <span>Nội dung do AI tự sinh sẽ xuất hiện tại đây sau khi bấm <b>[Bắt Đầu Soạn Thảo]</b> ở dưới.</span>
               </div>
@@ -1658,62 +1781,62 @@
               <div x-show="personalBrain.generatedReport && !personalBrain.generatingReport" class="space-y-2">
                 <!-- Nút thao tác nhanh trên khung nội dung -->
                 <div class="flex items-center justify-between pb-1">
-                  <div class="flex items-center gap-2 text-[11px] text-teal-400 font-mono">
+                  <div class="flex items-center gap-2 text-[11px] font-mono" :class="currentTheme === 'light' ? 'text-teal-600' : 'text-teal-400'">
                     <i class="fa-solid fa-file-word text-blue-400"></i>
                     <span x-text="personalBrain.generatedReport?.filename"></span>
-                    <span class="text-slate-400" x-text="'(' + (personalBrain.generatedReport?.word_count || 0) + ' từ)'"></span>
+                    <span :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" x-text="'(' + (personalBrain.generatedReport?.word_count || 0) + ' từ)'"></span>
                   </div>
-                  <button type="button" x-show="!brainDraftDangSua" @click="brainDraftDangSua = true; brainDraftNoiDungSua = (personalBrain.generatedReport?.noi_dung || personalBrain.generatedReport?.draft_body || '')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/40 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition">
+                  <button type="button" x-show="!brainDraftDangSua" @click="brainDraftDangSua = true; brainDraftNoiDungSua = (personalBrain.generatedReport?.noi_dung || personalBrain.generatedReport?.draft_body || '')" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition border" :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-slate-200 text-amber-700 border-amber-300' : 'bg-slate-800 hover:bg-slate-700 text-amber-300 border-amber-500/40'">
                     <i class="fa-solid fa-pen-to-square"></i>
                     <span>Sửa trực tiếp</span>
                   </button>
                 </div>
 
                 <!-- Chế độ xem văn bản -->
-                <div x-show="!brainDraftDangSua" class="p-3 bg-slate-950/60 rounded-lg border border-slate-800 whitespace-pre-wrap break-words font-sans text-xs text-slate-200 text-justify leading-relaxed max-h-96 overflow-y-auto" x-text="personalBrain.generatedReport?.noi_dung || personalBrain.generatedReport?.draft_body"></div>
+                <div x-show="!brainDraftDangSua" class="p-3 rounded-lg border whitespace-pre-wrap break-words font-sans text-xs text-justify leading-relaxed max-h-96 overflow-y-auto" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-800' : 'bg-slate-950/60 border-slate-800 text-slate-200'" x-text="personalBrain.generatedReport?.noi_dung || personalBrain.generatedReport?.draft_body"></div>
 
                 <!-- Chế độ sửa văn bản -->
                 <div x-show="brainDraftDangSua" class="space-y-2 font-sans">
-                  <textarea x-model="brainDraftNoiDungSua" rows="12" class="w-full p-3 rounded-lg bg-slate-950/80 border border-emerald-500/40 text-slate-100 text-xs leading-relaxed resize-y focus:outline-none focus:border-emerald-400" placeholder="Chỉnh sửa nội dung văn bản tại đây…"></textarea>
+                  <textarea x-model="brainDraftNoiDungSua" rows="12" class="w-full p-3 rounded-lg text-xs leading-relaxed resize-y focus:outline-none focus:border-emerald-400 border" :class="currentTheme === 'light' ? 'bg-white border-emerald-300 text-slate-900' : 'bg-slate-950/80 border-emerald-500/40 text-slate-100'" placeholder="Chỉnh sửa nội dung văn bản tại đây…"></textarea>
                   <div class="flex items-center gap-2">
                     <button type="button" @click="luuSuaBrainDraft()" :disabled="brainDraftDangLuu" class="px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-50 flex items-center gap-1">
                       <i class="fa-solid fa-floppy-disk"></i>
                       <span x-text="brainDraftDangLuu ? 'Đang lưu…' : 'Lưu thay đổi'"></span>
                     </button>
-                    <button type="button" @click="brainDraftDangSua = false" class="px-3 py-1.5 rounded-lg text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Hủy</button>
+                    <button type="button" @click="brainDraftDangSua = false" class="px-3 py-1.5 rounded-lg text-[11px] border" :class="currentTheme === 'light' ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'">Hủy</button>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- 5. Khối chữ ký & Nơi nhận phía dưới -->
-            <div class="grid grid-cols-2 pt-3 border-t border-slate-800 text-[11px]">
+            <div class="grid grid-cols-2 pt-3 border-t text-[11px]" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
               <div>
-                <p class="font-bold italic text-slate-400">Nơi nhận:</p>
-                <p class="text-slate-400 italic text-[10px]">- Như kính gửi;<br>- UBND tỉnh (báo cáo);<br>- Ban Giám đốc Sở;<br>- Lưu: VT, VP.</p>
+                <p class="font-bold italic" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'">Nơi nhận:</p>
+                <p class="italic text-[10px]" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'">- Như kính gửi;<br>- UBND tỉnh (báo cáo);<br>- Ban Giám đốc Sở;<br>- Lưu: VT, VP.</p>
               </div>
               <div class="text-center" x-show="!['ke_hoach','quyet_dinh'].includes(personalBrain.reportForm.loai_van_ban)">
-                <p class="font-bold text-slate-300" x-text="(personalBrain.settingsForm.user_title || '').toUpperCase().includes('PHÓ') ? 'KT. GIÁM ĐỐC' : ((personalBrain.settingsForm.user_title || '').toUpperCase().includes('GIÁM ĐỐC') ? 'GIÁM ĐỐC' : 'THỦ TRƯỞNG ĐƠN VỊ')"></p>
-                <p class="font-bold text-white uppercase" x-text="personalBrain.settingsForm.user_title || 'PHÓ GIÁM ĐỐC'"></p>
-                <div class="h-8 flex items-center justify-center text-[10px] text-emerald-400/80 font-mono italic">[Chờ ký số SIM PKI]</div>
-                <p class="font-bold text-white uppercase" x-text="personalBrain.settingsForm.user_fullname || 'Nguyễn Trung Hiếu'"></p>
+                <p class="font-bold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'" x-text="(personalBrain.settingsForm.user_title || '').toUpperCase().includes('PHÓ') ? 'KT. GIÁM ĐỐC' : ((personalBrain.settingsForm.user_title || '').toUpperCase().includes('GIÁM ĐỐC') ? 'GIÁM ĐỐC' : 'THỦ TRƯỞNG ĐƠN VỊ')"></p>
+                <p class="font-bold uppercase" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" x-text="personalBrain.settingsForm.user_title || 'PHÓ GIÁM ĐỐC'"></p>
+                <div class="h-8 flex items-center justify-center text-[10px] font-mono italic" :class="currentTheme === 'light' ? 'text-emerald-600/90' : 'text-emerald-400/80'">[Chờ ký số SIM PKI]</div>
+                <p class="font-bold uppercase" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" x-text="personalBrain.settingsForm.user_fullname || 'Nguyễn Trung Hiếu'"></p>
               </div>
               <div class="text-center" x-show="['ke_hoach','quyet_dinh'].includes(personalBrain.reportForm.loai_van_ban)">
-                <p class="font-bold text-slate-300">TM. ỦY BAN NHÂN DÂN TỈNH</p>
-                <p class="font-bold text-white">CHỦ TỊCH</p>
-                <div class="h-8 flex items-center justify-center text-[10px] text-emerald-400/80 font-mono italic">[UBND tỉnh ký ban hành]</div>
+                <p class="font-bold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">TM. ỦY BAN NHÂN DÂN TỈNH</p>
+                <p class="font-bold" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">CHỦ TỊCH</p>
+                <div class="h-8 flex items-center justify-center text-[10px] font-mono italic" :class="currentTheme === 'light' ? 'text-emerald-600/90' : 'text-emerald-400/80'">[UBND tỉnh ký ban hành]</div>
               </div>
             </div>
           </div>
 
           <!-- 6. Khung gửi gợi ý cho AI viết lại (chỉ hiện khi đã sinh xong) -->
-          <div x-show="personalBrain.generatedReport" class="p-3 bg-slate-900/70 border border-emerald-500/30 rounded-xl space-y-2">
-            <div class="flex items-center gap-1.5 text-[10px] text-slate-400">
+          <div x-show="personalBrain.generatedReport" class="p-3 border rounded-xl space-y-2" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/70 border-emerald-500/30'">
+            <div class="flex items-center gap-1.5 text-[10px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
               <i class="fa-solid fa-wand-magic-sparkles text-emerald-400"></i>
               <span>Gợi ý cho AI viết lại hoặc điều chỉnh (VD: bổ sung số liệu 2026, nhấn mạnh cải cách TTHC...):</span>
             </div>
             <div class="flex items-end gap-2">
-              <textarea x-model="brainDraftGoiY" rows="2" class="flex-1 p-2 rounded-lg bg-slate-950/80 border border-slate-700 text-slate-100 text-[11px] leading-relaxed resize-y focus:outline-none focus:border-emerald-400" placeholder="Nhập gợi ý cho AI…"></textarea>
+              <textarea x-model="brainDraftGoiY" rows="2" class="flex-1 p-2 rounded-lg text-[11px] leading-relaxed resize-y focus:outline-none focus:border-emerald-400 border" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-slate-950/80 border-slate-700 text-slate-100'" placeholder="Nhập gợi ý cho AI…"></textarea>
               <button type="button" @click="guiAiSoanLaiBrainDraft()" :disabled="personalBrain.generatingReport" class="px-3 py-2 rounded-lg text-[11px] font-semibold bg-indigo-600 hover:bg-indigo-500 text-white disabled:opacity-50 flex items-center gap-1.5">
                 <i class="fa-solid" :class="personalBrain.generatingReport ? 'fa-spinner fa-spin' : 'fa-paper-plane'"></i>
                 <span x-text="personalBrain.generatingReport ? 'Đang viết…' : 'Gửi AI'"></span>
@@ -1724,17 +1847,27 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="flex items-center justify-between px-5 py-3 bg-[#0f172a] border-t border-slate-800 flex-shrink-0 text-xs">
+      <div class="flex items-center justify-between px-5 py-3 border-t flex-shrink-0 text-xs" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-slate-800'">
         <div class="flex items-center gap-2">
-          <button @click="personalBrain.showReportModal = false" :disabled="personalBrain.generatingReport" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-semibold">Đóng</button>
+          <button @click="personalBrain.showReportModal = false" :disabled="personalBrain.generatingReport" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Đóng</button>
           <!-- Nút Lưu Kho khi đã sinh xong nội dung -->
           <button x-show="personalBrain.generatedReport" @click="luuVaoKhoTuModalSoan()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-sm shadow-amber-600/30">
             <i class="fa-solid fa-folder-arrow-down"></i>
             <span>Lưu Kho & Đóng</span>
           </button>
+          <!-- Nút Xem khi đã sinh xong nội dung -->
+          <button x-show="personalBrain.generatedReport?.filename" @click="xemTrucTiepTuModalSoan()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-sm shadow-indigo-600/30" title="Xem trực tiếp văn bản đúng định dạng Word A4">
+            <i class="fa-solid fa-eye"></i>
+            <span>Xem</span>
+          </button>
+          <!-- Nút Tải khi đã sinh xong nội dung -->
+          <button x-show="personalBrain.generatedReport?.filename" @click="taiFileTuModalSoan()" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-sm shadow-teal-600/30" title="Tải tệp Word .docx về máy">
+            <i class="fa-solid fa-download"></i>
+            <span>Tải</span>
+          </button>
         </div>
         <div class="flex items-center gap-3">
-          <span class="text-[11px] text-slate-400 hidden sm:inline" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'Áp dụng thể thức Hướng dẫn số 05-HD/VPTW ngày 26/12/2013' : 'Áp dụng thể thức Nghị định số 30/2020/NĐ-CP ngày 05/3/2020'"></span>
+          <span class="text-[11px] hidden sm:inline" :class="currentTheme === 'light' ? 'text-slate-500' : 'text-slate-400'" x-text="(personalBrain.reportForm.loai_van_ban || '').endsWith('_dang') ? 'Áp dụng thể thức Hướng dẫn số 05-HD/VPTW ngày 26/12/2013' : 'Áp dụng thể thức Nghị định số 30/2020/NĐ-CP ngày 05/3/2020'"></span>
           <button @click="submitGenerateReport()" :disabled="personalBrain.generatingReport || (personalBrain.selectedIds && personalBrain.selectedIds.length === 0)" class="px-5 py-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/30 disabled:opacity-50">
             <i class="fa-solid" :class="personalBrain.generatingReport ? 'fa-circle-notch fa-spin text-amber-300' : 'fa-wand-magic-sparkles text-amber-300'"></i>
             <span x-text="personalBrain.generatingReport ? 'Đang soạn thảo...' : (personalBrain.generatedReport ? 'Soạn Thảo Lại Từ Đầu' : 'Bắt Đầu Soạn Thảo')"></span>
@@ -1746,6 +1879,83 @@
 
   <!-- Modal: Kho Dự Thảo Văn Bản & Báo Cáo NĐ 30 -->
   <div x-show="showDraftsModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4" x-cloak>
+    <div class="border rounded-2xl w-full max-w-lg overflow-hidden flex flex-col" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-[#27354f]'">
+      <div class="flex items-center justify-between px-5 py-4 border-b" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-[#27354f]'">
+        <h3 class="text-sm font-black uppercase tracking-wide" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">KHO DỰ THẢO VĂN BẢN NĐ 30</h3>
+        <button @click="showDraftsModal = false" class="text-slate-400 hover:text-rose-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="p-5 space-y-3 overflow-y-auto max-h-[60vh]" :class="currentTheme === 'light' ? 'bg-white text-slate-800' : 'bg-[#111827] text-slate-200'">
+        <template x-for="(dr, drIdx) in (personalBrain.drafts || [])" :key="dr.filename">
+          <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl border" :class="[currentTheme === 'light' ? 'border-slate-200 hover:bg-slate-50' : 'border-slate-700 hover:bg-slate-800/50', isDraftUnread(dr.filename) ? '' : 'opacity-75']">
+            <div class="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold flex-shrink-0" :class="currentTheme === 'light' ? 'bg-teal-600/10 text-teal-700' : 'bg-teal-500/15 text-teal-300'" x-text="Number(drIdx) + 1"></div>
+            <div class="min-w-0 flex-1">
+              <p class="truncate" :class="isDraftUnread(dr.filename) ? 'font-black text-teal-600 dark:text-teal-300' : 'font-semibold opacity-80'" x-text="dr.filename"></p>
+              <p class="text-[10px] opacity-60" x-text="dr.size_kb + ' KB · ' + dr.modified"></p>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button @click="editDraft(dr.filename)" class="px-2 py-1 rounded-lg text-[10px] font-bold border" :class="currentTheme === 'light' ? 'bg-indigo-50 border-indigo-300 text-indigo-700' : 'bg-indigo-500/15 border-indigo-500/40 text-indigo-300'" title="Sửa nội dung + AI gợi ý">✎ Sửa</button>
+              <button @click="openPreviewDraft(dr.filename)" class="px-2 py-1 rounded-lg text-[10px] font-bold border" :class="currentTheme === 'light' ? 'bg-slate-100 border-slate-300' : 'bg-slate-800 border-slate-600'" title="Xem trực tiếp đúng định dạng Word">👁 Xem</button>
+              <button @click="downloadDraftFile(dr.filename)" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-teal-600 text-white">Tải</button>
+              <button @click="deleteDraftFile(dr.filename)" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-rose-600 text-white" title="Xóa bản dự thảo">Xóa</button>
+            </div>
+          </div>
+        </template>
+        <p x-show="!(personalBrain.drafts || []).length" class="text-xs opacity-60 text-center py-4">Chưa có bản dự thảo nào. Hãy soạn thảo văn bản rồi lưu — bản mới sẽ hiện tại đây.</p>
+      </div>
+      <div class="px-5 py-3 border-t flex justify-between items-center" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-[#27354f]'">
+        <span class="text-[10px] opacity-60" x-text="(personalBrain.drafts || []).length + ' bản dự thảo'"></span>
+        <button @click="loadDrafts()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white">⟳ Làm mới</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Xem trước bản dự thảo (định dạng Word, xem trực tiếp) -->
+  <div x-show="personalBrain.showPreviewModal" class="fixed inset-0 z-[65] bg-black/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4" x-cloak>
+    <div class="border rounded-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[94vh]" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-[#27354f]'">
+      <div class="flex items-center justify-between px-5 py-3.5 border-b" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-[#27354f]'">
+        <h3 class="text-sm font-black uppercase tracking-wide truncate" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">
+          👁 XEM: <span x-text="personalBrain.previewDraftName"></span>
+        </h3>
+        <div class="flex items-center gap-2">
+          <button @click="downloadDraftFile(personalBrain.previewDraftName)" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white hover:bg-teal-500">⬇ Tải Word</button>
+          <button @click="personalBrain.showPreviewModal = false" class="text-slate-400 hover:text-rose-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+      </div>
+      <iframe :src="personalBrain.previewDraftUrl" class="w-full flex-1 bg-white" style="border: 0; min-height: 62vh;" title="Xem trước bản dự thảo"></iframe>
+    </div>
+  </div>
+
+  <!-- Modal: Sửa bản dự thảo + AI gợi ý -->
+  <div x-show="personalBrain.showEditDraftModal" class="fixed inset-0 z-[70] bg-black/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4" x-cloak>
+    <div class="border rounded-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[92vh]" :class="currentTheme === 'light' ? 'bg-white border-slate-300' : 'bg-[#111827] border-[#27354f]'">
+      <div class="flex items-center justify-between px-5 py-3.5 border-b" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-[#27354f]'">
+        <h3 class="text-sm font-black uppercase tracking-wide" :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'">
+          ✎ SỬA BẢN DỰ THẢO — <span x-text="personalBrain.editDraftName"></span>
+        </h3>
+        <button @click="personalBrain.showEditDraftModal = false" class="text-slate-400 hover:text-rose-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="p-4 space-y-3 overflow-y-auto flex-1" :class="currentTheme === 'light' ? 'bg-white text-slate-800' : 'bg-[#111827] text-slate-200'">
+        <div class="flex flex-col sm:flex-row gap-2 items-stretch">
+          <textarea x-model="personalBrain.aiEditRequest" rows="4"
+                 placeholder="Nhập yêu cầu AI chỉnh sửa — viết cụ thể để AI hiểu đúng ý. Ví dụ:&#10;• Viết ngắn gọn hơn, chỉ giữ phần I và III&#10;• Bổ sung số liệu về chuyển đổi số lấy từ tài liệu nguồn&#10;• Đổi kiểu văn phong trang trọng hơn"
+                 :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-slate-100'"
+                 class="flex-1 px-3 py-2 rounded-xl border text-xs leading-relaxed"></textarea>
+          <button @click="aiSuggestDraft()" :disabled="personalBrain.aiEditBusy"
+                  class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50 whitespace-nowrap sm:self-end">
+            <span x-text="personalBrain.aiEditBusy ? '✨ AI đang xử lý...' : '✨ AI gợi ý sửa'"></span>
+          </button>
+        </div>
+        <textarea x-model="personalBrain.editDraftText" rows="18" spellcheck="false"
+                  :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-900 border-slate-700 text-slate-100'"
+                  class="w-full px-3 py-2.5 rounded-xl border font-mono text-xs leading-relaxed"></textarea>
+      </div>
+      <div class="px-5 py-3 border-t flex justify-end gap-2" :class="currentTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-[#0f172a] border-[#27354f]'">
+        <button @click="personalBrain.showEditDraftModal = false" class="px-4 py-2 rounded-xl text-xs font-bold border" :class="currentTheme === 'light' ? 'border-slate-300 text-slate-600' : 'border-slate-600 text-slate-300'">Đóng</button>
+        <button @click="saveDraftEdit()" :disabled="personalBrain.aiEditBusy"
+                class="px-4 py-2 rounded-xl text-xs font-bold bg-teal-600 text-white hover:bg-teal-500 disabled:opacity-50">💾 Lưu văn bản</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Notification Popup -->
   <div x-show="toastMessage" x-transition.opacity.duration.300ms class="fixed bottom-6 right-6 z-50 max-w-md bg-slate-900 border border-teal-500/50 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-xs sm:text-sm font-medium">
@@ -1767,6 +1977,20 @@
           selectedCategory: 'all',
           selectedSourceType: 'all',
           selectedIds: [],
+          drafts: [],
+          showDraftsModal: false,
+          editDraftName: '',
+          editDraftText: '',
+          aiEditRequest: '',
+          aiEditBusy: false,
+          showEditDraftModal: false,
+          showPreviewModal: false,
+          previewDraftName: '',
+          previewDraftUrl: '',
+          quickForm: { loai: 'bao_cao', trich_yeu: '', prompt: '', co_quan_gui: 'Ủy ban nhân dân tỉnh Tây Ninh' },
+          quickBusy: false,
+          quickResult: null,
+          khoSaving: false,
           showDriveModal: false,
           showFolderModal: false,
           showFileModal: false,
@@ -1790,11 +2014,14 @@
           shareItemTarget: null,
           shareItemVisibility: 'private',
           shareItemDeptId: '',
+          shareItemForm: { visibility: 'private', shared_users: [], shared_departments: [] },
+          batchShareMode: false,
           driveForm: { drive_url: '', title: '', category: 'Chỉ đạo điều hành', tags_str: '' },
+          driveProgress: { done: 0, total: 0, current: '', active: false },
           folderForm: { folder_path: '', category: 'Tài liệu cơ quan', recursive: true, tags_str: '' },
           fileForm: { file: null, category: 'Tài liệu cơ quan', tags_str: '', visibility: 'private' },
           webForm: { url: '', title: '', category: 'Nghiên cứu tham khảo', tags_str: '' },
-          settingsForm: { user_fullname: 'Nguyễn Trung Hiếu', user_title: 'PHÓ GIÁM ĐỐC', user_unit: 'Sở Khoa học và Công nghệ tỉnh Tây Ninh', gdrive_enabled: true, gdrive_auto_sync: true, gdrive_folder_url: '', web_links_str: '', ai_model: 'google-antigravity/gemini-3.8-flash' },
+          settingsForm: { user_fullname: 'Nguyễn Trung Hiếu', user_title: 'PHÓ GIÁM ĐỐC', user_unit: 'Sở Khoa học và Công nghệ tỉnh Tây Ninh', gdrive_enabled: true, gdrive_auto_sync: true, gdrive_folder_url: '', web_links_str: '', ai_model: 'google-antigravity/gemini-3.8-flash', ai_provider_url: 'http://127.0.0.1:10100/v1/chat/completions', ai_provider_key: '' },
           reportForm: { loai_van_ban: 'bao_cao', title: '', trich_yeu: '', prompt: '', co_quan_gui: 'Ủy ban nhân dân tỉnh Tây Ninh' },
           generatingReport: false,
           generatedReport: null,
@@ -1826,6 +2053,7 @@
           this.loadPersonalBrain();
           this.loadCommuneUsersAndDepts();
           this.fetchBrainSettings();
+          this.loadDrafts();
         },
 
         async fetchBrainSettings() {
@@ -1841,7 +2069,7 @@
                 gdrive_auto_sync: data.settings.gdrive_auto_sync !== false,
                 gdrive_folder_url: data.settings.gdrive_folder_url || '',
                 web_links_str: (data.settings.web_links || []).join('\n'),
-                ai_model: data.settings.ai_model || 'google-antigravity/gemini-3.8-flash'
+                ai_model: data.settings.ai_model || 'google-antigravity/gemini-3.8-flash', ai_provider_url: data.settings.ai_provider_url || '', ai_provider_key: data.settings.ai_provider_key || ''
               };
             }
           } catch(e) {}
@@ -1925,18 +2153,6 @@
           this.personalBrain.shareItemVisibility = item.visibility || 'private';
           this.personalBrain.shareItemDeptId = item.department_id || (this.personalBrain.currentUser?.department_id || '');
           this.personalBrain.showShareItemModal = true;
-        },
-
-        // Extracted Core Brain Methods
-                      body: JSON.stringify({ message: text })
-            });
-            const data = await res.json();
-            this.chatHistory.push({ role: 'assistant', content: data.reply || 'Không có phản hồi.' });
-          } catch(e) {
-            this.chatHistory.push({ role: 'assistant', content: 'Lỗi kết nối: ' + e });
-          } finally {
-            this.chatLoading = false;
-          }
         },
 
         async restartService(sname) {
@@ -2517,7 +2733,7 @@
                 gdrive_auto_sync: data.settings.gdrive_auto_sync !== false,
                 gdrive_folder_url: data.settings.gdrive_folder_url || '',
                 web_links: Array.isArray(data.settings.web_links) && data.settings.web_links.length ? [...data.settings.web_links] : ['https://chinhphu.vn'],
-                ai_model: data.settings.ai_model || 'google-antigravity/gemini-3.8-flash'
+                ai_model: data.settings.ai_model || 'google-antigravity/gemini-3.8-flash', ai_provider_url: data.settings.ai_provider_url || '', ai_provider_key: data.settings.ai_provider_key || ''
               };
             }
           } catch(e) {
@@ -2583,26 +2799,69 @@
             return;
           }
           this.personalBrain.ingesting = true;
+          this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: true };
+          this.driveAbort = new AbortController();
           try {
             const tags = (this.personalBrain.driveForm.tags_str || '').split(',').map(s => s.trim()).filter(Boolean);
-            const res = await this.postJson('/api/personal-brain/ingest/drive', {
-              drive_url: url,
-              title: this.personalBrain.driveForm.title,
-              category: this.personalBrain.driveForm.category,
-              tags: tags
+            const res = await fetch('/api/personal-brain/ingest/drive-stream', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ drive_url: url, category: this.personalBrain.driveForm.category, tags }),
+              signal: this.driveAbort.signal
             });
-            if (res.status === 'success') {
-              this.showToast(res.message || 'Đã nạp tài liệu Google Drive vào Brain!');
+            if (!res.ok || !(res.body)) {
+              const t = await res.text().catch(() => '');
+              this.showToast('Lỗi: ' + (t.slice(0, 120) || ('HTTP ' + res.status)));
+              return;
+            }
+            const reader = res.body.getReader();
+            const dec = new TextDecoder();
+            let buf = '';
+            let created = 0, skipped = 0, lastTitle = '';
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              buf += dec.decode(value, { stream: true });
+              let nl;
+              while ((nl = buf.indexOf('\n\n')) >= 0) {
+                const chunk = buf.slice(0, nl); buf = buf.slice(nl + 2);
+                for (const line of chunk.split('\n')) {
+                  if (!line.startsWith('data: ')) continue;
+                  let ev; try { ev = JSON.parse(line.slice(6)); } catch (e) { continue; }
+                  if (ev.type === 'progress') {
+                    this.personalBrain.driveProgress = { done: ev.done, total: ev.total, current: ev.current, active: true };
+                  } else if (ev.type === 'item') {
+                    if (ev.ok) { created++; lastTitle = ev.title; } else { skipped++; }
+                    this.personalBrain.driveProgress = { done: ev.done || 0, total: ev.total || 0, current: ev.title || '', active: true };
+                  } else if (ev.type === 'error') {
+                    this.showToast('Lỗi: ' + ev.error);
+                  }
+                }
+              }
+            }
+            if (created > 0) {
+              this.showToast(`Đã nạp ${created} tệp từ Google Drive vào Brain!` + (skipped ? ` (bỏ qua ${skipped})` : ''));
               this.personalBrain.showDriveModal = false;
               await this.loadPersonalBrain();
             } else {
-              this.showToast('Lỗi: ' + (res.detail || 'Không thể nạp link Google Drive'));
+              this.showToast('Không nạp được tệp nào từ link Drive (kiểm tra quyền chia sẻ).');
             }
           } catch (e) {
-            this.showToast('Lỗi kết nối khi nạp Google Drive: ' + e);
+            if (e && e.name === 'AbortError') {
+              this.showToast('Đã hủy nạp Google Drive.');
+            } else {
+              this.showToast('Lỗi kết nối khi nạp Google Drive: ' + e);
+            }
           } finally {
             this.personalBrain.ingesting = false;
+            this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: false };
           }
+        },
+
+        cancelIngestDrive() {
+          if (this.driveAbort) { this.driveAbort.abort(); }
+          this.personalBrain.showDriveModal = false;
+          this.personalBrain.ingesting = false;
         },
 
         handleBrainFolderSelect(e) {
@@ -2808,6 +3067,22 @@
           }
         },
 
+        async xemTrucTiepTuModalSoan() {
+          if (!this.personalBrain.generatedReport?.filename) return;
+          if (this.brainDraftDangSua && this.brainDraftNoiDungSua) {
+            await this.luuSuaBrainDraft();
+          }
+          this.openPreviewDraft(this.personalBrain.generatedReport.filename);
+        },
+
+        async taiFileTuModalSoan() {
+          if (!this.personalBrain.generatedReport?.filename) return;
+          if (this.brainDraftDangSua && this.brainDraftNoiDungSua) {
+            await this.luuSuaBrainDraft();
+          }
+          this.downloadDraftFile(this.personalBrain.generatedReport.filename);
+        },
+
         async luuSuaBrainDraft() {
           if (!this.personalBrain.generatedReport) return;
           const noiDung = (this.brainDraftNoiDungSua || '').trim();
@@ -2962,7 +3237,224 @@
           if (!filename) return;
           this.personalBrain.showReportModal = false;
           this.showDraftsModal = false;
-      };
+          window.open('/api/vbdh/draft/download/' + encodeURIComponent(filename), '_blank');
+        },
+
+        downloadDraftFile(filename) {
+          if (!filename) return;
+          this.showToast(`Đang tải tệp '${filename}' về máy...`);
+          window.open('/api/vbdh/draft/download/' + encodeURIComponent(filename), '_blank');
+        },
+
+        viewDraftFile(filename) {
+          if (!filename) return;
+          window.open('/api/vbdh/draft/download/' + encodeURIComponent(filename), '_blank');
+        },
+
+        async loadDrafts() {
+          try {
+            const res = await fetch('/api/vbdh/draft/list');
+            const data = await res.json();
+            if (data.status === 'success') {
+              this.personalBrain.drafts = data.drafts || [];
+            }
+          } catch (e) {
+            console.error('Lỗi khi nạp Kho Dự Thảo:', e);
+          }
+        },
+
+        async openDraftsModal() {
+          await this.loadDrafts();
+          this.showDraftsModal = true;
+        },
+
+        isDraftUnread(filename) {
+          try {
+            const opened = JSON.parse(localStorage.getItem('javis_drafts_opened') || '{}');
+            return !opened[filename];
+          } catch (e) {
+            return true;
+          }
+        },
+
+        markDraftRead(filename) {
+          try {
+            const opened = JSON.parse(localStorage.getItem('javis_drafts_opened') || '{}');
+            opened[filename] = Date.now();
+            localStorage.setItem('javis_drafts_opened', JSON.stringify(opened));
+          } catch (e) {}
+        },
+
+        openPreviewDraft(filename) {
+          this.markDraftRead(filename);
+          this.personalBrain.previewDraftName = filename;
+          this.personalBrain.previewDraftUrl = '/api/vbdh/draft/preview/' + encodeURIComponent(filename) + '?t=' + Date.now();
+          this.personalBrain.showPreviewModal = true;
+          this.loadDrafts();
+        },
+
+        async editDraft(filename) {
+          this.personalBrain.aiEditBusy = false;
+          this.personalBrain.editDraftName = filename;
+          this.personalBrain.editDraftText = 'Đang tải nội dung...';
+          this.personalBrain.aiEditRequest = '';
+          this.personalBrain.showEditDraftModal = true;
+          try {
+            const res = await fetch('/api/vbdh/draft/text/' + encodeURIComponent(filename));
+            const data = await res.json();
+            if (data.status === 'success') {
+              this.personalBrain.editDraftText = data.text;
+            } else {
+              this.showToast(data.detail || 'Không đọc được tệp dự thảo.');
+            }
+          } catch (e) {
+            this.showToast('Lỗi kết nối khi đọc tệp dự thảo.');
+          }
+        },
+
+        async saveDraftEdit() {
+          const fn = this.personalBrain.editDraftName;
+          if (!fn) return;
+          try {
+            this.personalBrain.aiEditBusy = true;
+            const res = await fetch('/api/vbdh/draft/save', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ filename: fn, text: this.personalBrain.editDraftText }),
+              signal: AbortSignal.timeout(60000)
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+              this.showToast(`Đã lưu "${fn}" thành công!`);
+              this.personalBrain.showEditDraftModal = false;
+              this.loadDrafts();
+              // Cập nhật luôn nội dung xem trước nếu đang mở đúng tệp này
+              if (this.personalBrain.showPreviewModal && this.personalBrain.previewDraftName === fn) {
+                this.personalBrain.previewDraftUrl = '/api/vbdh/draft/preview/' + encodeURIComponent(fn) + '?t=' + Date.now();
+              }
+            } else {
+              this.showToast(data.detail || 'Lỗi khi lưu bản dự thảo.');
+            }
+          } catch (e) {
+            this.showToast('Lỗi kết nối khi lưu.');
+          } finally {
+            this.personalBrain.aiEditBusy = false;
+          }
+        },
+
+        async aiSuggestDraft() {
+          const req = (this.personalBrain.aiEditRequest || '').trim();
+          if (!req) {
+            this.showToast('Hãy nhập yêu cầu chỉnh sửa (VD: viết ngắn gọn hơn, bổ sung số liệu...).');
+            return;
+          }
+          try {
+            this.personalBrain.aiEditBusy = true;
+            const res = await fetch('/api/vbdh/draft/ai-edit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ filename: this.personalBrain.editDraftName, request: req }),
+              signal: AbortSignal.timeout(180000)
+            });
+            const data = await res.json();
+            if (data.status === 'success' && data.edited_text) {
+              this.personalBrain.editDraftText = data.edited_text;
+              this.showToast('✨ AI đã gợi ý chỉnh sửa - kiểm tra rồi bấm Lưu văn bản.');
+            } else {
+              this.showToast(data.detail || 'AI không trả lời được, thử lại sau.');
+            }
+          } catch (e) {
+            this.showToast('Lỗi kết nối tới AI.');
+          } finally {
+            this.personalBrain.aiEditBusy = false;
+          }
+        },
+
+        async deleteDraftFile(filename) {
+          if (!confirm('Xóa bản dự thảo "' + filename + '"? Không thể hoàn tác.')) return;
+          try {
+            const res = await fetch('/api/vbdh/draft/delete', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ filename })
+            });
+            if (res.ok) {
+              this.showToast('Đã xóa ' + filename);
+              this.loadDrafts();
+            } else {
+              this.showToast('Không xóa được bản dự thảo.');
+            }
+          } catch (e) {
+            this.showToast('Lỗi kết nối khi xóa.');
+          }
+        },
+
+        async saveQuickDraftToKho(filename) {
+          if (!filename) return;
+          try {
+            this.personalBrain.khoSaving = true;
+            const res = await fetch('/api/vbdh/draft/save-to-kho', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ filename })
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+              this.showToast(data.message || 'Đã lưu vào Kho Tri Thức!');
+            } else {
+              this.showToast('Lỗi: ' + (data.detail || 'Không lưu được'));
+            }
+          } catch (e) {
+            this.showToast('Lỗi kết nối khi lưu kho: ' + e);
+          } finally {
+            this.personalBrain.khoSaving = false;
+          }
+        },
+
+        // Ham bi goi o nhieu cho (luu/sua/soan lai ban du thao) — truoc day bi thieu dinh nghia
+        // gay TypeError "loadDraftsList is not a function" sau khi luu van ban.
+        async loadDraftsList() {
+          await this.loadDrafts();
+        },
+
+        // Dashboard Quick Draft: AI tao du thao van ban tu yeu cau nguoi dung
+        async quickGenerateDraft() {
+          const f = this.personalBrain.quickForm;
+          const trich = (f.trich_yeu || '').trim();
+          const yeucau = (f.prompt || '').trim();
+          if (!trich || !yeucau) {
+            this.showToast('Vui lòng điền Trích yếu và Yêu cầu nội dung trước khi tạo.');
+            return;
+          }
+          this.personalBrain.quickBusy = true;
+          this.personalBrain.quickResult = null;
+          try {
+            const res = await fetch('/api/personal-brain/generate-report', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                item_ids: [],
+                loai_van_ban: f.loai || 'bao_cao',
+                trich_yeu: trich,
+                co_quan_gui: f.co_quan_gui || 'Ủy ban nhân dân tỉnh Tây Ninh',
+                prompt: yeucau
+              })
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+              this.personalBrain.quickResult = data;
+              this.showToast(data.message || 'AI đã tạo bản dự thảo thành công!');
+              this.loadDrafts();
+            } else {
+              this.showToast('Lỗi: ' + (data.detail || 'Không thể tạo văn bản'));
+            }
+          } catch (e) {
+            this.showToast('Lỗi kết nối khi tạo dự thảo: ' + e);
+          } finally {
+            this.personalBrain.quickBusy = false;
+          }
+        }
+      }
     }
   </script>
 </body>
