@@ -745,8 +745,18 @@ def api_ingest_drive_stream(req: IngestDriveRequest):
 
 
 def _extract_text_from_file(file_path: Path) -> str:
-    """Trich xuat toan van tu tep dia phuong ho tro docx, pdf, txt, md, json, csv."""
+    """Trich xuat toan van tu tep dia phuong ho tro docx, pdf, txt, md, json, csv.
+    Uu tien anydoc (Rust/Firecrawl) de tao Markdown sach, tiet kiem token cho Second Brain."""
     ext = file_path.suffix.lower()
+    if ext in (".docx", ".doc", ".pptx", ".ppt", ".xlsx", ".xls", ".odt", ".ods", ".odp", ".rtf", ".epub", ".csv", ".pdf"):
+        try:
+            import anydoc
+            md = anydoc.to_markdown(str(file_path))
+            if md and len(md.strip()) >= 20:
+                return md.strip()
+        except Exception:
+            pass
+
     try:
         if ext in (".txt", ".md", ".json", ".csv", ".log", ".yaml", ".yml"):
             return file_path.read_text(encoding="utf-8", errors="ignore").strip()
