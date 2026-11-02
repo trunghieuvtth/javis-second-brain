@@ -449,7 +449,11 @@
               <div>
                 <div :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" class="text-sm font-bold group-hover:text-emerald-500 transition flex items-center gap-1.5">
                   <span>Thư Mục Máy Tính</span>
-                  <i class="fa-solid fa-plus text-xs opacity-70"></i>
+                  <i class="fa-solid fa-plus text-xs opacity-70" x-show="!personalBrain.ingesting || !personalBrain.folderProgress?.active"></i>
+                  <span x-show="personalBrain.ingesting && personalBrain.folderProgress?.active" class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse flex items-center gap-1" title="Đang nạp nền - Bấm để mở xem tiến độ">
+                    <i class="fa-solid fa-spinner fa-spin text-[9px]"></i>
+                    <span x-text="(personalBrain.folderProgress?.percent ?? 0) + '%'"></span>
+                  </span>
                 </div>
                 <p :class="currentTheme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-300'" class="text-xs mt-1 line-clamp-2 leading-relaxed">Quét thư mục máy tính (.pdf, .docx, .xlsx, .txt, .md)</p>
               </div>
@@ -463,7 +467,11 @@
               <div>
                 <div :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" class="text-sm font-bold group-hover:text-blue-500 transition flex items-center gap-1.5">
                   <span>File Đính Kèm</span>
-                  <i class="fa-solid fa-plus text-xs opacity-70"></i>
+                  <i class="fa-solid fa-plus text-xs opacity-70" x-show="!personalBrain.ingesting || !personalBrain.fileProgress?.active"></i>
+                  <span x-show="personalBrain.ingesting && personalBrain.fileProgress?.active" class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-400 border border-blue-500/30 animate-pulse flex items-center gap-1" title="Đang nạp nền - Bấm để mở xem tiến độ">
+                    <i class="fa-solid fa-spinner fa-spin text-[9px]"></i>
+                    <span x-text="(personalBrain.fileProgress?.percent ?? 0) + '%'"></span>
+                  </span>
                 </div>
                 <p :class="currentTheme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-300'" class="text-xs mt-1 line-clamp-2 leading-relaxed">Kéo thả hoặc chọn tệp tải trực tiếp từ máy của bạn</p>
               </div>
@@ -477,7 +485,11 @@
               <div>
                 <div :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" class="text-sm font-bold group-hover:text-cyan-500 transition flex items-center gap-1.5">
                   <span>Link Web</span>
-                  <i class="fa-solid fa-plus text-xs opacity-70"></i>
+                  <i class="fa-solid fa-plus text-xs opacity-70" x-show="!personalBrain.ingesting || !personalBrain.webProgress?.active"></i>
+                  <span x-show="personalBrain.ingesting && personalBrain.webProgress?.active" class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 animate-pulse flex items-center gap-1" title="Đang nạp nền - Bấm để mở xem tiến độ">
+                    <i class="fa-solid fa-spinner fa-spin text-[9px]"></i>
+                    <span x-text="(personalBrain.webProgress?.percent ?? 0) + '%'"></span>
+                  </span>
                 </div>
                 <p :class="currentTheme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-300'" class="text-xs mt-1 line-clamp-2 leading-relaxed">Nhập link bài báo, văn bản pháp luật, trang tin tức</p>
               </div>
@@ -759,7 +771,7 @@
             <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Chọn thư mục trực tiếp từ thiết bị đang sử dụng hoặc nhập đường dẫn server</p>
           </div>
         </div>
-        <button @click="personalBrain.showFolderModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="closeFolderModal()" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'" title="Đóng cửa sổ (tiến trình vẫn chạy nền)"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -815,8 +827,42 @@
           </div>
         </div>
 
-            <i class="fa-solid fa-microchip mr-1 text-emerald-400"></i> Trích xuất tự động qua lõi đa năng RapidOCR, PyMuPDF và OpenXML độc quyền của Hermes.
+        <div class="p-2.5 border rounded-lg text-[11px] leading-relaxed" :class="currentTheme === 'light' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-emerald-950/20 border-emerald-500/20 text-emerald-300/90'">
+          <i class="fa-solid fa-microchip mr-1 text-emerald-400"></i> Trích xuất tự động qua lõi đa năng RapidOCR, PyMuPDF và OpenXML độc quyền của Hermes.
         </div>
+
+        <!-- Trạng thái đang làm việc & Thanh Status bar (% tiến độ) hiển thị bên dưới dòng hỗ trợ cho Thư Mục -->
+        <div x-show="personalBrain.ingesting || (personalBrain.folderProgress && personalBrain.folderProgress.active)" class="p-3.5 border rounded-xl space-y-2.5 animate-fade-in" :class="currentTheme === 'light' ? 'bg-slate-50 border-emerald-300 shadow-sm' : 'bg-slate-900/90 border-emerald-500/40 shadow-inner'" x-cloak>
+          <!-- 1. Dòng chữ trạng thái đang làm việc -->
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="relative flex h-2.5 w-2.5 shrink-0">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" x-show="personalBrain.ingesting"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span class="text-xs font-bold truncate" :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-200'" x-text="personalBrain.folderProgress?.statusText || 'Đang quét thư mục & trích xuất văn bản...'"></span>
+            </div>
+            <!-- Chỉ số % tiến trình -->
+            <span class="font-mono text-xs font-black text-emerald-500 shrink-0 px-2 py-0.5 rounded border" :class="currentTheme === 'light' ? 'bg-emerald-100/70 border-emerald-300 text-emerald-800' : 'bg-emerald-950 border-emerald-500/40 text-emerald-300'" x-text="(personalBrain.folderProgress?.percent ?? 0) + '%'"></span>
+          </div>
+
+          <!-- 2. Thanh Status bar tiến trình % -->
+          <div class="w-full h-3 rounded-full overflow-hidden p-0.5 border" :class="currentTheme === 'light' ? 'bg-slate-200 border-slate-300' : 'bg-slate-950 border-slate-800'">
+            <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-400 transition-all duration-300 relative overflow-hidden"
+                 :style="'width: ' + (personalBrain.folderProgress?.percent ?? 5) + '%'">
+              <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+            </div>
+          </div>
+
+          <!-- 3. Chi tiết tệp & Ghi chú chạy nền khi bấm X -->
+          <div class="flex items-center justify-between text-[11px] pt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
+            <span class="font-medium truncate max-w-[260px]" x-text="personalBrain.folderProgress?.total ? ('Đã xử lý: ' + (personalBrain.folderProgress.done || 0) + '/' + personalBrain.folderProgress.total + ' tệp') : (personalBrain.folderProgress?.current || 'Đang quét dữ liệu...')"></span>
+            <span class="text-[10px] italic text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shrink-0">
+              <i class="fa-solid fa-circle-info"></i> Bấm <b>X</b> để đóng (vẫn nạp nền)
+            </span>
+          </div>
+        </div>
+      </div>
 
       <div class="flex justify-end gap-2 pt-3 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
         <button @click="personalBrain.showFolderModal = false" :disabled="personalBrain.ingesting" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Hủy</button>
@@ -841,7 +887,7 @@
             <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Hỗ trợ tệp Word (.docx), PDF (.pdf), Excel (.xlsx), Text (.txt, .md)</p>
           </div>
         </div>
-        <button @click="personalBrain.showFileModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="closeFileModal()" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'" title="Đóng cửa sổ (tiến trình vẫn chạy nền)"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -870,6 +916,42 @@
             <input type="text" x-model="personalBrain.fileForm.tags_str" placeholder="Chuyển đổi số, Kế hoạch 2026" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
           </div>
         </div>
+
+        <div class="p-2.5 border rounded-lg text-[11px] leading-relaxed" :class="currentTheme === 'light' ? 'bg-blue-50 border-blue-200 text-blue-800' : 'bg-blue-950/20 border-blue-500/20 text-blue-300/90'">
+          <i class="fa-solid fa-file-circle-check mr-1 text-blue-400"></i> Hỗ trợ mọi định dạng tài liệu văn phòng phổ biến (.pdf, .docx, .xlsx, .pptx, .txt, .md...).
+        </div>
+
+        <!-- Trạng thái đang làm việc & Thanh Status bar (% tiến độ) hiển thị bên dưới dòng hỗ trợ cho Tải Tệp -->
+        <div x-show="personalBrain.ingesting || (personalBrain.fileProgress && personalBrain.fileProgress.active)" class="p-3.5 border rounded-xl space-y-2.5 animate-fade-in" :class="currentTheme === 'light' ? 'bg-slate-50 border-blue-300 shadow-sm' : 'bg-slate-900/90 border-blue-500/40 shadow-inner'" x-cloak>
+          <!-- 1. Dòng chữ trạng thái đang làm việc -->
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="relative flex h-2.5 w-2.5 shrink-0">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" x-show="personalBrain.ingesting"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+              </span>
+              <span class="text-xs font-bold truncate" :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-200'" x-text="personalBrain.fileProgress?.statusText || 'Đang tải lên & bóc tách toàn văn tài liệu...'"></span>
+            </div>
+            <!-- Chỉ số % tiến trình -->
+            <span class="font-mono text-xs font-black text-blue-500 shrink-0 px-2 py-0.5 rounded border" :class="currentTheme === 'light' ? 'bg-blue-100/70 border-blue-300 text-blue-800' : 'bg-blue-950 border-blue-500/40 text-blue-300'" x-text="(personalBrain.fileProgress?.percent ?? 0) + '%'"></span>
+          </div>
+
+          <!-- 2. Thanh Status bar tiến trình % -->
+          <div class="w-full h-3 rounded-full overflow-hidden p-0.5 border" :class="currentTheme === 'light' ? 'bg-slate-200 border-slate-300' : 'bg-slate-950 border-slate-800'">
+            <div class="h-full rounded-full bg-gradient-to-r from-blue-500 via-indigo-400 to-teal-400 transition-all duration-300 relative overflow-hidden"
+                 :style="'width: ' + (personalBrain.fileProgress?.percent ?? 5) + '%'">
+              <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+            </div>
+          </div>
+
+          <!-- 3. Chi tiết tệp & Ghi chú chạy nền khi bấm X -->
+          <div class="flex items-center justify-between text-[11px] pt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
+            <span class="font-medium truncate max-w-[260px]" x-text="personalBrain.fileProgress?.filename || personalBrain.fileForm.selectedFileName || 'Tệp đính kèm'"></span>
+            <span class="text-[10px] italic text-blue-600 dark:text-blue-400 flex items-center gap-1 shrink-0">
+              <i class="fa-solid fa-circle-info"></i> Bấm <b>X</b> để đóng (vẫn nạp nền)
+            </span>
+          </div>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 pt-3 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
@@ -894,7 +976,7 @@
             <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Cào và làm sạch nội dung bài viết, tin tức hoặc văn bản từ URL</p>
           </div>
         </div>
-        <button @click="personalBrain.showWebModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="closeWebModal()" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'" title="Đóng cửa sổ (tiến trình vẫn chạy nền)"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -920,6 +1002,42 @@
           <div>
             <label class="block mb-1 font-semibold" :class="currentTheme === 'light' ? 'text-slate-700' : 'text-slate-300'">Từ khóa / Tags</label>
             <input type="text" x-model="personalBrain.webForm.tags_str" placeholder="Tin tức, Chính sách, 2026" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-cyan-500" :class="currentTheme === 'light' ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-400' : 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'">
+          </div>
+        </div>
+
+        <div class="p-2.5 border rounded-lg text-[11px] leading-relaxed" :class="currentTheme === 'light' ? 'bg-cyan-50 border-cyan-200 text-cyan-800' : 'bg-cyan-950/20 border-cyan-500/20 text-cyan-300/90'">
+          <i class="fa-solid fa-globe mr-1 text-cyan-400"></i> Cào và làm sạch nội dung bài viết, tin tức hoặc văn bản từ URL, loại bỏ quảng cáo và mã rác.
+        </div>
+
+        <!-- Trạng thái đang làm việc & Thanh Status bar (% tiến độ) cho Link Web -->
+        <div x-show="personalBrain.ingesting || (personalBrain.webProgress && personalBrain.webProgress.active)" class="p-3.5 border rounded-xl space-y-2.5 animate-fade-in" :class="currentTheme === 'light' ? 'bg-slate-50 border-cyan-300 shadow-sm' : 'bg-slate-900/90 border-cyan-500/40 shadow-inner'" x-cloak>
+          <!-- 1. Dòng chữ trạng thái đang làm việc -->
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="relative flex h-2.5 w-2.5 shrink-0">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" x-show="personalBrain.ingesting"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+              </span>
+              <span class="text-xs font-bold truncate" :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-200'" x-text="personalBrain.webProgress?.statusText || 'Đang kết nối URL & trích xuất văn bản...'"></span>
+            </div>
+            <!-- Chỉ số % tiến trình -->
+            <span class="font-mono text-xs font-black text-cyan-500 shrink-0 px-2 py-0.5 rounded border" :class="currentTheme === 'light' ? 'bg-cyan-100/70 border-cyan-300 text-cyan-800' : 'bg-cyan-950 border-cyan-500/40 text-cyan-300'" x-text="(personalBrain.webProgress?.percent ?? 0) + '%'"></span>
+          </div>
+
+          <!-- 2. Thanh Status bar tiến trình % -->
+          <div class="w-full h-3 rounded-full overflow-hidden p-0.5 border" :class="currentTheme === 'light' ? 'bg-slate-200 border-slate-300' : 'bg-slate-950 border-slate-800'">
+            <div class="h-full rounded-full bg-gradient-to-r from-cyan-500 via-teal-400 to-blue-400 transition-all duration-300 relative overflow-hidden"
+                 :style="'width: ' + (personalBrain.webProgress?.percent ?? 5) + '%'">
+              <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+            </div>
+          </div>
+
+          <!-- 3. Chi tiết URL & Ghi chú chạy nền khi bấm X -->
+          <div class="flex items-center justify-between text-[11px] pt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
+            <span class="font-medium truncate max-w-[260px]" x-text="personalBrain.webProgress?.url || personalBrain.webForm.url || 'URL trang web'"></span>
+            <span class="text-[10px] italic text-cyan-600 dark:text-cyan-400 flex items-center gap-1 shrink-0">
+              <i class="fa-solid fa-circle-info"></i> Bấm <b>X</b> để đóng (vẫn nạp nền)
+            </span>
           </div>
         </div>
       </div>
@@ -2041,6 +2159,9 @@
           batchShareMode: false,
           driveForm: { drive_url: '', title: '', category: 'Chỉ đạo điều hành', tags_str: '' },
           driveProgress: { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' },
+          folderProgress: { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' },
+          fileProgress: { filename: '', active: false, percent: 0, statusText: '' },
+          webProgress: { url: '', active: false, percent: 0, statusText: '' },
           folderForm: { folder_path: '', category: 'Tài liệu cơ quan', recursive: true, tags_str: '' },
           fileForm: { file: null, category: 'Tài liệu cơ quan', tags_str: '', visibility: 'private' },
           webForm: { url: '', title: '', category: 'Nghiên cứu tham khảo', tags_str: '' },
@@ -2958,6 +3079,27 @@
           this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' };
         },
 
+        closeFolderModal() {
+          this.personalBrain.showFolderModal = false;
+          if (this.personalBrain.ingesting && this.personalBrain.folderProgress?.active) {
+            this.showToast('Tiến trình nạp thư mục vẫn đang tiếp tục chạy nền...');
+          }
+        },
+
+        closeFileModal() {
+          this.personalBrain.showFileModal = false;
+          if (this.personalBrain.ingesting && this.personalBrain.fileProgress?.active) {
+            this.showToast('Tiến trình tải và nạp tệp vẫn đang tiếp tục chạy nền...');
+          }
+        },
+
+        closeWebModal() {
+          this.personalBrain.showWebModal = false;
+          if (this.personalBrain.ingesting && this.personalBrain.webProgress?.active) {
+            this.showToast('Tiến trình cào link web vẫn đang tiếp tục chạy nền...');
+          }
+        },
+
         handleBrainFolderSelect(e) {
           const fileList = e.target.files;
           if (fileList && fileList.length > 0) {
@@ -2980,6 +3122,14 @@
           // 1. Trường hợp người dùng Browse thư mục trực tiếp từ thiết bị cá nhân
           if (files && files.length > 0) {
             this.personalBrain.ingesting = true;
+            this.personalBrain.folderProgress = {
+              done: 0,
+              total: files.length,
+              current: files[0].name,
+              active: true,
+              percent: 15,
+              statusText: `Đang tải lên ${files.length} tệp từ thư mục "${this.personalBrain.folderForm.folderName || 'máy tính'}"...`
+            };
             try {
               const formData = new FormData();
               for (let i = 0; i < files.length; i++) {
@@ -2988,17 +3138,34 @@
               formData.append('category', this.personalBrain.folderForm.category || 'Tài liệu cơ quan');
               formData.append('folder_name', this.personalBrain.folderForm.folderName || 'Thư mục máy tính');
 
+              this.personalBrain.folderProgress.percent = 45;
+              this.personalBrain.folderProgress.statusText = `Đang trích xuất toàn văn và bóc tách các tệp văn bản...`;
+
               const res = await fetch('/api/personal-brain/ingest/folder-upload', {
                 method: 'POST',
                 body: formData
               }).then(r => r.json());
 
               if (res.status === 'success') {
+                this.personalBrain.folderProgress = {
+                  done: files.length,
+                  total: files.length,
+                  current: '',
+                  active: true,
+                  percent: 100,
+                  statusText: res.message || `Đã nạp thành công toàn bộ ${files.length} tệp vào Kho Tri Thức!`
+                };
                 this.showToast(res.message || 'Đã nạp thành công toàn bộ thư mục vào Kho Tri Thức!');
-                this.personalBrain.showFolderModal = false;
                 await this.loadPersonalBrain();
+                setTimeout(() => {
+                  if (!this.personalBrain.ingesting) {
+                    this.personalBrain.showFolderModal = false;
+                    this.personalBrain.folderProgress = { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' };
+                  }
+                }, 2500);
               } else {
                 this.showToast('Lỗi: ' + (res.detail || 'Không thể tải lên thư mục'));
+                this.personalBrain.folderProgress.statusText = 'Lỗi tải lên thư mục: ' + (res.detail || 'Thất bại');
               }
             } catch (e) {
               this.showToast('Lỗi kết nối khi tải thư mục: ' + e);
@@ -3014,6 +3181,14 @@
             return;
           }
           this.personalBrain.ingesting = true;
+          this.personalBrain.folderProgress = {
+            done: 0,
+            total: 0,
+            current: serverPath,
+            active: true,
+            percent: 30,
+            statusText: `Đang quét và bóc tách thư mục trên server: ${serverPath}...`
+          };
           try {
             const res = await this.postJson('/api/personal-brain/ingest/folder', {
               folder_path: serverPath,
@@ -3021,11 +3196,25 @@
               recursive: this.personalBrain.folderForm.recursive
             });
             if (res.status === 'success') {
+              this.personalBrain.folderProgress = {
+                done: res.count || 1,
+                total: res.count || 1,
+                current: '',
+                active: true,
+                percent: 100,
+                statusText: res.message || 'Đã quét và nạp thư mục thành công!'
+              };
               this.showToast(res.message || 'Đã quét và nạp thư mục thành công!');
-              this.personalBrain.showFolderModal = false;
               await this.loadPersonalBrain();
+              setTimeout(() => {
+                if (!this.personalBrain.ingesting) {
+                  this.personalBrain.showFolderModal = false;
+                  this.personalBrain.folderProgress = { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' };
+                }
+              }, 2500);
             } else {
               this.showToast('Lỗi: ' + (res.detail || 'Không thể quét thư mục'));
+              this.personalBrain.folderProgress.statusText = 'Lỗi: ' + (res.detail || 'Thất bại');
             }
           } catch (e) {
             this.showToast('Lỗi kết nối khi quét thư mục: ' + e);
@@ -3049,11 +3238,20 @@
             return;
           }
           this.personalBrain.ingesting = true;
+          this.personalBrain.fileProgress = {
+            filename: file.name,
+            active: true,
+            percent: 25,
+            statusText: `Đang tải lên tệp: ${file.name}...`
+          };
           try {
             const fd = new FormData();
             fd.append('file', file);
             fd.append('category', this.personalBrain.fileForm.category || 'Báo cáo chuyên đề');
             fd.append('tags', this.personalBrain.fileForm.tags_str || '');
+
+            this.personalBrain.fileProgress.percent = 65;
+            this.personalBrain.fileProgress.statusText = `Đang trích xuất toàn văn qua PyMuPDF/python-docx/openxml...`;
 
             const res = await fetch('/api/personal-brain/ingest/file', {
               method: 'POST',
@@ -3061,11 +3259,23 @@
             });
             const data = await res.json();
             if (res.ok && data.status === 'success') {
+              this.personalBrain.fileProgress = {
+                filename: file.name,
+                active: true,
+                percent: 100,
+                statusText: data.message || `Đã nạp tệp '${file.name}' thành công!`
+              };
               this.showToast(data.message || 'Đã bóc tách và nạp tệp thành công vào Brain!');
-              this.personalBrain.showFileModal = false;
               await this.loadPersonalBrain();
+              setTimeout(() => {
+                if (!this.personalBrain.ingesting) {
+                  this.personalBrain.showFileModal = false;
+                  this.personalBrain.fileProgress = { filename: '', active: false, percent: 0, statusText: '' };
+                }
+              }, 2500);
             } else {
               this.showToast('Lỗi tải tệp: ' + (data.detail || 'Không thể nạp tệp'));
+              this.personalBrain.fileProgress.statusText = 'Lỗi tải tệp: ' + (data.detail || 'Thất bại');
             }
           } catch (e) {
             this.showToast('Lỗi kết nối tải tệp: ' + e);
@@ -3081,8 +3291,17 @@
             return;
           }
           this.personalBrain.ingesting = true;
+          this.personalBrain.webProgress = {
+            url: url,
+            active: true,
+            percent: 20,
+            statusText: `Đang kết nối trang web: ${url}...`
+          };
           try {
             const tags = (this.personalBrain.webForm.tags_str || '').split(',').map(s => s.trim()).filter(Boolean);
+            this.personalBrain.webProgress.percent = 60;
+            this.personalBrain.webProgress.statusText = `Đang cào dữ liệu, lọc quảng cáo và bóc tách nội dung chính...`;
+
             const res = await this.postJson('/api/personal-brain/ingest/web', {
               url: url,
               title: this.personalBrain.webForm.title,
@@ -3090,11 +3309,23 @@
               tags: tags
             });
             if (res.status === 'success') {
+              this.personalBrain.webProgress = {
+                url: url,
+                active: true,
+                percent: 100,
+                statusText: res.message || 'Đã cào và nạp bài viết từ web thành công!'
+              };
               this.showToast(res.message || 'Đã cào và nạp bài viết từ web thành công!');
-              this.personalBrain.showWebModal = false;
               await this.loadPersonalBrain();
+              setTimeout(() => {
+                if (!this.personalBrain.ingesting) {
+                  this.personalBrain.showWebModal = false;
+                  this.personalBrain.webProgress = { url: '', active: false, percent: 0, statusText: '' };
+                }
+              }, 2500);
             } else {
               this.showToast('Lỗi: ' + (res.detail || 'Không thể cào link web'));
+              this.personalBrain.webProgress.statusText = 'Lỗi: ' + (res.detail || 'Thất bại');
             }
           } catch (e) {
             this.showToast('Lỗi kết nối khi cào web: ' + e);

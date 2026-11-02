@@ -35,3 +35,23 @@ Skill này giúp các AI Agent trên JavisOS, Hermes Agent và OpenCode tương 
       "co_quan_gui": "Ủy ban nhân dân tỉnh Tây Ninh"
     }'
   ```
+
+3. **Nạp tệp đính kèm từ Bot (JavisOS/Hermes/Telegram) vào Kho Tri Thức:**
+  - **Nạp qua đường dẫn tệp nội bộ (Khuyên dùng cho Bot):**
+    Khi bot đã tải hoặc lưu tệp đính kèm về máy (.pdf, .docx, .txt, .md, .csv...):
+    ```bash
+    curl -X POST "http://127.0.0.1:8090/api/personal-brain/ingest/local-file" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "file_path": "C:\\Users\\User\\Downloads\\tai_lieu_dinh_kem.pdf",
+        "title": "Tài liệu tiếp nhận qua Bot",
+        "category": "Tài liệu cơ quan",
+        "tags": ["Bot", "Đính kèm"]
+      }'
+    ```
+  - **Nạp qua luồng tải lên Multipart Upload:**
+    ```bash
+    curl -X POST "http://127.0.0.1:8090/api/personal-brain/ingest/file" \
+      -F "file=@C:\\path\\to\\document.docx" \
+      -F "category=Tài liệu cơ quan"
+    ```

@@ -744,6 +744,27 @@ def api_ingest_drive_stream(req: IngestDriveRequest):
     return StreamingResponse(gen(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
 
+def _extract_text_from_file(file_path: Path) -> str:
+    """Trich xuat toan van tu tep dia phuong ho tro docx, pdf, txt, md, json, csv."""
+    ext = file_path.suffix.lower()
+    try:
+        if ext in (".txt", ".md", ".json", ".csv", ".log", ".yaml", ".yml"):
+            return file_path.read_text(encoding="utf-8", errors="ignore").strip()
+        elif ext == ".pdf":
+            import fitz as _fitz
+            d = _fitz.open(str(file_path))
+            pages_txt = [pg.get_text().strip() for pg in d if pg.get_text().strip()]
+            d.close()
+            return "\n".join(pages_txt).strip()
+        elif ext == ".docx":
+            import docx as _docx
+            d = _docx.Document(str(file_path))
+            return "\n".join(p.text.strip() for p in d.paragraphs if p.text.strip())
+    except Exception as e:
+        print(f"[!] Loi trich xuat {file_path.name}: {e}")
+    return ""
+
+
 @app.post("/api/personal-brain/ingest/file")
 async def api_ingest_file(
     file: UploadFile = File(...),
@@ -756,14 +777,10 @@ async def api_ingest_file(
     with dest_path.open("wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    text_content = f"Tệp tải lên: {safe_name}\n"
-    word_count = 100
-    if safe_name.lower().endswith(".txt") or safe_name.lower().endswith(".md"):
-        try:
-            text_content = dest_path.read_text(encoding="utf-8", errors="ignore")
-            word_count = len(text_content.split())
-        except Exception:
-            pass
+    text_content = _extract_text_from_file(dest_path)
+    if not text_content:
+        text_content = f"Tệp tải lên: {safe_name}\n"
+    word_count = len(text_content.split())
 
     new_item = {
         "id": f"pb_{int(time.time() * 1000)}",
@@ -785,7 +802,71 @@ async def api_ingest_file(
     items = load_items()
     items.insert(0, new_item)
     save_items(items)
-    return {"status": "success", "message": f"Đã nạp tệp '{safe_name}' vào Brain thành công!", "item": new_item}
+    return {"status": "success", "message": f"Đã nạp tệp '{safe_name}' vào Brain thành công ({word_count:,} từ)!", "item": new_item}
+
+
+class IngestLocalFileRequest(BaseModel):
+    file_path: str
+    title: Optional[str] = None
+    category: Optional[str] = "Tài liệu cơ quan"
+    tags: Optional[List[str]] = []
+    owner_id: Optional[str] = "070077000098"
+    visibility: Optional[str] = "private"
+
+
+@app.post("/api/personal-brain/ingest/local-file")
+@app.post("/api/personal-brain/ingest/bot-attachment")
+def api_ingest_local_file(req: IngestLocalFileRequest):
+    """Nạp tệp đính kèm từ Bot (JavisOS/Hermes/Telegram) qua đường dẫn tệp trên máy tính.
+    Tự động sao chép vào Kho Tri Thức và trích xuất toàn văn (PDF, Word, TXT, Excel, MD...)."""
+    raw_path = (req.file_path or "").strip().strip('"').strip("'")
+    if not raw_path:
+        raise HTTPException(status_code=400, detail="Vui lòng cung cấp đường dẫn file đính kèm (file_path).")
+
+    src_p = Path(raw_path)
+    if not src_p.exists() or not src_p.is_file():
+        raise HTTPException(status_code=404, detail=f"Không tìm thấy tệp đính kèm tại đường dẫn: {raw_path}")
+
+    safe_name = src_p.name
+    dest_path = FILES_DIR / safe_name
+    try:
+        if src_p.resolve() != dest_path.resolve():
+            shutil.copyfile(src_p, dest_path)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lỗi khi sao chép tệp: {e}")
+
+    text_content = _extract_text_from_file(dest_path)
+    if not text_content:
+        text_content = f"Tệp đính kèm: {safe_name}\n"
+
+    word_count = len(text_content.split())
+    doc_title = (req.title or "").strip() or safe_name.rsplit(".", 1)[0].replace("_", " ")
+
+    new_item = {
+        "id": f"pb_{int(time.time() * 1000)}",
+        "title": doc_title,
+        "category": req.category or "Tài liệu cơ quan",
+        "source_type": "file",
+        "source_url_or_path": safe_name,
+        "filename": safe_name,
+        "file_path": str(dest_path),
+        "summary": text_content[:250].strip() + ("..." if len(text_content) > 250 else ""),
+        "text_content": text_content,
+        "word_count": word_count,
+        "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "tags": req.tags or ["File đính kèm", "Bot"],
+        "owner_id": req.owner_id or "070077000098",
+        "visibility": req.visibility or "private"
+    }
+
+    items = load_items()
+    items.insert(0, new_item)
+    save_items(items)
+    return {
+        "status": "success",
+        "message": f"Đã nạp tệp đính kèm '{safe_name}' vào Brain ({word_count:,} từ)!",
+        "item": new_item
+    }
 
 @app.post("/api/personal-brain/ingest/folder-upload")
 async def api_ingest_folder(
