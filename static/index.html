@@ -431,7 +431,11 @@
               <div>
                 <div :class="currentTheme === 'light' ? 'text-slate-900' : 'text-white'" class="text-sm font-bold group-hover:text-amber-500 transition flex items-center gap-1.5">
                   <span>Google Drive</span>
-                  <i class="fa-solid fa-plus text-xs opacity-70"></i>
+                  <i class="fa-solid fa-plus text-xs opacity-70" x-show="!personalBrain.ingesting || !personalBrain.driveProgress?.active"></i>
+                  <span x-show="personalBrain.ingesting && personalBrain.driveProgress?.active" class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse flex items-center gap-1" title="Đang nạp nền - Bấm để mở xem tiến độ">
+                    <i class="fa-solid fa-spinner fa-spin text-[9px]"></i>
+                    <span x-text="(personalBrain.driveProgress?.percent ?? 0) + '%'"></span>
+                  </span>
                 </div>
                 <p :class="currentTheme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-300'" class="text-xs mt-1 line-clamp-2 leading-relaxed">Nạp tài liệu từ link chia sẻ Google Drive hoặc Google Docs</p>
               </div>
@@ -668,7 +672,7 @@
             <p class="text-[11px]" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">Trích xuất văn bản từ liên kết tệp hoặc tài liệu Docs Google Drive</p>
           </div>
         </div>
-        <button @click="personalBrain.showDriveModal = false" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'"><i class="fa-solid fa-xmark"></i></button>
+        <button @click="closeDriveModal()" :class="currentTheme === 'light' ? 'text-slate-500 hover:text-slate-900' : 'text-slate-400 hover:text-white'" title="Đóng cửa sổ (tiến trình vẫn chạy nền)"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -699,24 +703,43 @@
         <div class="p-2.5 border rounded-lg text-[11px] leading-relaxed" :class="currentTheme === 'light' ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-amber-950/20 border-amber-500/20 text-amber-300/90'">
           <i class="fa-solid fa-lightbulb mr-1 text-amber-400"></i> Hỗ trợ tải trực tiếp tệp công khai hoặc tài liệu Google Docs sang định dạng văn bản sạch để phân tích.
         </div>
+
+        <!-- Trạng thái đang làm việc & Thanh Status bar (hiển thị % tiến độ) hiển thị bên dưới dòng chữ hỗ trợ -->
+        <div x-show="personalBrain.ingesting || (personalBrain.driveProgress && personalBrain.driveProgress.active)" class="p-3.5 border rounded-xl space-y-2.5 animate-fade-in" :class="currentTheme === 'light' ? 'bg-slate-50 border-emerald-300 shadow-sm' : 'bg-slate-900/90 border-emerald-500/40 shadow-inner'" x-cloak>
+          <!-- 1. Dòng chữ trạng thái đang làm việc -->
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="relative flex h-2.5 w-2.5 shrink-0">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" x-show="personalBrain.ingesting"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span class="text-xs font-bold truncate" :class="currentTheme === 'light' ? 'text-slate-800' : 'text-slate-200'" x-text="personalBrain.driveProgress?.statusText || (personalBrain.driveProgress?.current ? ('Đang xử lý: ' + personalBrain.driveProgress.current) : 'Đang kết nối Google Drive & quét dữ liệu...')"></span>
+            </div>
+            <!-- Chỉ số % tiến trình -->
+            <span class="font-mono text-xs font-black text-emerald-500 shrink-0 px-2 py-0.5 rounded border" :class="currentTheme === 'light' ? 'bg-emerald-100/70 border-emerald-300 text-emerald-800' : 'bg-emerald-950 border-emerald-500/40 text-emerald-300'" x-text="(personalBrain.driveProgress?.percent ?? 0) + '%'"></span>
+          </div>
+
+          <!-- 2. Thanh Status bar tiến trình % -->
+          <div class="w-full h-3 rounded-full overflow-hidden p-0.5 border" :class="currentTheme === 'light' ? 'bg-slate-200 border-slate-300' : 'bg-slate-950 border-slate-800'">
+            <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-400 transition-all duration-300 relative overflow-hidden"
+                 :style="'width: ' + (personalBrain.driveProgress?.percent ?? 5) + '%'">
+              <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
+            </div>
+          </div>
+
+          <!-- 3. Chi tiết tệp & Ghi chú chạy nền khi bấm X -->
+          <div class="flex items-center justify-between text-[11px] pt-0.5" :class="currentTheme === 'light' ? 'text-slate-600' : 'text-slate-400'">
+            <span class="font-medium truncate max-w-[260px]" x-text="personalBrain.driveProgress?.total ? ('Đã xử lý: ' + (personalBrain.driveProgress.done || 0) + '/' + personalBrain.driveProgress.total + ' tệp') : (personalBrain.driveProgress?.current || 'Đang kết nối...')"></span>
+            <span class="text-[10px] italic text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shrink-0">
+              <i class="fa-solid fa-circle-info"></i> Bấm <b>X</b> để đóng (vẫn nạp nền)
+            </span>
+          </div>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 pt-3 border-t" :class="currentTheme === 'light' ? 'border-slate-200' : 'border-slate-800'">
         <button @click="cancelIngestDrive()" class="px-4 py-2 rounded-xl text-xs font-semibold transition" :class="currentTheme === 'light' ? 'bg-slate-200 hover:bg-slate-300 text-slate-800' : 'bg-slate-800 text-slate-300 hover:text-white'">Hủy</button>
-        <!-- Thanh tien trinh nap Drive (xanh chay nhu sac pin) -->
-        <div x-show="personalBrain.driveProgress && personalBrain.driveProgress.active" class="mb-3 space-y-1.5" x-cloak>
-          <div class="flex items-center justify-between text-[11px] font-bold" :class="currentTheme === 'light' ? 'text-emerald-700' : 'text-emerald-400'">
-            <span x-text="'Đang nạp: ' + (personalBrain.driveProgress.current || '')"></span>
-            <span x-text="(personalBrain.driveProgress.done || 0) + '/' + (personalBrain.driveProgress.total || 0) + ' tệp'"></span>
-          </div>
-          <div class="w-full h-2.5 rounded-full overflow-hidden" :class="currentTheme === 'light' ? 'bg-slate-200' : 'bg-slate-800'">
-            <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500 relative overflow-hidden"
-                 :style="'width:' + (personalBrain.driveProgress.total ? Math.round(100 * (personalBrain.driveProgress.done || 0) / personalBrain.driveProgress.total) : 0) + '%'">
-              <div class="absolute inset-0 bg-white/30 animate-pulse"></div>
-            </div>
-          </div>
-        </div>
-        <button @click="submitIngestDrive()" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-amber-600/20">
+        <button @click="submitIngestDrive()" :disabled="personalBrain.ingesting" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-amber-600/20 disabled:opacity-50">
           <i class="fa-solid" :class="personalBrain.ingesting ? 'fa-circle-notch fa-spin' : 'fa-cloud-arrow-down'"></i>
           <span x-text="personalBrain.ingesting ? 'Đang nạp...' : 'Nạp Vào Brain'"></span>
         </button>
@@ -2017,7 +2040,7 @@
           shareItemForm: { visibility: 'private', shared_users: [], shared_departments: [] },
           batchShareMode: false,
           driveForm: { drive_url: '', title: '', category: 'Chỉ đạo điều hành', tags_str: '' },
-          driveProgress: { done: 0, total: 0, current: '', active: false },
+          driveProgress: { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' },
           folderForm: { folder_path: '', category: 'Tài liệu cơ quan', recursive: true, tags_str: '' },
           fileForm: { file: null, category: 'Tài liệu cơ quan', tags_str: '', visibility: 'private' },
           webForm: { url: '', title: '', category: 'Nghiên cứu tham khảo', tags_str: '' },
@@ -2778,7 +2801,9 @@
 
         openIngestModal(type) {
           if (type === 'drive') {
-            this.personalBrain.driveForm = { drive_url: '', title: '', category: 'Chỉ đạo điều hành', tags_str: '' };
+            if (!this.personalBrain.ingesting) {
+              this.personalBrain.driveForm = { drive_url: '', title: '', category: 'Chỉ đạo điều hành', tags_str: '' };
+            }
             this.personalBrain.showDriveModal = true;
           } else if (type === 'folder') {
             this.personalBrain.folderForm = { folder_path: '', category: 'Tài liệu cơ quan', recursive: true, files: [], folderName: '', fileCount: 0 };
@@ -2792,6 +2817,13 @@
           }
         },
 
+        closeDriveModal() {
+          this.personalBrain.showDriveModal = false;
+          if (this.personalBrain.ingesting) {
+            this.showToast('Tiến trình nạp Google Drive vẫn đang tiếp tục chạy nền...');
+          }
+        },
+
         async submitIngestDrive() {
           const url = (this.personalBrain.driveForm.drive_url || '').trim();
           if (!url) {
@@ -2799,8 +2831,16 @@
             return;
           }
           this.personalBrain.ingesting = true;
-          this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: true };
+          this.personalBrain.driveProgress = { 
+            done: 0, 
+            total: 0, 
+            current: 'Đang kết nối...', 
+            active: true, 
+            percent: 5, 
+            statusText: 'Đang kết nối Google Drive & quét dữ liệu...' 
+          };
           this.driveAbort = new AbortController();
+          let created = 0, skipped = 0;
           try {
             const tags = (this.personalBrain.driveForm.tags_str || '').split(',').map(s => s.trim()).filter(Boolean);
             const res = await fetch('/api/personal-brain/ingest/drive-stream', {
@@ -2817,7 +2857,6 @@
             const reader = res.body.getReader();
             const dec = new TextDecoder();
             let buf = '';
-            let created = 0, skipped = 0, lastTitle = '';
             while (true) {
               const { value, done } = await reader.read();
               if (done) break;
@@ -2828,33 +2867,87 @@
                 for (const line of chunk.split('\n')) {
                   if (!line.startsWith('data: ')) continue;
                   let ev; try { ev = JSON.parse(line.slice(6)); } catch (e) { continue; }
-                  if (ev.type === 'progress') {
-                    this.personalBrain.driveProgress = { done: ev.done, total: ev.total, current: ev.current, active: true };
+                  if (ev.type === 'start') {
+                    const tot = ev.total || 1;
+                    this.personalBrain.driveProgress = {
+                      done: 0,
+                      total: tot,
+                      current: '',
+                      active: true,
+                      percent: 10,
+                      statusText: `Đã tìm thấy ${tot} tệp. Bắt đầu tải và bóc tách dữ liệu...`
+                    };
+                  } else if (ev.type === 'progress') {
+                    const doneCnt = ev.done || 0;
+                    const tot = ev.total || 1;
+                    const pct = Math.max(10, Math.min(99, Math.round((doneCnt / tot) * 100)));
+                    this.personalBrain.driveProgress = {
+                      done: doneCnt,
+                      total: tot,
+                      current: ev.current || '',
+                      active: true,
+                      percent: pct,
+                      statusText: `Đang tải & bóc tách: ${ev.current || 'tệp'} (${doneCnt}/${tot} tệp - ${pct}%)`
+                    };
                   } else if (ev.type === 'item') {
-                    if (ev.ok) { created++; lastTitle = ev.title; } else { skipped++; }
-                    this.personalBrain.driveProgress = { done: ev.done || 0, total: ev.total || 0, current: ev.title || '', active: true };
+                    if (ev.ok) { created++; } else { skipped++; }
+                    const doneCnt = ev.done || (created + skipped);
+                    const tot = ev.total || 1;
+                    const pct = Math.min(100, Math.round((doneCnt / tot) * 100));
+                    this.personalBrain.driveProgress = {
+                      done: doneCnt,
+                      total: tot,
+                      current: ev.title || '',
+                      active: true,
+                      percent: pct,
+                      statusText: (ev.ok ? '✓ Đã nạp: ' : '⚠ Bỏ qua: ') + (ev.title || '') + ` (${doneCnt}/${tot} tệp - ${pct}%)`
+                    };
+                  } else if (ev.type === 'done') {
+                    this.personalBrain.driveProgress = {
+                      done: ev.total || created,
+                      total: ev.total || created,
+                      current: '',
+                      active: true,
+                      percent: 100,
+                      statusText: `Hoàn tất nạp dữ liệu! Đã nạp ${created} tệp${skipped ? ` (bỏ qua ${skipped})` : ''}.`
+                    };
                   } else if (ev.type === 'error') {
-                    this.showToast('Lỗi: ' + ev.error);
+                    this.showToast('Lỗi nạp Google Drive: ' + ev.error);
+                    this.personalBrain.driveProgress = {
+                      done: 0,
+                      total: 0,
+                      current: '',
+                      active: false,
+                      percent: 0,
+                      statusText: 'Lỗi: ' + ev.error
+                    };
                   }
                 }
               }
             }
             if (created > 0) {
               this.showToast(`Đã nạp ${created} tệp từ Google Drive vào Brain!` + (skipped ? ` (bỏ qua ${skipped})` : ''));
-              this.personalBrain.showDriveModal = false;
               await this.loadPersonalBrain();
+              setTimeout(() => {
+                if (!this.personalBrain.ingesting) {
+                  this.personalBrain.showDriveModal = false;
+                  this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' };
+                }
+              }, 2500);
             } else {
               this.showToast('Không nạp được tệp nào từ link Drive (kiểm tra quyền chia sẻ).');
             }
           } catch (e) {
             if (e && e.name === 'AbortError') {
-              this.showToast('Đã hủy nạp Google Drive.');
+              this.showToast('Đã dừng tiến trình nạp Google Drive.');
             } else {
               this.showToast('Lỗi kết nối khi nạp Google Drive: ' + e);
             }
           } finally {
             this.personalBrain.ingesting = false;
-            this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: false };
+            if (created === 0) {
+              this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' };
+            }
           }
         },
 
@@ -2862,6 +2955,7 @@
           if (this.driveAbort) { this.driveAbort.abort(); }
           this.personalBrain.showDriveModal = false;
           this.personalBrain.ingesting = false;
+          this.personalBrain.driveProgress = { done: 0, total: 0, current: '', active: false, percent: 0, statusText: '' };
         },
 
         handleBrainFolderSelect(e) {
