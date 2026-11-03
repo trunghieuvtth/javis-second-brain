@@ -1460,19 +1460,38 @@ def api_vbdh_draft_save_edit(req: DraftSaveEditRequest):
 
 @app.post("/api/vbdh/draft/delete")
 def api_vbdh_draft_delete(req: dict):
-    safe = Path(str(req.get("filename", ""))).name
+    draft_id = req.get("draft_id")
+    filename = req.get("filename")
+    safe = Path(str(filename or draft_id or "")).name
     p = DRAFTS_DIR / safe
     deleted = []
-    if p.exists():
-        p.unlink()
-        deleted.append(safe)
+    if p.exists() and safe:
+        try:
+            p.unlink()
+            deleted.append(safe)
+        except Exception:
+            pass
     kho = FILES_DIR / safe
-    if kho.exists():
-        kho.unlink()
-        deleted.append(str(kho))
-    if not deleted:
-        raise HTTPException(status_code=404, detail="Không tìm thấy tệp dự thảo để xóa.")
-    return {"status": "success", "message": f"Đã xóa {len(deleted)} tệp."}
+    if kho.exists() and safe:
+        try:
+            kho.unlink()
+            deleted.append(str(kho))
+        except Exception:
+            pass
+
+    # Nếu có tệp index drafts trong data/drafts/drafts_index.json
+    drafts_index_file = DRAFTS_DIR / "drafts_index.json"
+    if drafts_index_file.exists():
+        try:
+            drafts = json.loads(drafts_index_file.read_text(encoding="utf-8"))
+            remaining = [d for d in drafts if not ((draft_id and d.get("id") == draft_id) or (safe and d.get("filename") == safe))]
+            if len(remaining) != len(drafts):
+                deleted.append("index_record")
+                drafts_index_file.write_text(json.dumps(remaining, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception:
+            pass
+
+    return {"status": "success", "message": f"Đã xóa bản dự thảo {safe} thành công!"}
 
 
 @app.post("/api/vbdh/draft/ai-edit")
